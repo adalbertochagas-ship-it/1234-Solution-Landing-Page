@@ -499,10 +499,178 @@
 
     .marquee-separator {
       color: var(--gold);
-      font-size: 0.4rem;
-      opacity: 0.6;
+      opacity: 0.5;
     }
 
+    /* ==========================================================================
+       6. SEÇÃO PROBLEMA
+       ========================================================================== */
+    .section-problem {
+      padding: 8rem 0;
+      position: relative;
+      background-color: var(--navy);
+      z-index: 10;
+    }
+
+    .problem-header {
+      max-width: 800px;
+      margin-bottom: 4rem;
+    }
+
+    .problem-header .eyebrow {
+      margin-bottom: 2rem;
+    }
+
+    .problem-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-weight: 700;
+      color: var(--paper);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .problem-lede {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      color: var(--text-lede);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 6rem;
+    }
+
+    .problem-card {
+      padding: 2.5rem;
+      background: rgba(22, 40, 63, 0.4);
+      border: 1px solid var(--line-dark);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.4s var(--ease-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .problem-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(198,164,90,0.25);
+      background: rgba(22, 40, 63, 0.65);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 20px 50px rgba(14,27,43,0.8);
+    }
+
+    .problem-card-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .problem-icon-wrapper {
+      width: 72px;
+      height: 72px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line-dark);
+      background: var(--navy);
+    }
+
+    .problem-icon-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.2) sepia(20%) hue-rotate(180deg);
+      opacity: 0.8;
+      transition: all 0.4s ease;
+    }
+
+    .problem-card:hover .problem-icon-wrapper img {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .problem-card-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--paper);
+      margin-bottom: 0;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+    }
+
+    .problem-card-desc {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-lede);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .problem-footer {
+      border-top: 1px solid var(--line-dark);
+      padding-top: 5rem;
+      padding-bottom: 2rem;
+      text-align: center;
+    }
+
+    .problem-bridge {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      max-width: 900px;
+      margin: 0 auto;
+      
+      /* Efeito Text Shimmer Animado (Inspirado nos templates) */
+      background: linear-gradient(
+        -45deg,
+        var(--paper) 30%,
+        var(--gold) 50%,
+        var(--paper) 70%
+      );
+      background-size: 300% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: textShimmer 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes textShimmer {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .problem-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+      .problem-card {
+        padding: 2rem;
+      }
+      .problem-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+    }
+    
     /* ==========================================================================
        7. RESPONSIVIDADE
        ========================================================================== */
@@ -601,7 +769,7 @@
           <div class="eyebrow gs-reveal">1234 Solution . Estratégia, Gestão e Governança</div>
           <h1 class="headline">
             <div class="gs-reveal-split">Ativos bem geridos não são sorte.</div>
-            <div class="gs-reveal-split gold-italic">São método.</div>
+            <div class="gs-reveal-split gold-italic">São métodos.</div>
           </h1>
           <p class="subheadline gs-reveal">
             Sou Adalberto Chagas, fundador e CEO da 1234 Solution. Em mais de 30 anos, transformei infraestrutura em resultado, hoje ajudando concessionárias de saneamento, autarquias, indústrias de capital intensivo e empresas de infraestrutura, reguladas ou não, a comprovar investimentos, blindar processos de auditoria e revisão tarifária, e tomar decisões mais inteligentes sobre seus ativos.
@@ -692,6 +860,73 @@
     </div>
   </template>
 
+  <!-- ==========================================================================
+       DOBRA: O PROBLEMA
+       ========================================================================== -->
+  <section class="section-problem" id="problema">
+    <div class="max-w">
+      
+      <div class="problem-header gs-reveal">
+        <div class="eyebrow">O problema</div>
+        <h2 class="problem-title">Quanto do seu patrimônio você consegue comprovar sob pressão?</h2>
+        <p class="problem-lede">No setor regulado, a pressão vem da agência. Na indústria, vem da auditoria, da seguradora ou do conselho. O risco por trás é o mesmo: ativo que existe, mas não está comprovado do jeito que alguém vai exigir.</p>
+      </div>
+
+      <div class="problem-grid gs-reveal-stagger">
+        
+        <!-- Card 01 -->
+        <div class="problem-card interactive">
+          <div class="problem-card-header">
+            <div class="problem-icon-wrapper">
+              <img src="img/icon-3.jpg" alt="Risco de glosa" loading="lazy">
+            </div>
+            <h3 class="problem-card-title">Risco de glosa ou de auditoria</h3>
+          </div>
+          <p class="problem-card-desc">Em saneamento e infraestrutura regulada, CAPEX que a ARSESP e a ANA podem não reconhecer na Base de Remuneração Regulatória. Em outras indústrias, o mesmo gap aparece em auditorias, seguros e certificações como ISO 55.000.</p>
+        </div>
+
+        <!-- Card 02 -->
+        <div class="problem-card interactive">
+          <div class="problem-card-header">
+            <div class="problem-icon-wrapper">
+              <img src="img/icon-2.jpg" alt="Ativos ocultos" loading="lazy">
+            </div>
+            <h3 class="problem-card-title">Ativos ocultos</h3>
+          </div>
+          <p class="problem-card-desc">Redes enterradas, equipamentos legados, instalações antigas que ninguém documentou direito. Sem mapeamento e valoração, esse patrimônio não sustenta indenização, seguro nem composição de custo.</p>
+        </div>
+
+        <!-- Card 03 -->
+        <div class="problem-card interactive">
+          <div class="problem-card-header">
+            <div class="problem-icon-wrapper">
+              <img src="img/icon-1.jpg" alt="Dado fragmentado" loading="lazy">
+            </div>
+            <h3 class="problem-card-title">Dado fragmentado</h3>
+          </div>
+          <p class="problem-card-desc">A engenharia usa um sistema, a contabilidade usa outro. Cada auditoria ou revisão tarifária vira uma corrida para reconciliar planilhas que deveriam falar a mesma língua.</p>
+        </div>
+
+        <!-- Card 04 -->
+        <div class="problem-card interactive">
+          <div class="problem-card-header">
+            <div class="problem-icon-wrapper">
+              <img src="img/icon-4.jpg" alt="Pressão normativa constante" loading="lazy">
+            </div>
+            <h3 class="problem-card-title">Pressão normativa constante</h3>
+          </div>
+          <p class="problem-card-desc">Resoluções de agências ou normas internas de compliance mudam mais rápido do que a equipe consegue se atualizar. Ficar em conformidade virou trabalho em tempo integral.</p>
+        </div>
+
+      </div>
+
+      <div class="problem-footer gs-reveal">
+        <p class="problem-bridge">Se alguma dessas situações é familiar, você já sabe o tamanho do risco que carrega.</p>
+      </div>
+
+    </div>
+  </section>
+
   <!-- Bibliotecas JS via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -763,38 +998,89 @@
 
       // Ocultar imediatamente para evitar 'flash' antes das fontes carregarem
       gsap.set('.gs-reveal', { y: 30, opacity: 0 });
-      gsap.set('.gs-reveal-video', { x: 30, opacity: 0 });
-      gsap.set('.gs-reveal-stagger .stat-card', { y: 30, opacity: 0 });
-      gsap.set('.gs-reveal-split', { opacity: 0 });
+      gsap.set('.hero-section .gs-reveal-video', { x: 30, opacity: 0 });
+      gsap.set('.gs-reveal-stagger > *', { y: 30, opacity: 0 });
+      gsap.set('.hero-section .gs-reveal-split', { opacity: 0 });
 
       // Aguarda as fontes carregarem para que o SplitType calcule as larguras corretamente!
       document.fonts.ready.then(() => {
-        const splitHeadline = new SplitType('.gs-reveal-split', { types: 'lines, words', tagName: 'span' });
+        const splitHeadline = new SplitType('.hero-section .gs-reveal-split', { types: 'lines, words', tagName: 'span' });
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
         // Prepara as linhas separadas para animação
         gsap.set(splitHeadline.lines, { overflow: 'hidden' });
         gsap.set(splitHeadline.words, { y: '100%' });
-        gsap.set('.gs-reveal-split', { opacity: 1 }); // Revela o container (palavras estão invisíveis pelo y: 100%)
+        gsap.set('.hero-section .gs-reveal-split', { opacity: 1 }); // Revela o container
 
-        // Timeline
-        tl.to('.eyebrow', { y: 0, opacity: 1, duration: 0.8, delay: 0.1 })
+        // Timeline da Hero Section
+        tl.to('.hero-section .eyebrow', { y: 0, opacity: 1, duration: 0.8, delay: 0.1 })
           .to(splitHeadline.words, {
             y: '0%',
             duration: 0.8,
             stagger: 0.04,
             ease: "power4.out"
           }, "-=0.5")
-          .to('.subheadline', { y: 0, opacity: 1, duration: 0.8 }, "-=0.6")
+          .to('.hero-section .subheadline', { y: 0, opacity: 1, duration: 0.8 }, "-=0.6")
           .to('.hero-actions', { y: 0, opacity: 1, duration: 0.8 }, "-=0.6")
           .to('.gs-reveal-video', { x: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.8")
-          .to('.gs-reveal-stagger .stat-card', {
+          .to('.hero-stats-wrapper .stat-card', {
             y: 0,
             opacity: 1,
             duration: 0.8,
             stagger: 0.1
           }, "-=0.6")
           .to('.hero-marquee-wrapper', { y: 0, opacity: 1, duration: 0.8 }, "-=0.6");
+
+        // ScrollTriggers para o restante da página (Seção Problema, etc)
+        gsap.utils.toArray('section:not(.hero-section) .gs-reveal').forEach(function(elem) {
+          ScrollTrigger.create({
+            trigger: elem,
+            start: "top 85%",
+            onEnter: function() {
+              gsap.to(elem, {y: 0, opacity: 1, duration: 0.8, ease: "power3.out"});
+            },
+            once: true
+          });
+        });
+
+        gsap.utils.toArray('section:not(.hero-section) .gs-reveal-stagger').forEach(function(elem) {
+          ScrollTrigger.create({
+            trigger: elem,
+            start: "top 85%",
+            onEnter: function() {
+              gsap.to(elem.children, {y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out"});
+            },
+            once: true
+          });
+        });
+
+        // Efeito Parallax Real (Scrub) para a Seção Problema
+        if (window.matchMedia("(min-width: 769px)").matches) {
+          // Parallax focado no Título e Lede
+          gsap.to('.problem-title', {
+            y: 60, // Efeito de profundidade (move na direção oposta ao scroll)
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".section-problem",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1
+            }
+          });
+          
+          gsap.to('.problem-lede', {
+            y: 30, // Mais sutil que o título para criar separação de camadas
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".section-problem",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1
+            }
+          });
+
+          // As caixas permanecem perfeitamente alinhadas no grid (sem offset de parallax entre elas)
+        }
       });
     });
   </script>
