@@ -1,1115 +1,2065 @@
 <!DOCTYPE html>
 <html class="scroll-smooth" lang="en">
-
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Aura Design System v2.0</title>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Design System · Liquid Glass</title>
+  <meta name="description" content="A comprehensive design system combining Liquid Glass aesthetics, motion principles, and premium UI components."/>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+  <!-- Iconify -->
+  <script src="templates/glass-effect2/assets/iconify_654a1ef798a3.js"></script>
+  <!-- Tailwind CDN -->
+  <script src="templates/glass-effect2/assets/resource_3fa48481346f.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 
-    <!-- External CSS Dependencies (Relative paths from assets/) -->
-    <link href="templates/digital-architect.aura.build/assets/css2_19fd9cc6b396.css" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — ROOT VARIABLES
+    ============================================================ */
+    :root {
+      /* Cursor sizes */
+      --cursor-size: 18px;
+      --cursor-hover-size: 80px;
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                        display: ['Space Grotesk', 'sans-serif'],
-                    },
-                    colors: {
-                        stone: {
-                            50: '#fafaf9',
-                            100: '#f5f5f4',
-                            200: '#e7e5e4',
-                            300: '#d6d3d1',
-                            400: '#a8a29e',
-                            500: '#78716c',
-                            600: '#57534e',
-                            700: '#44403c',
-                            800: '#292524',
-                            900: '#1c1917',
-                        },
-                        'surface-light': '#EAEAE5',
-                    },
-                    animation: {
-                        'spin-slow': 'spin 8s linear infinite',
-                        'shimmer': 'shimmer 2s linear infinite',
-                    },
-                    keyframes: {
-                        shimmer: {
-                            from: {
-                                backgroundPosition: '0 0'
-                            },
-                            to: {
-                                backgroundPosition: '-200% 0'
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+      /* === COLOR PALETTE ===
+         Primary:   #007BFF  — Electric Blue
+         Secondary: #6C3CF7  — Deep Violet
+         Accent:    #00C6FF  — Cyan Spark
+         Neutral:   #050A14  — Abyss
+         Feedback:  #22C55E / #EF4444 / #F59E0B
+      */
+      --color-primary:       #007BFF;         /* hsl(211,100%,50%) */
+      --color-primary-rgb:   0,123,255;
+      --color-secondary:     #6C3CF7;         /* hsl(255,90%,60%) */
+      --color-secondary-rgb: 108,60,247;
+      --color-accent:        #00C6FF;         /* hsl(196,100%,50%) */
+      --color-accent-rgb:    0,198,255;
+      --color-success:       #22C55E;
+      --color-danger:        #EF4444;
+      --color-warning:       #F59E0B;
 
-    <style>
-        /* BASE STYLES & OVERRIDES */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #EAEAE5;
-            color: #1C1C1C;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+      /* Backgrounds */
+      --bg-base:             #050A14;
+      --bg-surface:          rgba(255,255,255,0.03);
+      --bg-elevated:         rgba(255,255,255,0.06);
+      --bg-overlay:          rgba(5,10,20,0.85);
 
-        /* TYPOGRAPHY UTILS */
-        .text-balance {
-            text-wrap: balance;
-        }
+      /* Borders */
+      --border-subtle:       rgba(255,255,255,0.07);
+      --border-default:      rgba(255,255,255,0.12);
+      --border-strong:       rgba(255,255,255,0.25);
+      --border-primary:      rgba(0,123,255,0.4);
 
-        /* REVEAL ANIMATIONS */
-        .reveal {
-            opacity: 0;
-            transform: translateY(2rem);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+      /* Text */
+      --text-primary:        #FFFFFF;
+      --text-secondary:      rgba(255,255,255,0.7);
+      --text-muted:          rgba(255,255,255,0.4);
+      --text-disabled:       rgba(255,255,255,0.2);
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+      /* Typography scale */
+      --font-heading:        'Montserrat', 'Prompt', sans-serif;
+      --font-body:           'Open Sans', 'Prompt', sans-serif;
+      --font-mono:           'Space Mono', monospace;
 
-        /* TEXT MASK REVEAL */
-        .text-reveal-wrapper {
-            overflow: hidden;
-            display: inline-block;
-            vertical-align: bottom;
-        }
+      --text-xs:   0.75rem;    /* 12px */
+      --text-sm:   0.875rem;   /* 14px */
+      --text-base: 1rem;       /* 16px */
+      --text-lg:   1.125rem;   /* 18px */
+      --text-xl:   1.25rem;    /* 20px */
+      --text-2xl:  1.5rem;     /* 24px */
+      --text-3xl:  1.875rem;   /* 30px */
+      --text-4xl:  2.25rem;    /* 36px */
+      --text-5xl:  3rem;       /* 48px */
+      --text-6xl:  3.75rem;    /* 60px */
+      --text-7xl:  4.5rem;     /* 72px */
+      --text-8xl:  6rem;       /* 96px */
 
-        .text-reveal-content {
-            transform: translateY(110%);
-            opacity: 0;
-            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
-            display: block;
-        }
+      /* Spacing scale (base-8) */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --space-24: 6rem;
 
-        .reveal-active .text-reveal-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
+      /* Radius */
+      --radius-sm:  4px;
+      --radius-md:  8px;
+      --radius-lg:  12px;
+      --radius-xl:  16px;
+      --radius-2xl: 24px;
+      --radius-full: 9999px;
 
-        /* DELAYS */
-        .delay-100 {
-            transition-delay: 0.1s;
-        }
+      /* Shadows / glow */
+      --glow-primary:   0 0 40px rgba(0,123,255,0.35);
+      --glow-secondary: 0 0 40px rgba(108,60,247,0.35);
+      --glow-accent:    0 0 40px rgba(0,198,255,0.35);
+      --shadow-card:    0 8px 32px rgba(0,0,0,0.4);
+      --shadow-lg:      0 20px 60px rgba(0,0,0,0.5);
 
-        .delay-200 {
-            transition-delay: 0.2s;
-        }
+      /* Transitions */
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-spring: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
 
-        .delay-300 {
-            transition-delay: 0.3s;
-        }
+    /* ============================================================
+       BASE RESET & TYPOGRAPHY
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .delay-500 {
-            transition-delay: 0.5s;
-        }
+    html { scroll-behavior: smooth; }
 
-        .delay-700 {
-            transition-delay: 0.7s;
-        }
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      cursor: none;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
 
-        /* BEAM BUTTON ANIMATION */
-        @keyframes borderRotate {
-            100% {
-                background-position: 0% 50%;
-            }
-        }
+    h1, h2, h3, h4, h5, h6, .font-heading {
+      font-family: var(--font-heading);
+    }
 
-        .btn-beam {
-            position: relative;
-            z-index: 10;
-            overflow: hidden;
-        }
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
 
-        .btn-beam::before {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            z-index: -1;
-            background: conic-gradient(from 90deg at 50% 50%, #E2E8F0 0%, #000000 50%, #E2E8F0 100%);
-            animation: spin 4s linear infinite;
-            border-radius: inherit;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
+    /* ============================================================
+       CUSTOM CURSOR
+    ============================================================ */
+    #cursor {
+      position: fixed; top: 0; left: 0;
+      width: var(--cursor-size); height: var(--cursor-size);
+      background: white; border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s var(--ease-smooth),
+                  height 0.3s var(--ease-smooth),
+                  background-color 0.3s,
+                  opacity 0.3s;
+      mix-blend-mode: overlay;
+      backdrop-filter: blur(2px);
+    }
+    #cursor.hovered {
+      width: var(--cursor-hover-size); height: var(--cursor-hover-size);
+      opacity: 0.5;
+      background-color: rgba(var(--color-primary-rgb), 0.5);
+      mix-blend-mode: normal;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
 
-        .btn-beam:hover::before {
-            opacity: 1;
-        }
+    /* ============================================================
+       NOISE OVERLAY
+    ============================================================ */
+    .noise-overlay {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 60; opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
 
-        .btn-beam-content {
-            background-color: #1c1917;
-            color: white;
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            height: 100%;
-            border-radius: inherit;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+    /* ============================================================
+       AMBIENT LIQUID BLOBS (background animation)
+    ============================================================ */
+    .liquid-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: -1;
+      animation: blob-float 12s infinite alternate var(--ease-smooth);
+    }
+    @keyframes blob-float {
+      0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50%  { transform: translate(20px, 30px) scale(1.08) rotate(5deg); }
+      100% { transform: translate(40px, 60px) scale(1.14) rotate(-3deg); }
+    }
 
-        /* FLASHLIGHT EFFECT */
-        .flashlight-card {
-            background: rgba(255, 255, 255, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
+    /* ============================================================
+       GLASS PANEL — Core Component
+    ============================================================ */
+    .glass-panel {
+      background: var(--bg-surface);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-top:    1px solid rgba(255,255,255,0.15);
+      border-left:   1px solid rgba(255,255,255,0.08);
+      border-right:  1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s var(--ease-spring);
+    }
+    .glass-panel::before {
+      content: '';
+      position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+      transition: 0.6s var(--ease-smooth);
+      pointer-events: none; z-index: 2;
+    }
+    .glass-panel:hover {
+      background: var(--bg-elevated);
+      border-color: rgba(255,255,255,0.22);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(var(--color-primary-rgb),0.12), var(--shadow-card);
+    }
+    .glass-panel:hover::before { left: 100%; }
 
-        .flashlight-card::before {
-            content: "";
-            position: absolute;
-            inset: 0px;
-            background: radial-gradient(600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
-                    rgba(255, 255, 255, 0.8),
-                    transparent 40%);
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-            z-index: 2;
-        }
+    /* ============================================================
+       REVEAL ON SCROLL
+    ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.9s var(--ease-spring), transform 0.9s var(--ease-spring);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+    .reveal-delay-6 { transition-delay: 0.6s; }
 
-        .flashlight-card:hover::before {
-            opacity: 1;
-        }
+    /* ============================================================
+       SPLIT LINE TEXT ANIMATION (hero lettering)
+    ============================================================ */
+    .split-line { overflow: hidden; display: block; }
+    .split-line span {
+      display: block;
+      transform: translateY(110%);
+      transition: transform 1.3s var(--ease-spring);
+    }
+    .hero-revealed .split-line span { transform: translateY(0); }
+    .split-delay-1 span { transition-delay: 0.05s; }
+    .split-delay-2 span { transition-delay: 0.15s; }
+    .split-delay-3 span { transition-delay: 0.25s; }
+    .split-delay-4 span { transition-delay: 0.35s; }
+    .split-delay-5 span { transition-delay: 0.45s; }
 
-        /* MARQUEE */
-        @keyframes marquee {
-            0% {
-                transform: translateX(0);
-            }
+    /* ============================================================
+       HERO — FADE-IN SEQUENCE
+    ============================================================ */
+    .hero-meta {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s var(--ease-spring), transform 0.8s var(--ease-spring);
+    }
+    .hero-revealed .hero-meta { opacity: 1; transform: translateY(0); }
+    .hero-meta-1 { transition-delay: 0.55s; }
+    .hero-meta-2 { transition-delay: 0.7s; }
+    .hero-meta-3 { transition-delay: 0.85s; }
 
-            100% {
-                transform: translateX(-50%);
-            }
-        }
+    /* ============================================================
+       MARQUEE / MOTION BANNER
+    ============================================================ */
+    .marquee-container { overflow: hidden; mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent); }
+    .marquee-track { display: flex; width: max-content; animation: marquee-run 30s linear infinite; }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee-run { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .animate-marquee {
-            display: flex;
-            width: max-content;
-            animation: marquee 30s linear infinite;
-        }
+    /* ============================================================
+       BEAM BORDER ANIMATIONS (canvas-visual inspired)
+    ============================================================ */
+    .beam-border-v {
+      position: absolute; top: 0; bottom: 0; left: 0; width: 1px;
+      background: rgba(255,255,255,0.05); overflow: hidden; z-index: 5;
+    }
+    .beam-border-v::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent, var(--color-primary), transparent);
+      transform: translateY(-100%);
+      animation: beam-drop 6s var(--ease-smooth) infinite;
+    }
+    .beam-border-h {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: rgba(255,255,255,0.05); overflow: hidden; z-index: 5;
+    }
+    .beam-border-h::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent, var(--color-accent), transparent);
+      transform: translateX(-100%);
+      animation: beam-slide 8s var(--ease-smooth) infinite 3s;
+    }
+    @keyframes beam-drop {
+      0% { transform: translateY(-100%); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(100%); opacity: 0; }
+    }
+    @keyframes beam-slide {
+      0% { transform: translateX(-100%); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateX(100%); opacity: 0; }
+    }
 
-        /* GRID BACKGROUND */
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image:
-                linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-        }
+    /* ============================================================
+       GLOW PULSE — repeatable background accent
+    ============================================================ */
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.15; }
+      50%       { opacity: 0.4; }
+    }
+    .glow-ring {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle, var(--color-primary), transparent 70%);
+      animation: glow-pulse 4s ease-in-out infinite;
+      pointer-events: none;
+    }
 
-        /* NOISE GRAIN */
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.04;
-            pointer-events: none;
-            z-index: 9999;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
+    /* ============================================================
+       SPINNING CONIC BORDER (finex-inspired button border)
+    ============================================================ */
+    @keyframes conic-spin { to { transform: rotate(360deg); } }
 
-        /* CUSTOM SCROLLBAR */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
+    /* ============================================================
+       LINES SLIDE (finex button inner shimmer)
+    ============================================================ */
+    @keyframes lines-slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-        ::-webkit-scrollbar-track {
-            background: #EAEAE5;
-        }
+    /* ============================================================
+       GRID BACKGROUND PATTERN
+    ============================================================ */
+    .grid-bg {
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
 
-        ::-webkit-scrollbar-thumb {
-            background: #d6d3d1;
-            border-radius: 4px;
-        }
+    /* ============================================================
+       DS SECTION STYLING
+    ============================================================ */
+    .ds-section { padding: 7rem 0; position: relative; overflow: hidden; }
+    .ds-section + .ds-section::before {
+      content: '';
+      position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+    }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a8a29e;
-        }
-    </style>
+    .ds-section-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--color-primary);
+      margin-bottom: 0.5rem;
+    }
+    .ds-section-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-4xl);
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ============================================================
+       BUTTON SYSTEM
+    ============================================================ */
+    /* btn-primary — main CTA with conic spinning border */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 0.5rem; position: relative; overflow: hidden;
+      font-family: var(--font-heading); font-weight: 700;
+      font-size: var(--text-sm); letter-spacing: 0.06em;
+      text-transform: uppercase; text-decoration: none;
+      border: none; cursor: pointer;
+      transition: transform 0.3s var(--ease-elastic), box-shadow 0.3s;
+    }
+    .btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+
+    .btn-primary {
+      padding: 0.9rem 2.2rem;
+      border-radius: var(--radius-full);
+      color: white;
+      background: transparent;
+    }
+    .btn-primary .btn-inner-track {
+      position: absolute; inset: 0;
+      z-index: -1; border-radius: inherit; overflow: hidden; padding: 1px;
+    }
+    .btn-primary .btn-conic {
+      position: absolute; inset: -100%;
+      background: conic-gradient(from 0deg, transparent 0deg 270deg, var(--color-primary) 360deg);
+      animation: conic-spin 3s linear infinite;
+    }
+    .btn-primary .btn-bg {
+      position: absolute; inset: 1px; border-radius: inherit;
+      background: #070E1C;
+      overflow: hidden;
+    }
+    .btn-primary .btn-shimmer {
+      position: absolute; inset: 0;
+      opacity: 0.06; mix-blend-mode: plus-lighter;
+      background-image: repeating-linear-gradient(90deg, #fff, #fff 1px, transparent 1px, transparent 8px);
+      background-size: 24px 100%;
+      animation: lines-slide 1.8s linear infinite;
+    }
+    .btn-primary .btn-glow {
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 70%; height: 60%;
+      background: rgba(var(--color-primary-rgb), 0.2); blur: 24px;
+      border-radius: 50%; transition: background 0.4s;
+    }
+    .btn-primary:hover { transform: scale(1.03); box-shadow: var(--glow-primary); }
+    .btn-primary:hover .btn-glow { background: rgba(var(--color-primary-rgb), 0.45); }
+    .btn-primary:active { transform: scale(0.97); }
+    .btn-primary .btn-label { position: relative; z-index: 2; }
+
+    /* btn-ghost */
+    .btn-ghost {
+      padding: 0.85rem 2rem;
+      border-radius: var(--radius-full);
+      color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(255,255,255,0.28);
+      color: white;
+      transform: scale(1.02);
+    }
+
+    /* btn-outline-glow */
+    .btn-outline-glow {
+      padding: 0.85rem 2rem;
+      border-radius: var(--radius-full);
+      color: var(--color-primary);
+      background: rgba(var(--color-primary-rgb), 0.06);
+      border: 1px solid rgba(var(--color-primary-rgb), 0.4);
+    }
+    .btn-outline-glow:hover {
+      background: rgba(var(--color-primary-rgb), 0.12);
+      border-color: var(--color-primary);
+      box-shadow: var(--glow-primary);
+      transform: scale(1.02);
+    }
+
+    /* btn-icon */
+    .btn-icon {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: white;
+      transition: all 0.3s var(--ease-smooth);
+    }
+    .btn-icon:hover {
+      background: rgba(var(--color-primary-rgb), 0.15);
+      border-color: rgba(var(--color-primary-rgb), 0.5);
+      box-shadow: var(--glow-primary);
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    /* ============================================================
+       INPUT SYSTEM
+    ============================================================ */
+    .input-group { position: relative; margin-bottom: 1.5rem; }
+    .input-group input, .input-group textarea, .input-group select {
+      width: 100%; background: rgba(255,255,255,0.04);
+      border: none; border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding: 12px 0; color: white;
+      font-family: var(--font-body); font-size: var(--text-base);
+      outline: none;
+      transition: border-color 0.3s var(--ease-smooth);
+    }
+    .input-group label {
+      position: absolute; top: 12px; left: 0;
+      color: rgba(255,255,255,0.45);
+      pointer-events: none;
+      transition: all 0.3s var(--ease-smooth);
+      font-size: var(--text-sm); font-family: var(--font-body);
+    }
+    .input-group input:focus, .input-group textarea:focus {
+      border-bottom-color: var(--color-primary);
+    }
+    .input-group input:focus ~ label,
+    .input-group input:not(:placeholder-shown) ~ label,
+    .input-group textarea:focus ~ label,
+    .input-group textarea:not(:placeholder-shown) ~ label {
+      top: -14px; font-size: var(--text-xs);
+      color: var(--color-primary); letter-spacing: 0.08em;
+    }
+    /* Glass input variant */
+    .input-glass {
+      background: rgba(255,255,255,0.06) !important;
+      border: 1px solid rgba(255,255,255,0.12) !important;
+      border-radius: var(--radius-lg) !important;
+      padding: 14px 16px !important;
+      color: white !important;
+      font-family: var(--font-body) !important;
+      outline: none !important;
+      width: 100% !important;
+      backdrop-filter: blur(8px);
+      transition: border-color 0.3s, box-shadow 0.3s !important;
+    }
+    .input-glass:focus {
+      border-color: rgba(var(--color-primary-rgb), 0.6) !important;
+      box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.12) !important;
+    }
+
+    /* ============================================================
+       CARD SYSTEM
+    ============================================================ */
+    .card-feature {
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      position: relative; overflow: hidden;
+      transition: all 0.5s var(--ease-spring);
+    }
+    .card-feature::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(var(--color-primary-rgb),0.08), transparent 60%);
+      opacity: 0; transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .card-feature:hover::after { opacity: 1; }
+    .card-feature:hover {
+      border-color: rgba(var(--color-primary-rgb), 0.35);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(var(--color-primary-rgb), 0.1);
+      transform: translateY(-6px) scale(1.01);
+    }
+
+    .card-stat {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      transition: all 0.4s var(--ease-smooth);
+    }
+    .card-stat:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(var(--color-primary-rgb), 0.3);
+      transform: translateY(-4px);
+    }
+
+    /* ============================================================
+       BADGE / CHIP SYSTEM
+    ============================================================ */
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-family: var(--font-mono);
+      font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .badge-primary { background: rgba(var(--color-primary-rgb),0.15); color: var(--color-primary); border: 1px solid rgba(var(--color-primary-rgb),0.3); }
+    .badge-secondary { background: rgba(var(--color-secondary-rgb),0.15); color: #A78BFA; border: 1px solid rgba(var(--color-secondary-rgb),0.3); }
+    .badge-accent { background: rgba(var(--color-accent-rgb),0.1); color: var(--color-accent); border: 1px solid rgba(var(--color-accent-rgb),0.3); }
+    .badge-success { background: rgba(34,197,94,0.12); color: #4ADE80; border: 1px solid rgba(34,197,94,0.3); }
+    .badge-danger { background: rgba(239,68,68,0.12); color: #F87171; border: 1px solid rgba(239,68,68,0.3); }
+    .badge-neutral { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.1); }
+    .badge .badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: currentColor;
+      animation: glow-pulse 2s infinite;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #ds-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      padding: 1rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(5,10,20,0.75);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    #ds-nav.scrolled {
+      background: rgba(5,10,20,0.95);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+    }
+    .nav-logo {
+      font-family: var(--font-heading); font-weight: 800;
+      font-size: 1.05rem; letter-spacing: -0.02em; color: white;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .nav-logo .logo-icon {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: var(--color-primary);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 18px rgba(var(--color-primary-rgb), 0.5);
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-mono); font-size: var(--text-xs);
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.5); text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: white; }
+
+    /* ============================================================
+       TOOLTIP
+    ============================================================ */
+    .tooltip-wrapper { position: relative; display: inline-flex; }
+    .tooltip-wrapper .tooltip-box {
+      position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(6px);
+      background: rgba(15,20,35,0.95);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-md);
+      padding: 0.5rem 0.85rem;
+      font-size: var(--text-xs); font-family: var(--font-mono);
+      color: rgba(255,255,255,0.85); white-space: nowrap;
+      pointer-events: none; opacity: 0;
+      transition: opacity 0.25s, transform 0.25s var(--ease-spring);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      z-index: 300;
+    }
+    .tooltip-wrapper .tooltip-box::after {
+      content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba(255,255,255,0.12);
+    }
+    .tooltip-wrapper:hover .tooltip-box {
+      opacity: 1; transform: translateX(-50%) translateY(0);
+    }
+
+    /* ============================================================
+       MODAL
+    ============================================================ */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(5,10,20,0.8);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.35s, visibility 0.35s;
+    }
+    .modal-backdrop.open { opacity: 1; visibility: visible; }
+    .modal-panel {
+      background: rgba(12,22,42,0.92);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-2xl);
+      padding: 2.5rem;
+      max-width: 540px; width: 90%;
+      position: relative; overflow: hidden;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.4s var(--ease-spring);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.7);
+    }
+    .modal-backdrop.open .modal-panel { transform: scale(1) translateY(0); }
+    .modal-close {
+      position: absolute; top: 1.25rem; right: 1.25rem;
+      background: rgba(255,255,255,0.06); border: none;
+      color: rgba(255,255,255,0.5); width: 32px; height: 32px;
+      border-radius: 50%; cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .modal-close:hover { background: rgba(239,68,68,0.2); color: #F87171; }
+
+    /* ============================================================
+       SECTION DIVIDER WITH ANIMATED LINE
+    ============================================================ */
+    .section-divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(to right, transparent, rgba(var(--color-primary-rgb),0.4), rgba(var(--color-accent-rgb),0.4), transparent);
+      position: relative; overflow: hidden;
+    }
+    .section-divider::after {
+      content: '';
+      position: absolute; top: 0; left: -30%; width: 30%; height: 100%;
+      background: linear-gradient(to right, transparent, white, transparent);
+      animation: scan-line 4s linear infinite;
+    }
+    @keyframes scan-line { to { left: 130%; } }
+
+    /* ============================================================
+       COLOR SWATCHES
+    ============================================================ */
+    .swatch-card {
+      border-radius: var(--radius-lg); overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.3s var(--ease-elastic), box-shadow 0.3s;
+    }
+    .swatch-card:hover { transform: scale(1.04) translateY(-3px); box-shadow: var(--shadow-lg); }
+    .swatch-block { height: 100px; }
+    .swatch-info { padding: 0.85rem 1rem; background: rgba(255,255,255,0.04); }
+    .swatch-name { font-family: var(--font-heading); font-weight: 600; font-size: var(--text-sm); }
+    .swatch-value { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); }
+
+    /* ============================================================
+       FLOATING TAG ANIMATION (hero decorative elements)
+    ============================================================ */
+    @keyframes float-tag-1 {
+      0%, 100% { transform: translateY(0px) rotate(-2deg); }
+      50%       { transform: translateY(-12px) rotate(1deg); }
+    }
+    @keyframes float-tag-2 {
+      0%, 100% { transform: translateY(0px) rotate(2deg); }
+      50%       { transform: translateY(-8px) rotate(-1deg); }
+    }
+    @keyframes float-tag-3 {
+      0%, 100% { transform: translateY(0px) rotate(-1deg); }
+      50%       { transform: translateY(-16px) rotate(2deg); }
+    }
+    .float-tag-1 { animation: float-tag-1 6s ease-in-out infinite; }
+    .float-tag-2 { animation: float-tag-2 8s ease-in-out infinite 1s; }
+    .float-tag-3 { animation: float-tag-3 7s ease-in-out infinite 2s; }
+
+    /* ============================================================
+       PROGRESS / LOADING BARS
+    ============================================================ */
+    .progress-bar {
+      width: 100%; height: 4px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 99px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; border-radius: 99px;
+      background: linear-gradient(to right, var(--color-primary), var(--color-accent));
+      transform-origin: left;
+      animation: progress-grow 2s var(--ease-spring) forwards;
+    }
+    @keyframes progress-grow { from { width: 0; } }
+
+    /* ============================================================
+       ICON GRID HOVER
+    ============================================================ */
+    .icon-cell {
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      padding: 1rem; border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: all 0.3s var(--ease-spring);
+      cursor: pointer;
+    }
+    .icon-cell:hover {
+      background: rgba(var(--color-primary-rgb),0.1);
+      border-color: rgba(var(--color-primary-rgb),0.4);
+      transform: translateY(-4px) scale(1.06);
+      box-shadow: var(--glow-primary);
+    }
+    .icon-cell:hover .icon-label { color: var(--color-primary); }
+    .icon-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.08em; text-align: center; }
+
+    /* ============================================================
+       ANIMATION DEMOS
+    ============================================================ */
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    @keyframes morph-blob {
+      0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+      50%       { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+    }
+    @keyframes radar-pulse { 0% { transform: scale(1); opacity: 0.6; } 100% { transform: scale(2.5); opacity: 0; } }
+    @keyframes blink-cursor { 50% { opacity: 0; } }
+    @keyframes shake {
+      10%, 90%  { transform: translate3d(-1px, 0, 0); }
+      20%, 80%  { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60%  { transform: translate3d(4px, 0, 0); }
+    }
+    @keyframes draw-check {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes bounce-y {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .anim-demo-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-xl);
+      padding: 2rem; height: 160px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0.75rem;
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .anim-demo-card:hover { border-color: rgba(var(--color-primary-rgb),0.35); }
+    .anim-demo-label {
+      position: absolute; bottom: 12px;
+      font-size: 9px; font-family: var(--font-mono); text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--text-muted);
+    }
+
+    /* ============================================================
+       PARALLAX HELPER
+    ============================================================ */
+    .parallax-element { will-change: transform; }
+
+    /* ============================================================
+       UTILITY
+    ============================================================ */
+    .text-gradient {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .text-gradient-warm {
+      background: linear-gradient(135deg, #A78BFA, var(--color-primary), var(--color-accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .cursor-hover { /* marker class for cursor interaction */ }
+    .max-w-screen-xl { max-width: 1280px; margin-inline: auto; padding-inline: 2rem; }
+
+    /* ============================================================
+       SECTION — BG VARIANTS
+    ============================================================ */
+    .bg-section-alt {
+      background: radial-gradient(ellipse at 50% 0%, rgba(var(--color-secondary-rgb),0.08) 0%, transparent 60%);
+    }
+    .bg-section-accent {
+      background: radial-gradient(ellipse at 100% 50%, rgba(var(--color-accent-rgb),0.07) 0%, transparent 60%);
+    }
+
+    /* ============================================================
+       RESPONSIVE GRID UTILITIES
+    ============================================================ */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    @media (max-width: 1024px) { .grid-4 { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 768px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .ds-section-title { font-size: var(--text-3xl); }
+      .nav-links { display: none; }
+      #ds-nav { padding: 0.8rem 1.25rem; }
+    }
+  </style>
 </head>
 
-<body class="antialiased min-h-screen selection:bg-stone-800 selection:text-white pb-20 relative">
+<body class="text-white">
+  <!-- ============================================================
+       CUSTOM CURSOR
+  ============================================================ -->
+  <div id="cursor"></div>
 
-    <div class="noise"></div>
+  <!-- ============================================================
+       NOISE OVERLAY
+  ============================================================ -->
+  <div class="noise-overlay"></div>
 
-    <!-- MAIN WRAPPER -->
-    <div class="max-w-[1440px] mx-auto border-x border-stone-300 relative bg-[#EAEAE5] shadow-2xl shadow-stone-200">
+  <!-- ============================================================
+       LIQUID BACKGROUND
+  ============================================================ -->
+  <div style="position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:-1;">
+    <div class="liquid-blob" style="width:600px;height:600px;top:-120px;left:-120px;background:#007BFF;opacity:0.18;animation-duration:18s;"></div>
+    <div class="liquid-blob" style="width:500px;height:500px;top:40%;right:-100px;background:#6C3CF7;opacity:0.14;animation-duration:22s;animation-delay:-6s;"></div>
+    <div class="liquid-blob" style="width:700px;height:700px;bottom:-150px;left:25%;background:#00C6FF;opacity:0.1;animation-duration:28s;animation-delay:-12s;"></div>
+    <div class="liquid-blob" style="width:350px;height:350px;top:55%;left:10%;background:#6C3CF7;opacity:0.1;animation-duration:20s;animation-delay:-4s;"></div>
+    <div class="grid-bg" style="position:absolute;inset:0;"></div>
+  </div>
 
-        <!-- VERTICAL GRID LINES -->
-        <div
-            class="absolute inset-0 pointer-events-none grid grid-cols-1 md:grid-cols-12 gap-0 z-0 h-full w-full opacity-40">
-            <div class="hidden md:block md:col-span-1 border-r border-stone-300 h-full"></div>
-            <div class="hidden md:block md:col-span-1 border-r border-stone-300 h-full"></div>
-            <div class="hidden md:block md:col-span-1 border-r border-stone-300 h-full"></div>
-            <div class="hidden md:block md:col-span-1 border-r border-stone-300 h-full"></div>
-            <div class="hidden md:block md:col-span-1 border-r border-stone-300 h-full"></div>
-            <div class="hidden md:block md:col-span-1 border-r border-stone-300 h-full"></div>
-            <div class="hidden md:block md:col-span-1 border-r border-stone-300 h-full"></div>
-            <div class="hidden md:block md:col-span-1 border-r border-stone-300 h-full"></div>
-            <div class="hidden md:block md:col-span-1 border-r border-stone-300 h-full"></div>
-            <div class="hidden md:block md:col-span-1 border-r border-stone-300 h-full"></div>
-            <div class="hidden md:block md:col-span-1 border-r border-stone-300 h-full"></div>
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav id="ds-nav">
+    <a class="nav-logo cursor-hover" href="#hero">
+      <div class="logo-icon">
+        <span class="iconify" data-icon="lucide:layers" data-width="14" style="color:white;"></span>
+      </div>
+      Design System · Liquid Glass
+    </a>
+    <ul class="nav-links">
+      <li><a href="#typography">Typography</a></li>
+      <li><a href="#colors">Colors</a></li>
+      <li><a href="#components">Components</a></li>
+      <li><a href="#icons">Icons</a></li>
+      <li><a href="#animations">Animations</a></li>
+    </ul>
+    <div style="display:flex;gap:0.75rem;align-items:center;">
+      <span class="badge badge-primary"><span class="badge-dot"></span>v1.0</span>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       ① HERO — PRIMEIRA DOBRA
+  ============================================================ -->
+  <section id="hero" style="min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:80px;">
+
+    <!-- Beam decorations -->
+    <div class="beam-border-v" style="position:fixed;left:0;top:0;bottom:0;height:100vh;"></div>
+    <div class="beam-border-v" style="position:fixed;right:0;top:0;bottom:0;height:100vh;"></div>
+
+    <!-- Glow rings -->
+    <div class="glow-ring" style="width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.12;animation-duration:6s;"></div>
+    <div class="glow-ring" style="width:300px;height:300px;top:60%;right:15%;background:radial-gradient(circle,var(--color-secondary),transparent 70%);opacity:0.15;animation-duration:5s;animation-delay:2s;"></div>
+
+    <div class="max-w-screen-xl" style="width:100%;position:relative;z-index:10;">
+      <div style="max-width:900px;margin:0 auto;text-align:center;padding:3rem 0 2rem;">
+
+        <!-- Label pill -->
+        <div style="display:inline-flex;margin-bottom:2rem;" class="reveal reveal-delay-1">
+          <span style="
+            display:inline-flex;align-items:center;gap:0.5rem;
+            padding:0.45rem 1.1rem; border-radius:9999px;
+            border:1px solid rgba(255,255,255,0.12);
+            background:rgba(255,255,255,0.05);
+            backdrop-filter:blur(10px);
+            font-family:var(--font-mono); font-size:var(--text-xs);
+            color:rgba(255,255,255,0.7); letter-spacing:0.1em; text-transform:uppercase;
+          ">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--color-primary);animation:glow-pulse 2s infinite;display:inline-block;"></span>
+            Design System · Liquid Glass · v1.0
+          </span>
         </div>
 
-        <!-- 0. HERO DOBRA PRINCIPAL -->
-        <header
-            class="relative z-50 border-b border-stone-300 bg-white/50 backdrop-blur-md sticky top-0 transition-transform duration-500"
-            id="navbar">
-            <div class="flex justify-between items-center px-6 py-4">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-stone-900 text-white flex items-center justify-center rounded-sm">
-                        <iconify-icon icon="solar:cube-bold-duotone" class="text-xl"></iconify-icon>
-                    </div>
-                    <span class="font-display font-medium tracking-tight text-lg">AURA<span
-                            class="text-stone-400">.SYSTEM</span></span>
-                </div>
-                <nav
-                    class="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-stone-500">
-                    <a href="#typography" class="hover:text-stone-900 transition-colors">Typography</a>
-                    <a href="#colors" class="hover:text-stone-900 transition-colors">Colors</a>
-                    <a href="#components" class="hover:text-stone-900 transition-colors">Components</a>
-                    <a href="#motion" class="hover:text-stone-900 transition-colors">Motion</a>
-                </nav>
-                <button class="btn-beam px-1 py-1 rounded-full group">
-                    <div
-                        class="btn-beam-content px-5 py-2 rounded-full bg-stone-900 group-hover:bg-stone-800 text-xs font-mono uppercase tracking-widest transition-colors">
-                        Download Kit
-                    </div>
-                </button>
+        <!-- Main Headline -->
+        <h1 style="font-family:var(--font-heading);font-weight:900;font-size:clamp(3rem,9vw,7rem);line-height:0.95;letter-spacing:-0.04em;margin-bottom:1.5rem;text-transform:uppercase;">
+          <span class="split-line split-delay-1 parallax-element" data-parallax-speed="0.04">
+            <span>Visual</span>
+          </span>
+          <span class="split-line split-delay-2 parallax-element" data-parallax-speed="0.06" style="display:block;">
+            <span class="text-gradient">Design</span>
+          </span>
+          <span class="split-line split-delay-3 parallax-element" data-parallax-speed="0.08">
+            <span>Language</span>
+          </span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="hero-meta hero-meta-1" style="
+          font-size:clamp(1rem,2vw,1.3rem); color:rgba(255,255,255,0.55);
+          max-width:600px; margin:0 auto 2.5rem; line-height:1.7; font-weight:300;
+        ">
+          Uma linguagem visual completa — componentes, tokens, animações e princípios de tipografia que definem experiências premium.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="hero-meta hero-meta-2" style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem;">
+          <button class="btn btn-primary cursor-hover" onclick="document.getElementById('components').scrollIntoView({behavior:'smooth'})">
+            <div class="btn-inner-track">
+              <div class="btn-conic"></div>
+              <div class="btn-bg"><div class="btn-shimmer"></div><div class="btn-glow"></div></div>
             </div>
-        </header>
+            <span class="btn-label">Explorar Componentes</span>
+            <span class="iconify btn-label" data-icon="lucide:arrow-right" data-width="14"></span>
+          </button>
+          <button class="btn btn-ghost cursor-hover" onclick="document.getElementById('colors').scrollIntoView({behavior:'smooth'})">
+            Sistema de Cores
+          </button>
+        </div>
 
-        <section
-            class="relative z-10 min-h-[90vh] flex flex-col justify-center border-b border-stone-300 overflow-hidden">
-            <!-- Background Elements -->
-            <div class="absolute top-0 right-0 w-full h-full overflow-hidden pointer-events-none">
-                <img src="templates/digital-architect.aura.build/assets/c7fa69dd-d7fb-48f2-a866-ef3663_f6b789593f38.webp"
-                    class="absolute inset-0 w-full h-full object-cover opacity-20 grayscale contrast-125 mix-blend-multiply parallax-img">
-                <div class="absolute inset-0 bg-gradient-to-b from-[#EAEAE5]/80 via-transparent to-[#EAEAE5]"></div>
-                <div
-                    class="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-gradient-to-br from-stone-200 to-transparent rounded-full blur-3xl animate-float opacity-50">
-                </div>
-                <div
-                    class="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-gradient-to-tr from-white to-stone-300/50 rounded-full blur-3xl">
-                </div>
+        <!-- Floating decorative tags -->
+        <div class="hero-meta hero-meta-3" style="position:relative;height:120px;">
+          <div class="float-tag-1" style="position:absolute;left:5%;top:10%;">
+            <div class="glass-panel" style="padding:0.6rem 1rem;border-radius:12px;font-family:var(--font-mono);font-size:0.7rem;color:rgba(255,255,255,0.6);white-space:nowrap;">
+              <span style="color:var(--color-accent);">--color-primary:</span> #007BFF
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-0 relative">
-                <!-- Text Column -->
-                <div class="col-span-12 md:col-span-8 p-8 md:p-24 flex flex-col justify-center">
-                    <div class="inline-flex items-center gap-2 mb-8 reveal delay-100">
-                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                        <span class="text-xs font-mono uppercase tracking-widest text-stone-500">System v2.0 Live</span>
-                    </div>
-
-                    <h1
-                        class="font-display text-7xl md:text-9xl font-bold tracking-tighter leading-none mb-8 z-20 mix-blend-darken flex flex-col items-start">
-                        <span class="text-reveal-wrapper"><span class="text-reveal-content">Pure</span></span>
-                        <span class="text-reveal-wrapper"><span
-                                class="text-reveal-content delay-200">White</span></span>
-                        <span class="text-reveal-wrapper"><span
-                                class="text-reveal-content delay-300 text-stone-400">Aesthetic</span></span>
-                    </h1>
-
-                    <p class="text-lg md:text-xl text-stone-500 max-w-xl leading-relaxed reveal delay-500 font-light">
-                        A meticulously crafted design system focusing on negative space, typography, and subtle motion
-                        interactions.
-                    </p>
-
-                    <div class="mt-12 flex flex-wrap gap-4 reveal delay-700">
-                        <button
-                            class="group relative px-8 py-4 bg-stone-900 text-white overflow-hidden rounded-sm transition-all hover:shadow-2xl hover:-translate-y-1">
-                            <div
-                                class="absolute inset-0 w-full h-full bg-stone-700 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                            </div>
-                            <span
-                                class="relative z-10 font-mono text-xs uppercase tracking-widest flex items-center gap-2">
-                                Explore Components
-                                <iconify-icon icon="solar:arrow-right-linear"
-                                    class="text-base group-hover:translate-x-1 transition-transform"></iconify-icon>
-                            </span>
-                        </button>
-                        <button
-                            class="px-8 py-4 border border-stone-300 hover:bg-white transition-colors rounded-sm text-stone-900 font-mono text-xs uppercase tracking-widest">
-                            Read Documentation
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Visuals Column -->
-                <div
-                    class="col-span-12 md:col-span-4 border-l border-stone-300 bg-white/30 backdrop-blur-sm p-8 md:p-12 flex flex-col justify-between">
-                    <div class="reveal delay-300 flashlight-card border border-stone-200 p-8 rounded-lg aspect-[4/5] flex flex-col justify-end shadow-xl hover:shadow-2xl transition-shadow duration-700 group cursor-default"
-                        onmousemove="updateFlashlight(event, this)">
-                        <div
-                            class="absolute top-4 right-4 animate-spin-slow opacity-20 group-hover:opacity-100 transition-opacity">
-                            <iconify-icon icon="solar:settings-minimalistic-bold-duotone"
-                                class="text-4xl"></iconify-icon>
-                        </div>
-                        <div class="mb-auto mt-4">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-gradient-to-br from-stone-100 to-stone-200 border border-stone-100 mb-6 flex items-center justify-center text-2xl shadow-inner">
-                                <iconify-icon icon="solar:layers-minimalistic-bold-duotone"></iconify-icon>
-                            </div>
-                        </div>
-                        <h3
-                            class="text-3xl font-display font-medium tracking-tight mb-2 group-hover:translate-x-2 transition-transform duration-300">
-                            Modular</h3>
-                        <p
-                            class="text-sm text-stone-500 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                            Atomic components built for scalability and consistency across digital products.
-                        </p>
-                    </div>
-
-                    <div class="mt-8 grid grid-cols-2 gap-4">
-                        <div
-                            class="p-4 border border-stone-200 bg-white hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center gap-2 reveal delay-500">
-                            <h4 class="text-2xl font-bold font-display">40+</h4>
-                            <span class="text-[10px] uppercase font-mono text-stone-400">Components</span>
-                        </div>
-                        <div
-                            class="p-4 border border-stone-200 bg-white hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center gap-2 reveal delay-700">
-                            <h4 class="text-2xl font-bold font-display">2.0</h4>
-                            <span class="text-[10px] uppercase font-mono text-stone-400">Version</span>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <div class="float-tag-2" style="position:absolute;right:5%;top:5%;">
+            <div class="glass-panel" style="padding:0.6rem 1rem;border-radius:12px;font-family:var(--font-mono);font-size:0.7rem;color:rgba(255,255,255,0.6);white-space:nowrap;">
+              <span style="color:var(--color-primary);">font-weight:</span> 900
             </div>
-
-            <!-- Marquee Divider -->
-            <div class="border-t border-stone-300 bg-stone-100/50 py-4 overflow-hidden">
-                <div class="animate-marquee whitespace-nowrap">
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">Design System</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">★</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">Typography</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">★</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">Color Theory</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">★</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">Interaction</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">★</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">Design System</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">★</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">Typography</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">★</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">Color Theory</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">★</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">Interaction</span>
-                    <span class="mx-8 text-xs font-mono uppercase tracking-widest text-stone-400">★</span>
-                </div>
+          </div>
+          <div class="float-tag-3" style="position:absolute;left:30%;top:60%;">
+            <div class="glass-panel" style="padding:0.6rem 1rem;border-radius:12px;font-family:var(--font-mono);font-size:0.7rem;color:rgba(255,255,255,0.6);white-space:nowrap;">
+              backdrop-filter: blur(20px)
             </div>
-        </section>
-
-        <!-- 1. TYPOGRAPHY -->
-        <section id="typography" class="relative z-10 border-b border-stone-300">
-            <div class="p-8 md:p-12 border-b border-stone-300 bg-stone-50">
-                <span class="text-xs font-mono uppercase text-stone-400 block mb-2">01 / Foundation</span>
-                <h2 class="text-4xl font-display font-medium tracking-tight">Typography</h2>
+          </div>
+          <div class="float-tag-1" style="position:absolute;right:28%;top:0%;">
+            <div class="glass-panel" style="padding:0.6rem 1rem;border-radius:12px;font-family:var(--font-mono);font-size:0.7rem;color:rgba(255,255,255,0.6);white-space:nowrap;">
+              <span style="color:#A78BFA;">transition:</span> 0.5s spring
             </div>
+          </div>
+        </div>
+      </div>
 
-            <!-- Font Families -->
-            <div class="grid grid-cols-1 md:grid-cols-3 border-b border-stone-300">
-                <div class="p-8 border-r border-stone-300 bg-white">
-                    <span class="text-xs font-mono text-stone-400 mb-4 block">PRIMARY / SANS</span>
-                    <p class="text-6xl font-sans font-medium mb-4">Aa</p>
-                    <p class="font-sans text-xl">Inter</p>
-                    <p class="text-sm text-stone-500 mt-2">Geometric sans-serif used for UI elements, body text, and
-                        general readability.</p>
-                </div>
-                <div class="p-8 border-r border-stone-300 bg-white">
-                    <span class="text-xs font-mono text-stone-400 mb-4 block">DISPLAY</span>
-                    <p class="text-6xl font-display font-medium mb-4">Ag</p>
-                    <p class="font-display text-xl">Space Grotesk</p>
-                    <p class="text-sm text-stone-500 mt-2">Distinctive quirks for large headings and display text.</p>
-                </div>
-                <div class="p-8 bg-white">
-                    <span class="text-xs font-mono text-stone-400 mb-4 block">MONOSPACE</span>
-                    <p class="text-6xl font-mono font-medium mb-4">{}</p>
-                    <p class="font-mono text-xl">JetBrains Mono</p>
-                    <p class="text-sm text-stone-500 mt-2">For code blocks, technical data, and micro-labels.</p>
-                </div>
-            </div>
-
-            <div class="flex flex-col">
-                <!-- H1 -->
-                <div
-                    class="grid grid-cols-12 p-8 md:p-12 border-b border-stone-300 items-baseline hover:bg-white transition-colors group">
-                    <div class="col-span-12 md:col-span-2 text-xs font-mono text-stone-400">H1 / Display</div>
-                    <div class="col-span-12 md:col-span-8">
-                        <h1
-                            class="text-6xl md:text-8xl font-display font-semibold tracking-tighter text-stone-900 group-hover:translate-x-2 transition-transform">
-                            Digital Architect</h1>
-                    </div>
-                    <div class="col-span-12 md:col-span-2 text-right text-xs font-mono text-stone-400">6rem / 700</div>
-                </div>
-                <!-- H2 -->
-                <div
-                    class="grid grid-cols-12 p-8 md:p-12 border-b border-stone-300 items-baseline hover:bg-white transition-colors group">
-                    <div class="col-span-12 md:col-span-2 text-xs font-mono text-stone-400">H2 / Section</div>
-                    <div class="col-span-12 md:col-span-8">
-                        <h2
-                            class="text-5xl font-display font-medium tracking-tight text-stone-900 group-hover:translate-x-2 transition-transform">
-                            Design Strategy</h2>
-                    </div>
-                    <div class="col-span-12 md:col-span-2 text-right text-xs font-mono text-stone-400">3rem / 500</div>
-                </div>
-                <!-- H3 -->
-                <div
-                    class="grid grid-cols-12 p-8 md:p-12 border-b border-stone-300 items-baseline hover:bg-white transition-colors group">
-                    <div class="col-span-12 md:col-span-2 text-xs font-mono text-stone-400">H3 / Card</div>
-                    <div class="col-span-12 md:col-span-8">
-                        <h3
-                            class="text-3xl font-display font-normal tracking-tight text-stone-900 group-hover:translate-x-2 transition-transform">
-                            Feature Breakdown</h3>
-                    </div>
-                    <div class="col-span-12 md:col-span-2 text-right text-xs font-mono text-stone-400">1.875rem / 400
-                    </div>
-                </div>
-                <!-- Body Large -->
-                <div
-                    class="grid grid-cols-12 p-8 md:p-12 border-b border-stone-300 items-baseline hover:bg-white transition-colors">
-                    <div class="col-span-12 md:col-span-2 text-xs font-mono text-stone-400">Body / Large</div>
-                    <div class="col-span-12 md:col-span-8">
-                        <p class="text-xl font-sans font-light text-stone-600 leading-relaxed text-balance max-w-4xl">
-                            The essence of the system lies in its ability to adapt. We prioritize legibility and
-                            whitespace over decorative elements, allowing the content to breathe and speak for itself.
-                        </p>
-                    </div>
-                    <div class="col-span-12 md:col-span-2 text-right text-xs font-mono text-stone-400">1.25rem / 300
-                    </div>
-                </div>
-                <!-- Body Regular -->
-                <div
-                    class="grid grid-cols-12 p-8 md:p-12 border-b border-stone-300 items-baseline hover:bg-white transition-colors">
-                    <div class="col-span-12 md:col-span-2 text-xs font-mono text-stone-400">Body / Regular</div>
-                    <div class="col-span-12 md:col-span-8">
-                        <p class="text-base font-sans text-stone-600 leading-relaxed max-w-2xl">
-                            Standard paragraph text. Used for the majority of long-form content. Optimized for reading
-                            comfort with a relaxed line-height and generous character spacing.
-                        </p>
-                    </div>
-                    <div class="col-span-12 md:col-span-2 text-right text-xs font-mono text-stone-400">1rem / 400</div>
-                </div>
-                <!-- Captions -->
-                <div class="grid grid-cols-12 p-8 md:p-12 items-baseline hover:bg-white transition-colors">
-                    <div class="col-span-12 md:col-span-2 text-xs font-mono text-stone-400">Utility / Mono</div>
-                    <div class="col-span-12 md:col-span-8">
-                        <span
-                            class="text-xs font-mono uppercase tracking-widest text-stone-500 border border-stone-200 px-2 py-1 rounded-sm bg-stone-50">System
-                            Status: Optimal</span>
-                        <span class="ml-4 text-xs font-mono text-stone-400">v2.4.1</span>
-                    </div>
-                    <div class="col-span-12 md:col-span-2 text-right text-xs font-mono text-stone-400">0.75rem / 500
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. COLOR SYSTEM -->
-        <section id="colors" class="relative z-10 border-b border-stone-300">
-            <div class="p-8 md:p-12 border-b border-stone-300 bg-stone-50">
-                <span class="text-xs font-mono uppercase text-stone-400 block mb-2">02 / Foundation</span>
-                <h2 class="text-4xl font-display font-medium tracking-tight">System Colors</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-5 h-auto md:h-80">
-                <!-- Base -->
-                <div
-                    class="group border-b md:border-b-0 md:border-r border-stone-300 bg-[#EAEAE5] p-8 flex flex-col justify-between relative overflow-hidden">
-                    <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
-                    <span class="font-display font-bold text-lg">Surface Main</span>
-                    <div class="font-mono text-xs">
-                        <span class="block text-stone-500">HEX #EAEAE5</span>
-                        <span class="block text-stone-500">HSL 60, 5%, 92%</span>
-                        <span
-                            class="block mt-4 inline-block px-2 py-1 border border-stone-400 rounded-full">Background</span>
-                    </div>
-                </div>
-
-                <!-- Stone 900 -->
-                <div
-                    class="group border-b md:border-b-0 md:border-r border-stone-300 bg-stone-900 p-8 flex flex-col justify-between text-white relative overflow-hidden">
-                    <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
-                    <span class="font-display font-bold text-lg">Heavy</span>
-                    <div class="font-mono text-xs text-stone-400">
-                        <span class="block">HEX #1C1917</span>
-                        <span class="block">HSL 24, 5%, 10%</span>
-                        <span class="block mt-4 inline-block px-2 py-1 border border-stone-700 rounded-full">Primary
-                            Text</span>
-                    </div>
-                </div>
-
-                <!-- Stone 500 -->
-                <div
-                    class="group border-b md:border-b-0 md:border-r border-stone-300 bg-stone-500 p-8 flex flex-col justify-between text-white relative overflow-hidden">
-                    <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
-                    <span class="font-display font-bold text-lg">Neutral</span>
-                    <div class="font-mono text-xs text-stone-200">
-                        <span class="block">HEX #78716C</span>
-                        <span class="block">hsl(24, 5%, 45%)</span>
-                        <span
-                            class="block mt-4 inline-block px-2 py-1 border border-white/30 rounded-full">Secondary</span>
-                    </div>
-                </div>
-
-                <!-- Stone 200 -->
-                <div
-                    class="group border-b md:border-b-0 md:border-r border-stone-300 bg-stone-200 p-8 flex flex-col justify-between text-stone-800 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-40 transition-opacity"></div>
-                    <span class="font-display font-bold text-lg">Soft</span>
-                    <div class="font-mono text-xs text-stone-500">
-                        <span class="block">HEX #E7E5E4</span>
-                        <span class="block">hsl(24, 5%, 90%)</span>
-                        <span class="block mt-4 inline-block px-2 py-1 border border-stone-400/50 rounded-full">
-                            Borders</span>
-                    </div>
-                </div>
-
-                <!-- White -->
-                <div
-                    class="group border-b md:border-b-0 bg-white p-8 flex flex-col justify-between text-stone-900 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-stone-100 opacity-0 group-hover:opacity-100 transition-opacity">
-                    </div>
-                    <span class="font-display font-bold text-lg relative z-10">Pure</span>
-                    <div class="font-mono text-xs text-stone-400 relative z-10">
-                        <span class="block">HEX #FFFFFF</span>
-                        <span class="block">hsl(0, 0%, 100%)</span>
-                        <span
-                            class="block mt-4 inline-block px-2 py-1 border border-stone-200 rounded-full">Cards</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Gradient / Semantic Context -->
-            <div class="grid grid-cols-1 md:grid-cols-2">
-                <div class="p-12 border-r border-stone-300 flex items-center justify-center bg-stone-100">
-                    <div
-                        class="w-full h-32 bg-gradient-to-r from-stone-900 via-stone-500 to-[#EAEAE5] rounded-lg shadow-inner flex items-center justify-center">
-                        <span
-                            class="mix-blend-difference text-white font-mono text-xs uppercase tracking-widest">Gradient
-                            Scale</span>
-                    </div>
-                </div>
-                <div class="p-12 grid grid-cols-2 gap-8 bg-white">
-                    <div>
-                        <span class="text-xs font-mono uppercase mb-2 block text-stone-400">Error / Destructive</span>
-                        <div
-                            class="h-12 w-full bg-red-800 rounded flex items-center px-4 text-red-100 text-xs font-mono">
-                            #991B1B</div>
-                    </div>
-                    <div>
-                        <span class="text-xs font-mono uppercase mb-2 block text-stone-400">Success / Valid</span>
-                        <div
-                            class="h-12 w-full bg-emerald-800 rounded flex items-center px-4 text-emerald-100 text-xs font-mono">
-                            #065F46</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. UI COMPONENTS -->
-        <section id="components" class="relative z-10 border-b border-stone-300 bg-grid">
-            <div class="p-8 md:p-12 border-b border-stone-300 bg-stone-50/90 backdrop-blur-sm sticky top-[72px] z-20">
-                <span class="text-xs font-mono uppercase text-stone-400 block mb-2">03 / Architecture</span>
-                <h2 class="text-4xl font-display font-medium tracking-tight">UI Components</h2>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2">
-
-                <!-- BUTTONS & INPUTS -->
-                <div class="border-b lg:border-b-0 lg:border-r border-stone-300 p-8 md:p-16 space-y-16">
-
-                    <!-- Buttons -->
-                    <div>
-                        <h3 class="text-xs font-mono uppercase tracking-widest text-stone-400 mb-8">Buttons</h3>
-                        <div class="flex flex-wrap gap-6 items-center">
-                            <!-- Primary -->
-                            <button
-                                class="px-6 py-3 bg-stone-900 text-white rounded-sm text-sm font-medium hover:bg-stone-700 hover:-translate-y-0.5 transition-all shadow-lg shadow-stone-900/10 flex items-center gap-2 group">
-                                Primary Action
-                                <iconify-icon icon="solar:arrow-right-linear"
-                                    class="group-hover:translate-x-1 transition-transform"></iconify-icon>
-                            </button>
-
-                            <!-- Outline -->
-                            <button
-                                class="px-6 py-3 border border-stone-900 text-stone-900 rounded-sm text-sm font-medium hover:bg-stone-900 hover:text-white transition-all">
-                                Secondary
-                            </button>
-
-                            <!-- Ghost -->
-                            <button
-                                class="px-4 py-2 text-stone-500 hover:text-stone-900 text-sm font-medium transition-colors">
-                                Cancel
-                            </button>
-
-                            <!-- Beam Button Small -->
-                            <button class="btn-beam px-[1px] py-[1px] rounded-full">
-                                <span
-                                    class="btn-beam-content px-4 py-2 bg-stone-900 rounded-full text-xs font-mono text-white">
-                                    AI Generate
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Inputs -->
-                    <div>
-                        <h3 class="text-xs font-mono uppercase tracking-widest text-stone-400 mb-8">Inputs</h3>
-                        <div class="space-y-6 max-w-md">
-                            <!-- Standard -->
-                            <div class="group">
-                                <label
-                                    class="block text-xs font-mono uppercase text-stone-500 mb-2 group-focus-within:text-stone-900 transition-colors">Email
-                                    Address</label>
-                                <div class="relative">
-                                    <input type="email" placeholder="user@example.com"
-                                        class="w-full bg-white border border-stone-300 p-3 rounded-sm outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition-all font-sans">
-                                    <iconify-icon icon="solar:letter-linear"
-                                        class="absolute right-3 top-3.5 text-stone-400"></iconify-icon>
-                                </div>
-                            </div>
-
-                            <!-- Search -->
-                            <div class="relative">
-                                <input type="text" placeholder="Search components..."
-                                    class="w-full bg-stone-100 border-none p-3 pl-10 rounded-full outline-none focus:bg-white focus:ring-2 focus:ring-stone-200 transition-all">
-                                <iconify-icon icon="solar:magnifer-linear"
-                                    class="absolute left-3 top-3.5 text-stone-500"></iconify-icon>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Checkboxes & Toggles -->
-                    <div>
-                        <h3 class="text-xs font-mono uppercase tracking-widest text-stone-400 mb-8">Selection</h3>
-                        <div class="flex gap-8">
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <div
-                                    class="w-5 h-5 border border-stone-400 rounded-sm flex items-center justify-center group-hover:border-stone-900 transition-colors">
-                                    <div class="w-3 h-3 bg-stone-900 opacity-0 checkbox-check transition-opacity"></div>
-                                </div>
-                                <span class="text-sm text-stone-600">Checkbox</span>
-                                <input type="checkbox" class="hidden"
-                                    onclick="this.parentNode.querySelector('.checkbox-check').classList.toggle('opacity-0')">
-                            </label>
-
-                            <label class="flex items-center gap-3 cursor-pointer">
-                                <div
-                                    class="relative w-10 h-6 bg-stone-300 rounded-full transition-colors toggle-bg hover:bg-stone-400">
-                                    <div
-                                        class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform toggle-dot shadow-sm">
-                                    </div>
-                                </div>
-                                <span class="text-sm text-stone-600">Toggle</span>
-                                <input type="checkbox" class="hidden"
-                                    onclick="this.parentNode.querySelector('.toggle-bg').classList.toggle('bg-stone-900'); this.parentNode.querySelector('.toggle-dot').classList.toggle('translate-x-4')">
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CARDS & COMPLEX -->
-                <div class="p-8 md:p-16 bg-[#F5F5F4]">
-                    <h3 class="text-xs font-mono uppercase tracking-widest text-stone-400 mb-8">Cards & Containers</h3>
-
-                    <div class="grid gap-8">
-                        <!-- Glass Card -->
-                        <div
-                            class="p-8 rounded-xl bg-white/60 backdrop-blur-md border border-white/50 shadow-lg hover:shadow-xl transition-all duration-500 group">
-                            <div
-                                class="w-12 h-12 bg-stone-900 rounded-full flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
-                                <iconify-icon icon="solar:star-fall-bold-duotone" class="text-xl"></iconify-icon>
-                            </div>
-                            <h4 class="text-xl font-display font-medium mb-2">Glassmorphism</h4>
-                            <p class="text-sm text-stone-500 leading-relaxed mb-6">
-                                Using backdrop-blur and semi-transparent backgrounds to create depth and hierarchy in
-                                the interface.
-                            </p>
-                            <div class="flex items-center gap-4 text-xs font-mono text-stone-400">
-                                <span>#UI</span>
-                                <span>#MODERN</span>
-                            </div>
-                        </div>
-
-                        <!-- Media Card -->
-                        <div class="group relative overflow-hidden rounded-lg bg-stone-900 aspect-video flex items-end">
-                            <!-- Image Placeholder -->
-                            <div
-                                class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop')] bg-cover bg-center opacity-60 group-hover:opacity-40 transition-opacity duration-700 group-hover:scale-105 transform">
-                            </div>
-
-                            <div class="relative z-10 p-6 w-full">
-                                <span
-                                    class="inline-block px-2 py-1 bg-white/10 backdrop-blur text-white text-[10px] font-mono uppercase mb-2">Featured</span>
-                                <h4
-                                    class="text-white font-display text-2xl mb-1 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                                    Abstract Flow</h4>
-                                <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-300">
-                                    <p
-                                        class="text-stone-300 text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
-                                        A study in fluid dynamics and digital representation.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tooltips & Badges -->
-                        <div
-                            class="flex flex-wrap gap-4 items-center justify-center p-8 border border-dashed border-stone-300 rounded-lg">
-                            <div class="relative group cursor-help">
-                                <span class="px-3 py-1 bg-stone-200 rounded text-xs font-medium text-stone-700">Hover
-                                    Me</span>
-                                <div
-                                    class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-stone-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                                    Tooltip Info
-                                    <div
-                                        class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-stone-900">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <span
-                                class="px-2 py-0.5 rounded-full border border-stone-300 text-[10px] uppercase font-bold tracking-wider text-stone-500">Badge</span>
-                            <span
-                                class="px-2 py-0.5 rounded-full bg-green-100 text-green-800 text-[10px] uppercase font-bold tracking-wider">Active</span>
-
-                            <div class="flex -space-x-2">
-                                <div class="w-8 h-8 rounded-full bg-stone-300 border-2 border-white"></div>
-                                <div class="w-8 h-8 rounded-full bg-stone-400 border-2 border-white"></div>
-                                <div
-                                    class="w-8 h-8 rounded-full bg-stone-500 border-2 border-white flex items-center justify-center text-[10px] text-white font-medium">
-                                    +3</div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- ADVANCED MODULES -->
-            <div class="border-t border-stone-300">
-                <div class="grid grid-cols-1 lg:grid-cols-2">
-                    <!-- Modals & Overlays -->
-                    <div
-                        class="border-b lg:border-b-0 lg:border-r border-stone-300 p-8 md:p-16 bg-stone-100 flex flex-col justify-center">
-                        <div>
-                            <h3 class="text-xs font-mono uppercase tracking-widest text-stone-400 mb-8">Interaction &
-                                Overlays</h3>
-                            <div
-                                class="relative h-64 bg-stone-200 rounded-lg overflow-hidden flex items-center justify-center border border-stone-300 group cursor-default shadow-inner">
-                                <!-- Backdrop -->
-                                <div
-                                    class="absolute inset-0 bg-stone-900/10 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                </div>
-                                <!-- Modal -->
-                                <div
-                                    class="relative bg-white/90 backdrop-blur-xl p-6 rounded shadow-2xl w-64 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100 border border-white/50">
-                                    <div class="flex justify-between items-center mb-4">
-                                        <span class="font-display font-medium">Confirm Action</span>
-                                        <iconify-icon icon="solar:close-circle-linear"
-                                            class="text-stone-400"></iconify-icon>
-                                    </div>
-                                    <p class="text-xs text-stone-500 mb-4 leading-relaxed">Are you sure you want to
-                                        proceed? This interaction demonstrates the glassmorphic overlay.</p>
-                                    <div class="flex gap-2">
-                                        <button
-                                            class="flex-1 px-3 py-2 bg-stone-900 text-white text-xs rounded-sm hover:bg-stone-800 transition-colors">Confirm</button>
-                                        <button
-                                            class="flex-1 px-3 py-2 border border-stone-300 text-stone-700 text-xs rounded-sm hover:bg-stone-50 transition-colors">Cancel</button>
-                                    </div>
-                                </div>
-                                <span
-                                    class="absolute text-xs font-mono uppercase tracking-widest text-stone-400 group-hover:opacity-0 transition-opacity">Hover
-                                    to View Modal</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Data & Stats -->
-                    <div class="p-8 md:p-16 bg-white flex flex-col justify-center">
-                        <div>
-                            <h3 class="text-xs font-mono uppercase tracking-widest text-stone-400 mb-8">Data
-                                Visualization</h3>
-                            <div
-                                class="p-6 border border-stone-200 rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow duration-300">
-                                <div class="flex justify-between items-end mb-6">
-                                    <div>
-                                        <span class="text-[10px] uppercase font-mono text-stone-400 block mb-1">Total
-                                            Revenue</span>
-                                        <span class="text-3xl font-display font-medium">$24,500</span>
-                                    </div>
-                                    <div
-                                        class="text-emerald-600 text-xs font-mono flex items-center gap-1 bg-emerald-50 px-2 py-1 rounded-full border border-emerald-100">
-                                        +12% <iconify-icon icon="solar:graph-up-linear"></iconify-icon>
-                                    </div>
-                                </div>
-                                <!-- SVG Chart -->
-                                <svg viewBox="0 0 100 40" class="w-full h-24 overflow-visible">
-                                    <defs>
-                                        <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
-                                            <stop offset="0%" stop-color="#1c1917" stop-opacity="0.1" />
-                                            <stop offset="100%" stop-color="#1c1917" stop-opacity="0" />
-                                        </linearGradient>
-                                    </defs>
-                                    <path
-                                        d="M0 35 C 10 35, 10 20, 20 20 C 30 20, 30 30, 40 30 C 50 30, 50 5, 60 5 C 70 5, 70 25, 80 25 C 90 25, 90 10, 100 15 V 40 H 0 Z"
-                                        fill="url(#chartGradient)" stroke="none"></path>
-                                    <path
-                                        d="M0 35 C 10 35, 10 20, 20 20 C 30 20, 30 30, 40 30 C 50 30, 50 5, 60 5 C 70 5, 70 25, 80 25 C 90 25, 90 10, 100 15"
-                                        fill="none" stroke="#1c1917" stroke-width="1.5"
-                                        vector-effect="non-scaling-stroke" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                    <!-- Points -->
-                                    <circle cx="60" cy="5" r="3" fill="#EAEAE5" stroke="#1c1917" stroke-width="2" />
-                                    <circle cx="100" cy="15" r="3" fill="#1c1917" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. ICONS -->
-        <section class="relative z-10 border-b border-stone-300 bg-white">
-            <div class="p-8 md:p-12 border-b border-stone-300 bg-stone-50">
-                <span class="text-xs font-mono uppercase text-stone-400 block mb-2">04 / Assets</span>
-                <h2 class="text-4xl font-display font-medium tracking-tight">Iconography</h2>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-px bg-stone-200 border-b border-stone-200">
-                <!-- Icon Items (Loop manually) -->
-                <div
-                    class="bg-white p-8 aspect-square flex flex-col items-center justify-center gap-4 hover:bg-stone-50 transition-colors group">
-                    <iconify-icon icon="solar:home-smile-linear"
-                        class="text-3xl text-stone-400 group-hover:text-stone-900 group-hover:scale-110 transition-all"></iconify-icon>
-                    <span
-                        class="text-[10px] font-mono text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity">home</span>
-                </div>
-                <div
-                    class="bg-white p-8 aspect-square flex flex-col items-center justify-center gap-4 hover:bg-stone-50 transition-colors group">
-                    <iconify-icon icon="solar:folder-with-files-linear"
-                        class="text-3xl text-stone-400 group-hover:text-stone-900 group-hover:scale-110 transition-all"></iconify-icon>
-                    <span
-                        class="text-[10px] font-mono text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity">files</span>
-                </div>
-                <div
-                    class="bg-white p-8 aspect-square flex flex-col items-center justify-center gap-4 hover:bg-stone-50 transition-colors group">
-                    <iconify-icon icon="solar:graph-up-linear"
-                        class="text-3xl text-stone-400 group-hover:text-stone-900 group-hover:scale-110 transition-all"></iconify-icon>
-                    <span
-                        class="text-[10px] font-mono text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity">analytics</span>
-                </div>
-                <div
-                    class="bg-white p-8 aspect-square flex flex-col items-center justify-center gap-4 hover:bg-stone-50 transition-colors group">
-                    <iconify-icon icon="solar:users-group-rounded-linear"
-                        class="text-3xl text-stone-400 group-hover:text-stone-900 group-hover:scale-110 transition-all"></iconify-icon>
-                    <span
-                        class="text-[10px] font-mono text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity">team</span>
-                </div>
-                <div
-                    class="bg-white p-8 aspect-square flex flex-col items-center justify-center gap-4 hover:bg-stone-50 transition-colors group">
-                    <iconify-icon icon="solar:settings-linear"
-                        class="text-3xl text-stone-400 group-hover:text-stone-900 group-hover:scale-110 transition-all"></iconify-icon>
-                    <span
-                        class="text-[10px] font-mono text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity">settings</span>
-                </div>
-                <div
-                    class="bg-white p-8 aspect-square flex flex-col items-center justify-center gap-4 hover:bg-stone-50 transition-colors group">
-                    <iconify-icon icon="solar:bell-linear"
-                        class="text-3xl text-stone-400 group-hover:text-stone-900 group-hover:scale-110 transition-all"></iconify-icon>
-                    <span
-                        class="text-[10px] font-mono text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity">notify</span>
-                </div>
-                <div
-                    class="bg-white p-8 aspect-square flex flex-col items-center justify-center gap-4 hover:bg-stone-50 transition-colors group">
-                    <iconify-icon icon="solar:cloud-upload-linear"
-                        class="text-3xl text-stone-400 group-hover:text-stone-900 group-hover:scale-110 transition-all"></iconify-icon>
-                    <span
-                        class="text-[10px] font-mono text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity">cloud</span>
-                </div>
-                <div
-                    class="bg-white p-8 aspect-square flex flex-col items-center justify-center gap-4 hover:bg-stone-50 transition-colors group">
-                    <iconify-icon icon="solar:shield-check-linear"
-                        class="text-3xl text-stone-400 group-hover:text-stone-900 group-hover:scale-110 transition-all"></iconify-icon>
-                    <span
-                        class="text-[10px] font-mono text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity">security</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. ANIMATIONS -->
-        <section id="motion" class="relative z-10 border-b border-stone-300">
-            <div class="p-8 md:p-12 border-b border-stone-300 bg-stone-50">
-                <span class="text-xs font-mono uppercase text-stone-400 block mb-2">05 / Interaction</span>
-                <h2 class="text-4xl font-display font-medium tracking-tight">Motion Primitives</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-0">
-                <!-- Reveal -->
-                <div
-                    class="p-12 border-r border-stone-300 bg-[#EAEAE5] flex flex-col items-center justify-center min-h-[300px] overflow-hidden group">
-                    <span class="text-xs font-mono uppercase text-stone-400 mb-8 z-10">.reveal-up</span>
-                    <div
-                        class="w-32 h-32 bg-stone-900 rounded-lg shadow-xl translate-y-20 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-700 ease-out flex items-center justify-center text-white">
-                        <iconify-icon icon="solar:arrow-up-linear" class="text-4xl"></iconify-icon>
-                    </div>
-                </div>
-
-                <!-- Scale/Pulse -->
-                <div
-                    class="p-12 border-r border-stone-300 bg-[#EAEAE5] flex flex-col items-center justify-center min-h-[300px] cursor-pointer group">
-                    <span class="text-xs font-mono uppercase text-stone-400 mb-8">Hover Interaction</span>
-                    <div class="relative">
-                        <div
-                            class="absolute inset-0 bg-stone-400 rounded-full blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500">
-                        </div>
-                        <div
-                            class="w-32 h-32 bg-white border border-stone-200 rounded-full flex items-center justify-center text-stone-900 group-hover:scale-110 transition-transform duration-500">
-                            <iconify-icon icon="solar:cursor-linear" class="text-4xl"></iconify-icon>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Loader -->
-                <div class="p-12 bg-[#EAEAE5] flex flex-col items-center justify-center min-h-[300px] group">
-                    <span class="text-xs font-mono uppercase text-stone-400 mb-8">State Change</span>
-                    <div
-                        class="w-32 h-12 border border-stone-400 rounded-sm relative overflow-hidden flex items-center justify-center">
-                        <span
-                            class="text-xs font-mono font-bold uppercase group-hover:opacity-0 transition-opacity">Load</span>
-                        <div
-                            class="absolute inset-0 bg-stone-900 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-[2s] ease-in-out">
-                        </div>
-                        <iconify-icon icon="line-md:loading-loop"
-                            class="text-white absolute opacity-0 group-hover:opacity-100 transition-opacity delay-300 text-xl"></iconify-icon>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FOOTER -->
-        <footer class="bg-stone-900 text-stone-400 py-24 px-8 md:px-12 relative overflow-hidden">
-            <!-- Big Text Background -->
-            <div class="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none opacity-5">
-                <h1 class="text-[20vw] font-display font-bold leading-none text-white whitespace-nowrap">AURA SYSTEM
-                </h1>
-            </div>
-
-            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
-                <div class="col-span-1 md:col-span-2">
-                    <h3 class="text-2xl font-display font-medium text-white mb-6">Digital Architect</h3>
-                    <p class="max-w-sm font-light leading-relaxed">
-                        A comprehensive design language for building digital products that feel premium, robust, and
-                        distinctively human.
-                    </p>
-                </div>
-
-                <div>
-                    <h4 class="text-xs font-mono uppercase tracking-widest text-stone-500 mb-6">Resources</h4>
-                    <ul class="space-y-4 text-sm">
-                        <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Figma File</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">React Components</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Changelog</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="text-xs font-mono uppercase tracking-widest text-stone-500 mb-6">Social</h4>
-                    <ul class="space-y-4 text-sm">
-                        <li><a href="#" class="hover:text-white transition-colors">Twitter / X</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">Dribbble</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">GitHub</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div
-                class="max-w-7xl mx-auto mt-24 pt-8 border-t border-stone-800 flex justify-between items-center text-xs font-mono">
-                <span>© 2024 Digital Architect. All rights reserved.</span>
-                <span>v2.0.1 ALPHA</span>
-            </div>
-        </footer>
-
+      <!-- HERO STATS BAR -->
+      <div class="reveal reveal-delay-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-xl);overflow:hidden;margin-top:2rem;">
+        <div class="card-stat cursor-hover" style="border-radius:0;border:none;text-align:center;">
+          <div style="font-family:var(--font-heading);font-size:var(--text-4xl);font-weight:800;color:white;">6</div>
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.12em;margin-top:0.25rem;">Seções</div>
+        </div>
+        <div class="card-stat cursor-hover" style="border-radius:0;border:none;border-left:1px solid rgba(255,255,255,0.07);text-align:center;">
+          <div style="font-family:var(--font-heading);font-size:var(--text-4xl);font-weight:800;" class="text-gradient">12+</div>
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.12em;margin-top:0.25rem;">Componentes</div>
+        </div>
+        <div class="card-stat cursor-hover" style="border-radius:0;border:none;border-left:1px solid rgba(255,255,255,0.07);text-align:center;">
+          <div style="font-family:var(--font-heading);font-size:var(--text-4xl);font-weight:800;color:white;">18</div>
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.12em;margin-top:0.25rem;">Animações</div>
+        </div>
+        <div class="card-stat cursor-hover" style="border-radius:0;border:none;border-left:1px solid rgba(255,255,255,0.07);text-align:center;">
+          <div style="font-family:var(--font-heading);font-size:var(--text-4xl);font-weight:800;color:white;">∞</div>
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.12em;margin-top:0.25rem;">Possibilidades</div>
+        </div>
+      </div>
     </div>
 
-    <!-- SCRIPTS -->
-    <script>
-        // DOM ELEMENTS
-        const navbar = document.getElementById('navbar');
+    <!-- Scroll indicator -->
+    <div style="position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;opacity:0.4;animation:bounce-y 2s ease-in-out infinite;">
+      <span style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:0.2em;">Scroll</span>
+      <span class="iconify" data-icon="lucide:chevrons-down" data-width="16"></span>
+    </div>
+  </section>
 
-        // FLASHLIGHT EFFECT LOGIC
-        function updateFlashlight(e, card) {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
+  <!-- MARQUEE TRANSITION -->
+  <div class="marquee-container" style="padding:1rem 0;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);margin:0;">
+    <div class="marquee-track" style="gap:3rem;">
+      <!-- 2x for seamless loop -->
+      <template id="marquee-content">
+        <span style="font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.25);white-space:nowrap;">Design Tokens</span>
+        <span class="iconify" data-icon="lucide:asterisk" data-width="12" style="color:var(--color-primary);opacity:0.6;flex-shrink:0;"></span>
+        <span style="font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.25);white-space:nowrap;">Typography Scale</span>
+        <span class="iconify" data-icon="lucide:asterisk" data-width="12" style="color:var(--color-accent);opacity:0.6;flex-shrink:0;"></span>
+        <span style="font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.25);white-space:nowrap;">Color System</span>
+        <span class="iconify" data-icon="lucide:asterisk" data-width="12" style="color:var(--color-secondary);opacity:0.6;flex-shrink:0;"></span>
+        <span style="font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.25);white-space:nowrap;">UI Components</span>
+        <span class="iconify" data-icon="lucide:asterisk" data-width="12" style="color:var(--color-primary);opacity:0.6;flex-shrink:0;"></span>
+        <span style="font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.25);white-space:nowrap;">Motion Library</span>
+        <span class="iconify" data-icon="lucide:asterisk" data-width="12" style="color:var(--color-accent);opacity:0.6;flex-shrink:0;"></span>
+        <span style="font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.25);white-space:nowrap;">Icon System</span>
+        <span class="iconify" data-icon="lucide:asterisk" data-width="12" style="color:var(--color-secondary);opacity:0.6;flex-shrink:0;"></span>
+        <span style="font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.2em;color:rgba(255,255,255,0.25);white-space:nowrap;">Glass Morphism</span>
+        <span class="iconify" data-icon="lucide:asterisk" data-width="12" style="color:var(--color-primary);opacity:0.6;flex-shrink:0;"></span>
+      </template>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       ② TYPOGRAPHY
+  ============================================================ -->
+  <section class="ds-section bg-section-alt" id="typography">
+    <!-- Glow ring -->
+    <div class="glow-ring" style="width:400px;height:400px;top:50%;left:-100px;transform:translateY(-50%);opacity:0.08;animation-duration:7s;"></div>
+
+    <div class="max-w-screen-xl">
+      <div class="reveal">
+        <div class="ds-section-label">01 · Foundations</div>
+        <h2 class="ds-section-title">Tipografia</h2>
+      </div>
+
+      <!-- Font Families -->
+      <div class="reveal reveal-delay-1 glass-panel" style="padding:2rem;border-radius:var(--radius-xl);margin-bottom:3rem;">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-primary);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.75rem;">Primary — Heading</div>
+            <div style="font-family:var(--font-heading);font-size:1.5rem;font-weight:700;letter-spacing:-0.02em;">Montserrat</div>
+            <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:0.25rem;font-family:var(--font-mono);">Weights: 300–900 · CDN Google Fonts</div>
+          </div>
+          <div style="border-left:1px solid rgba(255,255,255,0.08);padding-left:2rem;">
+            <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--color-accent);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.75rem;">Secondary — Body</div>
+            <div style="font-family:var(--font-body);font-size:1.5rem;font-weight:400;">Open Sans</div>
+            <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:0.25rem;font-family:var(--font-mono);">Weights: 300–700 · CDN Google Fonts</div>
+          </div>
+          <div style="border-left:1px solid rgba(255,255,255,0.08);padding-left:2rem;">
+            <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:#A78BFA;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.75rem;">Mono — Code / Labels</div>
+            <div style="font-family:var(--font-mono);font-size:1.5rem;">Space Mono</div>
+            <div style="font-size:var(--text-xs);color:var(--text-muted);margin-top:0.25rem;font-family:var(--font-mono);">Weights: 400, 700 · CDN Google Fonts</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Type Scale -->
+      <div class="reveal reveal-delay-2" style="overflow:hidden;">
+        <!-- H1 -->
+        <div class="reveal" style="border-bottom:1px solid rgba(255,255,255,0.07);padding:2.5rem 0;display:grid;grid-template-columns:180px 1fr 200px;align-items:baseline;gap:2rem;">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Display H1</div>
+          <h1 style="font-family:var(--font-heading);font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;letter-spacing:-0.04em;line-height:1;color:white;text-transform:uppercase;">Liquid Glass</h1>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);line-height:1.8;text-align:right;">
+            family: Montserrat<br>weight: 900<br>size: clamp(2.5rem,6vw,4.5rem)<br>tracking: -0.04em<br>line-h: 1.0<br>transform: uppercase
+          </div>
+        </div>
+        <!-- H2 -->
+        <div class="reveal reveal-delay-1" style="border-bottom:1px solid rgba(255,255,255,0.07);padding:2rem 0;display:grid;grid-template-columns:180px 1fr 200px;align-items:baseline;gap:2rem;">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Heading H2</div>
+          <h2 style="font-family:var(--font-heading);font-size:clamp(1.8rem,4vw,3rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;color:white;">Intelligent Design Systems</h2>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);line-height:1.8;text-align:right;">
+            weight: 700<br>size: clamp(1.8–3rem)<br>tracking: -0.03em<br>line-h: 1.1
+          </div>
+        </div>
+        <!-- H3 -->
+        <div class="reveal reveal-delay-2" style="border-bottom:1px solid rgba(255,255,255,0.07);padding:2rem 0;display:grid;grid-template-columns:180px 1fr 200px;align-items:baseline;gap:2rem;">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Heading H3</div>
+          <h3 style="font-family:var(--font-heading);font-size:clamp(1.3rem,3vw,2rem);font-weight:600;letter-spacing:-0.02em;line-height:1.2;color:white;">Component Architecture</h3>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);line-height:1.8;text-align:right;">
+            weight: 600<br>size: clamp(1.3–2rem)<br>tracking: -0.02em<br>line-h: 1.2
+          </div>
+        </div>
+        <!-- H4 -->
+        <div class="reveal reveal-delay-3" style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1.75rem 0;display:grid;grid-template-columns:180px 1fr 200px;align-items:baseline;gap:2rem;">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Heading H4</div>
+          <h4 style="font-family:var(--font-heading);font-size:1.25rem;font-weight:600;letter-spacing:-0.01em;line-height:1.3;color:white;">Token Management</h4>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);line-height:1.8;text-align:right;">weight: 600 / 1.25rem</div>
+        </div>
+        <!-- H5 -->
+        <div class="reveal reveal-delay-4" style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1.5rem 0;display:grid;grid-template-columns:180px 1fr 200px;align-items:baseline;gap:2rem;">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Heading H5</div>
+          <h5 style="font-family:var(--font-heading);font-size:1rem;font-weight:600;letter-spacing:0.01em;text-transform:uppercase;line-height:1.4;color:white;">Section Label</h5>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);line-height:1.8;text-align:right;">weight: 600 / 1rem / uppercase</div>
+        </div>
+        <!-- H6 -->
+        <div class="reveal reveal-delay-5" style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1.5rem 0;display:grid;grid-template-columns:180px 1fr 200px;align-items:baseline;gap:2rem;">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Heading H6</div>
+          <h6 style="font-family:var(--font-heading);font-size:0.875rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;line-height:1.4;color:rgba(255,255,255,0.7);">Sub Category</h6>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);line-height:1.8;text-align:right;">weight: 700 / 0.875rem / uppercase</div>
+        </div>
+        <!-- Body lg -->
+        <div class="reveal" style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1.75rem 0;display:grid;grid-template-columns:180px 1fr 200px;align-items:baseline;gap:2rem;">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Body LG</div>
+          <p style="font-family:var(--font-body);font-size:1.125rem;font-weight:400;line-height:1.75;color:rgba(255,255,255,0.75);">Experiências premium construídas com precisão e cuidado artesanal.</p>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);line-height:1.8;text-align:right;">Open Sans / 400 / 1.125rem</div>
+        </div>
+        <!-- Body -->
+        <div class="reveal reveal-delay-1" style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1.75rem 0;display:grid;grid-template-columns:180px 1fr 200px;align-items:baseline;gap:2rem;">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Body</div>
+          <p style="font-family:var(--font-body);font-size:1rem;font-weight:400;line-height:1.7;color:rgba(255,255,255,0.65);">Cada componente é construído sobre tokens semânticos garantindo consistência em todo o produto.</p>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);line-height:1.8;text-align:right;">Open Sans / 400 / 1rem</div>
+        </div>
+        <!-- Body sm -->
+        <div class="reveal reveal-delay-2" style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1.5rem 0;display:grid;grid-template-columns:180px 1fr 200px;align-items:baseline;gap:2rem;">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Body SM</div>
+          <p style="font-family:var(--font-body);font-size:0.875rem;font-weight:400;line-height:1.6;color:rgba(255,255,255,0.5);">Texto auxiliar para informações secundárias e metadados contextuais.</p>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);line-height:1.8;text-align:right;">Open Sans / 400 / 0.875rem</div>
+        </div>
+        <!-- Caption -->
+        <div class="reveal reveal-delay-3" style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1.25rem 0;display:grid;grid-template-columns:180px 1fr 200px;align-items:baseline;gap:2rem;">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Caption</div>
+          <span style="font-family:var(--font-body);font-size:0.75rem;font-weight:400;line-height:1.5;color:rgba(255,255,255,0.35);">Caption / legenda / texto de apoio menor</span>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);line-height:1.8;text-align:right;">Open Sans / 400 / 0.75rem</div>
+        </div>
+        <!-- Label / Mono -->
+        <div class="reveal reveal-delay-4" style="padding:1.25rem 0;display:grid;grid-template-columns:180px 1fr 200px;align-items:baseline;gap:2rem;">
+          <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Label / Mono</div>
+          <span style="font-family:var(--font-mono);font-size:0.75rem;font-weight:700;color:var(--color-primary);text-transform:uppercase;letter-spacing:0.2em;">SECTION-LABEL · 01</span>
+          <div style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);line-height:1.8;text-align:right;">Space Mono / 700 / 0.75rem</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================
+       ③ COLORS
+  ============================================================ -->
+  <section class="ds-section bg-section-accent" id="colors">
+    <div class="glow-ring" style="width:500px;height:500px;top:20%;right:-150px;background:radial-gradient(circle,var(--color-secondary),transparent 70%);opacity:0.09;animation-duration:8s;"></div>
+
+    <div class="max-w-screen-xl">
+      <div class="reveal">
+        <div class="ds-section-label">02 · Foundations</div>
+        <h2 class="ds-section-title">Sistema de Cores</h2>
+      </div>
+
+      <!-- Primary / Secondary / Accent -->
+      <div class="reveal reveal-delay-1" style="margin-bottom:2rem;">
+        <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">Cores de Marca</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+          <!-- Primary -->
+          <div class="swatch-card cursor-hover">
+            <div class="swatch-block" style="background:var(--color-primary);box-shadow:inset 0 -30px 60px rgba(0,0,0,0.3);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Primary — Electric Blue</div>
+              <div class="swatch-value">#007BFF · rgb(0,123,255) · hsl(211,100%,50%)</div>
+              <div style="margin-top:0.5rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <span class="badge badge-primary">Text</span>
+                <span class="badge badge-primary">BG</span>
+                <span class="badge badge-primary">Border</span>
+                <span class="badge badge-primary">Glow</span>
+              </div>
+            </div>
+          </div>
+          <!-- Secondary -->
+          <div class="swatch-card cursor-hover">
+            <div class="swatch-block" style="background:var(--color-secondary);box-shadow:inset 0 -30px 60px rgba(0,0,0,0.3);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Secondary — Deep Violet</div>
+              <div class="swatch-value">#6C3CF7 · rgb(108,60,247) · hsl(255,91%,60%)</div>
+              <div style="margin-top:0.5rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <span class="badge badge-secondary">Gradient</span>
+                <span class="badge badge-secondary">Decorative</span>
+              </div>
+            </div>
+          </div>
+          <!-- Accent -->
+          <div class="swatch-card cursor-hover">
+            <div class="swatch-block" style="background:var(--color-accent);box-shadow:inset 0 -30px 60px rgba(0,0,0,0.3);"></div>
+            <div class="swatch-info">
+              <div class="swatch-name">Accent — Cyan Spark</div>
+              <div class="swatch-value">#00C6FF · rgb(0,198,255) · hsl(196,100%,50%)</div>
+              <div style="margin-top:0.5rem;display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <span class="badge badge-accent">Highlight</span>
+                <span class="badge badge-accent">Glow</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Neutrals -->
+      <div class="reveal reveal-delay-2" style="margin-bottom:2rem;">
+        <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">Neutros</div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:0.75rem;">
+          <div class="swatch-card cursor-hover">
+            <div class="swatch-block" style="background:#050A14;height:70px;border-top:2px solid rgba(255,255,255,0.15);"></div>
+            <div class="swatch-info" style="padding:0.6rem 0.75rem;">
+              <div class="swatch-name" style="font-size:0.75rem;">Abyss</div>
+              <div class="swatch-value">#050A14</div>
+            </div>
+          </div>
+          <div class="swatch-card cursor-hover">
+            <div class="swatch-block" style="background:rgba(255,255,255,0.03);height:70px;"></div>
+            <div class="swatch-info" style="padding:0.6rem 0.75rem;">
+              <div class="swatch-name" style="font-size:0.75rem;">Surface</div>
+              <div class="swatch-value">rgba(255,255,255,0.03)</div>
+            </div>
+          </div>
+          <div class="swatch-card cursor-hover">
+            <div class="swatch-block" style="background:rgba(255,255,255,0.07);height:70px;"></div>
+            <div class="swatch-info" style="padding:0.6rem 0.75rem;">
+              <div class="swatch-name" style="font-size:0.75rem;">Elevated</div>
+              <div class="swatch-value">rgba(255,255,255,0.07)</div>
+            </div>
+          </div>
+          <div class="swatch-card cursor-hover">
+            <div class="swatch-block" style="background:rgba(255,255,255,0.15);height:70px;"></div>
+            <div class="swatch-info" style="padding:0.6rem 0.75rem;">
+              <div class="swatch-name" style="font-size:0.75rem;">Border</div>
+              <div class="swatch-value">rgba(255,255,255,0.15)</div>
+            </div>
+          </div>
+          <div class="swatch-card cursor-hover">
+            <div class="swatch-block" style="background:rgba(255,255,255,0.45);height:70px;"></div>
+            <div class="swatch-info" style="padding:0.6rem 0.75rem;">
+              <div class="swatch-name" style="font-size:0.75rem;">Muted Text</div>
+              <div class="swatch-value">rgba(255,255,255,0.45)</div>
+            </div>
+          </div>
+          <div class="swatch-card cursor-hover">
+            <div class="swatch-block" style="background:white;height:70px;"></div>
+            <div class="swatch-info" style="padding:0.6rem 0.75rem;background:#1a1a2e;">
+              <div class="swatch-name" style="font-size:0.75rem;color:white;">Primary Text</div>
+              <div class="swatch-value" style="color:rgba(255,255,255,0.5);">#FFFFFF</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feedback + Gradients -->
+      <div class="reveal reveal-delay-3">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+          <!-- Feedback -->
+          <div>
+            <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">Feedback</div>
+            <div style="display:flex;flex-direction:column;gap:0.75rem;">
+              <div class="glass-panel" style="padding:1rem 1.25rem;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:0.75rem;">
+                  <div style="width:12px;height:12px;border-radius:50%;background:var(--color-success);box-shadow:0 0 10px var(--color-success);"></div>
+                  <span style="font-size:var(--text-sm);">Success</span>
+                </div>
+                <span style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);">#22C55E · AA ✓</span>
+              </div>
+              <div class="glass-panel" style="padding:1rem 1.25rem;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:0.75rem;">
+                  <div style="width:12px;height:12px;border-radius:50%;background:var(--color-danger);box-shadow:0 0 10px var(--color-danger);"></div>
+                  <span style="font-size:var(--text-sm);">Danger</span>
+                </div>
+                <span style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);">#EF4444 · AA ✓</span>
+              </div>
+              <div class="glass-panel" style="padding:1rem 1.25rem;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:space-between;">
+                <div style="display:flex;align-items:center;gap:0.75rem;">
+                  <div style="width:12px;height:12px;border-radius:50%;background:var(--color-warning);box-shadow:0 0 10px var(--color-warning);"></div>
+                  <span style="font-size:var(--text-sm);">Warning</span>
+                </div>
+                <span style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);">#F59E0B · AA ✓</span>
+              </div>
+            </div>
+          </div>
+          <!-- Gradients -->
+          <div>
+            <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:1.25rem;">Gradientes</div>
+            <div style="display:flex;flex-direction:column;gap:0.75rem;">
+              <div class="swatch-card cursor-hover" style="border-radius:var(--radius-lg);">
+                <div class="swatch-block" style="height:50px;background:linear-gradient(135deg,var(--color-primary),var(--color-accent));border-radius:var(--radius-lg) var(--radius-lg) 0 0;"></div>
+                <div class="swatch-info" style="padding:0.6rem 0.75rem;">
+                  <div class="swatch-name" style="font-size:0.75rem;">Blue → Cyan</div>
+                  <div class="swatch-value">#007BFF → #00C6FF · 135deg</div>
+                </div>
+              </div>
+              <div class="swatch-card cursor-hover" style="border-radius:var(--radius-lg);">
+                <div class="swatch-block" style="height:50px;background:linear-gradient(135deg,var(--color-secondary),var(--color-primary),var(--color-accent));border-radius:var(--radius-lg) var(--radius-lg) 0 0;"></div>
+                <div class="swatch-info" style="padding:0.6rem 0.75rem;">
+                  <div class="swatch-name" style="font-size:0.75rem;">Full Spectrum</div>
+                  <div class="swatch-value">#6C3CF7 → #007BFF → #00C6FF</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================
+       ④ UI COMPONENTS
+  ============================================================ -->
+  <section class="ds-section" id="components">
+    <div class="glow-ring" style="width:600px;height:600px;bottom:0;left:50%;transform:translateX(-50%);opacity:0.07;animation-duration:10s;"></div>
+
+    <div class="max-w-screen-xl">
+      <div class="reveal">
+        <div class="ds-section-label">03 · Components</div>
+        <h2 class="ds-section-title">Componentes UI</h2>
+      </div>
+
+      <!-- ——— BUTTONS ——— -->
+      <div class="reveal reveal-delay-1" style="margin-bottom:4rem;">
+        <h3 style="font-family:var(--font-heading);font-size:var(--text-xl);font-weight:600;margin-bottom:1.5rem;color:white;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:0.75rem;">
+          <span style="color:var(--color-primary);font-family:var(--font-mono);font-size:var(--text-sm);">01.</span> Buttons
+        </h3>
+        <div class="glass-panel" style="padding:2.5rem;border-radius:var(--radius-2xl);">
+          <div style="display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;margin-bottom:2rem;">
+            <!-- Primary CTA -->
+            <button class="btn btn-primary cursor-hover">
+              <div class="btn-inner-track">
+                <div class="btn-conic"></div>
+                <div class="btn-bg"><div class="btn-shimmer"></div><div class="btn-glow"></div></div>
+              </div>
+              <span class="btn-label">Primary CTA</span>
+              <span class="iconify btn-label" data-icon="lucide:zap" data-width="13"></span>
+            </button>
+            <!-- Ghost -->
+            <button class="btn btn-ghost cursor-hover">Ghost Button</button>
+            <!-- Outline Glow -->
+            <button class="btn btn-outline-glow cursor-hover">Outline Glow</button>
+            <!-- Icon btn -->
+            <button class="btn btn-icon cursor-hover">
+              <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
+            </button>
+            <!-- Disabled -->
+            <button class="btn btn-ghost" style="opacity:0.3;pointer-events:none;" disabled>Disabled</button>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;">
+            <span style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Small variants:</span>
+            <button class="btn btn-primary cursor-hover" style="padding:0.55rem 1.25rem;font-size:11px;">
+              <div class="btn-inner-track">
+                <div class="btn-conic"></div>
+                <div class="btn-bg"><div class="btn-shimmer"></div><div class="btn-glow"></div></div>
+              </div>
+              <span class="btn-label">Small</span>
+            </button>
+            <button class="btn btn-ghost cursor-hover" style="padding:0.5rem 1.1rem;font-size:11px;">Ghost SM</button>
+            <button class="btn btn-outline-glow cursor-hover" style="padding:0.5rem 1.1rem;font-size:11px;">Outline SM</button>
+          </div>
+          <!-- Spec table -->
+          <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.07);">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;font-family:var(--font-mono);font-size:9px;color:var(--text-muted);">
+              <div><div style="color:rgba(255,255,255,0.5);margin-bottom:0.25rem;">Border Radius</div>9999px (pill)</div>
+              <div><div style="color:rgba(255,255,255,0.5);margin-bottom:0.25rem;">Padding (default)</div>0.9rem 2.2rem</div>
+              <div><div style="color:rgba(255,255,255,0.5);margin-bottom:0.25rem;">Hover effect</div>scale(1.03) + glow</div>
+              <div><div style="color:rgba(255,255,255,0.5);margin-bottom:0.25rem;">Active</div>scale(0.97)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ——— INPUTS ——— -->
+      <div class="reveal reveal-delay-2" style="margin-bottom:4rem;">
+        <h3 style="font-family:var(--font-heading);font-size:var(--text-xl);font-weight:600;margin-bottom:1.5rem;color:white;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:0.75rem;">
+          <span style="color:var(--color-primary);font-family:var(--font-mono);font-size:var(--text-sm);">02.</span> Inputs
+        </h3>
+        <div class="glass-panel" style="padding:2.5rem;border-radius:var(--radius-2xl);">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;">
+            <!-- Underline inputs -->
+            <div>
+              <div style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:1.5rem;">Underline Style</div>
+              <div class="input-group cursor-hover">
+                <input type="text" id="inp-name" placeholder=" " style="color:white;background:transparent;"/>
+                <label for="inp-name">Full Name</label>
+              </div>
+              <div class="input-group cursor-hover" style="margin-top:0.5rem;">
+                <input type="email" id="inp-email" placeholder=" " style="color:white;background:transparent;"/>
+                <label for="inp-email">Email Address</label>
+              </div>
+              <div class="input-group cursor-hover" style="margin-top:0.5rem;">
+                <textarea id="inp-msg" rows="3" placeholder=" " style="color:white;background:transparent;resize:none;"></textarea>
+                <label for="inp-msg">Message</label>
+              </div>
+            </div>
+            <!-- Glass inputs -->
+            <div>
+              <div style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:1.5rem;">Glass Style</div>
+              <div style="display:flex;flex-direction:column;gap:1rem;">
+                <input class="input-glass cursor-hover" type="text" placeholder="Full Name"/>
+                <input class="input-glass cursor-hover" type="email" placeholder="Email Address"/>
+                <div style="position:relative;">
+                  <input class="input-glass cursor-hover" type="text" placeholder="Search..." style="padding-left:2.5rem !important;"/>
+                  <span class="iconify" data-icon="lucide:search" data-width="14" style="position:absolute;left:0.85rem;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none;"></span>
+                </div>
+                <select class="input-glass cursor-hover" style="appearance:none;-webkit-appearance:none;">
+                  <option value="" disabled selected>Select option…</option>
+                  <option>Option A</option>
+                  <option>Option B</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ——— CARDS ——— -->
+      <div class="reveal reveal-delay-3" style="margin-bottom:4rem;">
+        <h3 style="font-family:var(--font-heading);font-size:var(--text-xl);font-weight:600;margin-bottom:1.5rem;color:white;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:0.75rem;">
+          <span style="color:var(--color-primary);font-family:var(--font-mono);font-size:var(--text-sm);">03.</span> Cards
+        </h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
+          <!-- Feature card -->
+          <div class="card-feature cursor-hover reveal reveal-delay-1">
+            <div style="width:44px;height:44px;border-radius:var(--radius-lg);background:rgba(var(--color-primary-rgb),0.12);border:1px solid rgba(var(--color-primary-rgb),0.25);display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;">
+              <span class="iconify" data-icon="lucide:layers" data-width="20" style="color:var(--color-primary);"></span>
+            </div>
+            <h4 style="font-family:var(--font-heading);font-weight:600;font-size:1.05rem;margin-bottom:0.6rem;">Liquid Glass</h4>
+            <p style="font-size:var(--text-sm);color:rgba(255,255,255,0.5);line-height:1.6;">Efeito de vidro translúcido com backdrop-filter e reflexos dinâmicos.</p>
+            <div style="margin-top:1.5rem;display:flex;align-items:center;gap:0.5rem;color:var(--color-primary);font-size:var(--text-sm);font-weight:600;cursor:pointer;" class="cursor-hover">
+              Saiba mais <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+            </div>
+            <div class="beam-border-v" style="height:100%;"></div>
+          </div>
+          <!-- Stat card -->
+          <div class="card-stat cursor-hover reveal reveal-delay-2">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;">
+              <span style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);">Revenue</span>
+              <span class="badge badge-success"><span class="badge-dot"></span>+12.5%</span>
+            </div>
+            <div style="font-family:var(--font-heading);font-size:var(--text-4xl);font-weight:800;color:white;letter-spacing:-0.03em;">$48.2K</div>
+            <div style="margin-top:1rem;">
+              <div class="progress-bar"><div class="progress-fill" style="width:72%;"></div></div>
+              <div style="font-size:10px;color:var(--text-muted);margin-top:0.4rem;font-family:var(--font-mono);">72% of goal · $66.9K</div>
+            </div>
+          </div>
+          <!-- Glass panel card -->
+          <div class="glass-panel cursor-hover reveal reveal-delay-3" style="padding:2rem;border-radius:var(--radius-xl);">
+            <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem;">
+              <img src="templates/glass-effect2/assets/photo-1616469829581-73993eb86b_bcf29263e0b5.avif" alt="avatar" style="width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid rgba(var(--color-primary-rgb),0.4);"/>
+              <div>
+                <div style="font-weight:600;font-size:var(--text-sm);">Alex Morgan</div>
+                <div style="font-size:10px;color:var(--text-muted);">Design Lead</div>
+              </div>
+              <span class="badge badge-success" style="margin-left:auto;"><span class="badge-dot"></span>Online</span>
+            </div>
+            <p style="font-size:var(--text-sm);color:rgba(255,255,255,0.55);line-height:1.6;">"Este design system elevou nosso produto a um nível completamente novo."</p>
+            <div style="margin-top:1.25rem;display:flex;gap:0.25rem;">
+              <span class="iconify" data-icon="lucide:star" data-width="14" style="color:var(--color-warning);"></span>
+              <span class="iconify" data-icon="lucide:star" data-width="14" style="color:var(--color-warning);"></span>
+              <span class="iconify" data-icon="lucide:star" data-width="14" style="color:var(--color-warning);"></span>
+              <span class="iconify" data-icon="lucide:star" data-width="14" style="color:var(--color-warning);"></span>
+              <span class="iconify" data-icon="lucide:star" data-width="14" style="color:var(--color-warning);"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ——— NAVBAR ——— -->
+      <div class="reveal reveal-delay-1" style="margin-bottom:4rem;">
+        <h3 style="font-family:var(--font-heading);font-size:var(--text-xl);font-weight:600;margin-bottom:1.5rem;color:white;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:0.75rem;">
+          <span style="color:var(--color-primary);font-family:var(--font-mono);font-size:var(--text-sm);">04.</span> Navbar
+        </h3>
+        <div class="glass-panel" style="padding:0;border-radius:var(--radius-xl);overflow:hidden;">
+          <!-- Nav demo -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.75rem;background:rgba(5,10,20,0.5);">
+            <div style="display:flex;align-items:center;gap:0.6rem;">
+              <div style="width:28px;height:28px;border-radius:8px;background:var(--color-primary);display:flex;align-items:center;justify-content:center;box-shadow:0 0 15px rgba(var(--color-primary-rgb),0.5);">
+                <span class="iconify" data-icon="lucide:layers" data-width="14" style="color:white;"></span>
+              </div>
+              <span style="font-family:var(--font-heading);font-weight:700;font-size:0.95rem;">Brand</span>
+            </div>
+            <div style="display:flex;gap:2rem;">
+              <a href="#" style="font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.3s;" class="cursor-hover">Home</a>
+              <a href="#" style="font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.1em;color:white;text-decoration:none;" class="cursor-hover">Products</a>
+              <a href="#" style="font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.5);text-decoration:none;" class="cursor-hover">Pricing</a>
+              <a href="#" style="font-family:var(--font-mono);font-size:var(--text-xs);text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.5);text-decoration:none;" class="cursor-hover">About</a>
+            </div>
+            <div style="display:flex;gap:0.75rem;align-items:center;">
+              <button class="btn btn-ghost cursor-hover" style="padding:0.5rem 1.1rem;font-size:11px;">Login</button>
+              <button class="btn btn-primary cursor-hover" style="padding:0.5rem 1.25rem;font-size:11px;">
+                <div class="btn-inner-track"><div class="btn-conic"></div><div class="btn-bg"><div class="btn-shimmer"></div><div class="btn-glow"></div></div></div>
+                <span class="btn-label">Sign Up</span>
+              </button>
+            </div>
+          </div>
+          <!-- Active indicator -->
+          <div style="height:2px;background:linear-gradient(to right, transparent, var(--color-primary), var(--color-accent), transparent);"></div>
+        </div>
+        <div style="margin-top:0.75rem;font-family:var(--font-mono);font-size:9px;color:var(--text-muted);">
+          CSS: backdrop-filter:blur(20px) · position:fixed · z-index:200 · transition on scroll
+        </div>
+      </div>
+
+      <!-- ——— BADGES ——— -->
+      <div class="reveal reveal-delay-2" style="margin-bottom:4rem;">
+        <h3 style="font-family:var(--font-heading);font-size:var(--text-xl);font-weight:600;margin-bottom:1.5rem;color:white;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:0.75rem;">
+          <span style="color:var(--color-primary);font-family:var(--font-mono);font-size:var(--text-sm);">05.</span> Badges &amp; Status
+        </h3>
+        <div class="glass-panel" style="padding:2rem;border-radius:var(--radius-xl);">
+          <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-bottom:1.75rem;">
+            <span class="badge badge-primary"><span class="badge-dot"></span>Primary</span>
+            <span class="badge badge-secondary">Secondary</span>
+            <span class="badge badge-accent">Accent</span>
+            <span class="badge badge-success"><span class="badge-dot"></span>Success</span>
+            <span class="badge badge-danger">Danger</span>
+            <span class="badge badge-neutral">Neutral</span>
+            <span class="badge" style="background:rgba(249,115,22,0.12);color:#FB923C;border:1px solid rgba(249,115,22,0.3);">Warning</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+            <span class="badge badge-primary" style="padding:0.2rem 0.6rem;font-size:10px;">v1.0</span>
+            <span class="badge badge-success" style="padding:0.2rem 0.6rem;font-size:10px;"><span class="badge-dot"></span>Live</span>
+            <span class="badge badge-danger" style="padding:0.2rem 0.6rem;font-size:10px;">Beta</span>
+            <span class="badge badge-neutral" style="padding:0.2rem 0.6rem;font-size:10px;">Deprecated</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ——— TOOLTIPS ——— -->
+      <div class="reveal reveal-delay-3" style="margin-bottom:4rem;">
+        <h3 style="font-family:var(--font-heading);font-size:var(--text-xl);font-weight:600;margin-bottom:1.5rem;color:white;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:0.75rem;">
+          <span style="color:var(--color-primary);font-family:var(--font-mono);font-size:var(--text-sm);">06.</span> Tooltips
+        </h3>
+        <div class="glass-panel" style="padding:3rem;border-radius:var(--radius-xl);display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;align-items:flex-end;">
+          <div class="tooltip-wrapper">
+            <button class="btn btn-primary cursor-hover">
+              <div class="btn-inner-track"><div class="btn-conic"></div><div class="btn-bg"><div class="btn-shimmer"></div><div class="btn-glow"></div></div></div>
+              <span class="btn-label">Hover Me</span>
+            </button>
+            <div class="tooltip-box">Primary Action Tooltip ✨</div>
+          </div>
+          <div class="tooltip-wrapper">
+            <button class="btn btn-ghost cursor-hover">Ghost</button>
+            <div class="tooltip-box">Ghost button description</div>
+          </div>
+          <div class="tooltip-wrapper">
+            <button class="btn btn-icon cursor-hover">
+              <span class="iconify" data-icon="lucide:info" data-width="16"></span>
+            </button>
+            <div class="tooltip-box">More information here</div>
+          </div>
+          <div class="tooltip-wrapper">
+            <span class="badge badge-primary cursor-hover" style="cursor:pointer;">v1.0</span>
+            <div class="tooltip-box">Versão atual do sistema</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ——— MODAL ——— -->
+      <div class="reveal reveal-delay-4" style="margin-bottom:4rem;">
+        <h3 style="font-family:var(--font-heading);font-size:var(--text-xl);font-weight:600;margin-bottom:1.5rem;color:white;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:0.75rem;">
+          <span style="color:var(--color-primary);font-family:var(--font-mono);font-size:var(--text-sm);">07.</span> Modal
+        </h3>
+        <div class="glass-panel" style="padding:2rem;border-radius:var(--radius-xl);text-align:center;">
+          <p style="color:rgba(255,255,255,0.55);margin-bottom:1.5rem;font-size:var(--text-sm);">Click to preview the modal component</p>
+          <button class="btn btn-outline-glow cursor-hover" onclick="document.getElementById('demo-modal').classList.add('open')">
+            Open Modal Demo
+          </button>
+        </div>
+      </div>
+
+      <!-- ——— SECTIONS DEMO ——— -->
+      <div class="reveal reveal-delay-5" style="margin-bottom:2rem;">
+        <h3 style="font-family:var(--font-heading);font-size:var(--text-xl);font-weight:600;margin-bottom:1.5rem;color:white;border-bottom:1px solid rgba(255,255,255,0.07);padding-bottom:0.75rem;">
+          <span style="color:var(--color-primary);font-family:var(--font-mono);font-size:var(--text-sm);">08.</span> Section Backgrounds
+        </h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+          <div style="height:120px;border-radius:var(--radius-xl);background:radial-gradient(ellipse at 50% 0%,rgba(var(--color-secondary-rgb),0.2),transparent 70%);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">bg-section-alt</span>
+          </div>
+          <div style="height:120px;border-radius:var(--radius-xl);background:radial-gradient(ellipse at 100% 50%,rgba(var(--color-accent-rgb),0.15),transparent 60%);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;">
+            <span style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">bg-section-accent</span>
+          </div>
+          <div class="grid-bg" style="height:120px;border-radius:var(--radius-xl);border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;background-color:rgba(255,255,255,0.01);">
+            <span style="font-family:var(--font-mono);font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">grid-bg</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL INSTANCE -->
+  <div class="modal-backdrop" id="demo-modal" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="modal-panel">
+      <button class="modal-close cursor-hover" onclick="document.getElementById('demo-modal').classList.remove('open')">✕</button>
+      <!-- Glow decoration -->
+      <div class="glow-ring" style="width:200px;height:200px;top:-50px;right:-50px;opacity:0.2;animation-duration:4s;"></div>
+      <div style="margin-bottom:1.5rem;">
+        <div style="width:44px;height:44px;border-radius:var(--radius-lg);background:rgba(var(--color-primary-rgb),0.15);border:1px solid rgba(var(--color-primary-rgb),0.3);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+          <span class="iconify" data-icon="lucide:shield-check" data-width="22" style="color:var(--color-primary);"></span>
+        </div>
+        <h3 style="font-family:var(--font-heading);font-size:1.35rem;font-weight:700;margin-bottom:0.5rem;">Confirmar Ação</h3>
+        <p style="color:rgba(255,255,255,0.55);font-size:var(--text-sm);line-height:1.7;">Esta é uma demonstração do componente Modal do design system. Ele usa backdrop-filter, glass morphism e animações de entrada suaves.</p>
+      </div>
+      <div class="input-group" style="margin-bottom:1rem;">
+        <input type="text" id="modal-input" placeholder=" " style="color:white;background:transparent;"/>
+        <label for="modal-input">Confirmação</label>
+      </div>
+      <div style="display:flex;gap:0.75rem;justify-content:flex-end;margin-top:1.5rem;">
+        <button class="btn btn-ghost cursor-hover" onclick="document.getElementById('demo-modal').classList.remove('open')">Cancelar</button>
+        <button class="btn btn-primary cursor-hover" onclick="document.getElementById('demo-modal').classList.remove('open')">
+          <div class="btn-inner-track"><div class="btn-conic"></div><div class="btn-bg"><div class="btn-shimmer"></div><div class="btn-glow"></div></div></div>
+          <span class="btn-label">Confirmar</span>
+          <span class="iconify btn-label" data-icon="lucide:check" data-width="14"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================
+       ⑤ ICONS
+  ============================================================ -->
+  <section class="ds-section bg-section-alt" id="icons">
+    <div class="glow-ring" style="width:400px;height:400px;top:30%;right:-80px;background:radial-gradient(circle,var(--color-primary),transparent 70%);opacity:0.08;animation-duration:9s;"></div>
+
+    <div class="max-w-screen-xl">
+      <div class="reveal">
+        <div class="ds-section-label">04 · Foundations</div>
+        <h2 class="ds-section-title">Sistema de Ícones</h2>
+      </div>
+
+      <!-- Icon color variants -->
+      <div class="reveal reveal-delay-1 glass-panel" style="padding:1.75rem;border-radius:var(--radius-xl);margin-bottom:2rem;">
+        <div style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:1rem;">Color Variants · Lucide Icons via Iconify</div>
+        <div style="display:flex;gap:2rem;align-items:center;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <span class="iconify" data-icon="lucide:heart" data-width="22" style="color:white;"></span>
+            <span style="font-size:10px;color:var(--text-muted);font-family:var(--font-mono);">text-white</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <span class="iconify" data-icon="lucide:heart" data-width="22" style="color:var(--color-primary);"></span>
+            <span style="font-size:10px;color:var(--text-muted);font-family:var(--font-mono);">text-primary</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <span class="iconify" data-icon="lucide:heart" data-width="22" style="color:#A78BFA;"></span>
+            <span style="font-size:10px;color:var(--text-muted);font-family:var(--font-mono);">text-purple</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <span class="iconify" data-icon="lucide:heart" data-width="22" style="color:var(--color-accent);"></span>
+            <span style="font-size:10px;color:var(--text-muted);font-family:var(--font-mono);">text-accent</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <span class="iconify" data-icon="lucide:heart" data-width="22" style="color:var(--color-success);"></span>
+            <span style="font-size:10px;color:var(--text-muted);font-family:var(--font-mono);">text-success</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.6rem;">
+            <span class="iconify" data-icon="lucide:heart" data-width="22" style="color:rgba(255,255,255,0.35);"></span>
+            <span style="font-size:10px;color:var(--text-muted);font-family:var(--font-mono);">text-muted</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Icon grid -->
+      <div class="reveal reveal-delay-2" style="display:grid;grid-template-columns:repeat(8,1fr);gap:0.75rem;margin-bottom:2rem;">
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:arrow-up-right" data-width="22"></span><span class="icon-label">arrow-up-right</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:search" data-width="22"></span><span class="icon-label">search</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:compass" data-width="22"></span><span class="icon-label">compass</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:palette" data-width="22"></span><span class="icon-label">palette</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:code-2" data-width="22"></span><span class="icon-label">code-2</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:check-circle" data-width="22"></span><span class="icon-label">check-circle</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:heart" data-width="22"></span><span class="icon-label">heart</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:play" data-width="22"></span><span class="icon-label">play</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:zap" data-width="22"></span><span class="icon-label">zap</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:layers" data-width="22"></span><span class="icon-label">layers</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:shield" data-width="22"></span><span class="icon-label">shield</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:star" data-width="22"></span><span class="icon-label">star</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:settings" data-width="22"></span><span class="icon-label">settings</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:bell" data-width="22"></span><span class="icon-label">bell</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:user" data-width="22"></span><span class="icon-label">user</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:mail" data-width="22"></span><span class="icon-label">mail</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:phone" data-width="22"></span><span class="icon-label">phone</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:map-pin" data-width="22"></span><span class="icon-label">map-pin</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:calendar" data-width="22"></span><span class="icon-label">calendar</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:trending-up" data-width="22"></span><span class="icon-label">trending-up</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:share-2" data-width="22"></span><span class="icon-label">share-2</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:download" data-width="22"></span><span class="icon-label">download</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:upload" data-width="22"></span><span class="icon-label">upload</span></div>
+        <div class="icon-cell cursor-hover"><span class="iconify" data-icon="lucide:external-link" data-width="22"></span><span class="icon-label">external-link</span></div>
+      </div>
+
+      <!-- Icon usage examples -->
+      <div class="reveal reveal-delay-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+        <div class="glass-panel" style="padding:1.25rem;border-radius:var(--radius-lg);display:flex;align-items:center;gap:0.75rem;">
+          <span class="iconify" data-icon="lucide:phone" data-width="18" style="color:var(--color-primary);"></span>
+          <span style="font-size:var(--text-sm);">Icon in list item</span>
+        </div>
+        <div class="glass-panel" style="padding:1.25rem;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:var(--text-sm);color:var(--text-muted);">Icon button</span>
+          <button class="btn-icon cursor-hover" style="display:flex;align-items:center;justify-content:center;">
+            <span class="iconify" data-icon="lucide:arrow-right" data-width="14"></span>
+          </button>
+        </div>
+        <div class="glass-panel" style="padding:1.25rem;border-radius:var(--radius-lg);">
+          <div style="width:48px;height:48px;background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;margin-bottom:0.75rem;box-shadow:inset 0 1px 0 rgba(255,255,255,0.1);">
+            <span class="iconify" data-icon="lucide:zap" data-width="22" style="color:var(--color-primary);"></span>
+          </div>
+          <span style="font-size:10px;color:var(--text-muted);">Icon in gradient container</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================
+       ⑥ ANIMATIONS
+  ============================================================ -->
+  <section class="ds-section" id="animations">
+    <div class="glow-ring" style="width:500px;height:500px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,var(--color-secondary),transparent 70%);opacity:0.07;animation-duration:11s;"></div>
+
+    <div class="max-w-screen-xl">
+      <div class="reveal">
+        <div class="ds-section-label">05 · Motion</div>
+        <h2 class="ds-section-title">Animações</h2>
+      </div>
+
+      <!-- Easing reference -->
+      <div class="reveal reveal-delay-1 glass-panel" style="padding:1.75rem;border-radius:var(--radius-xl);margin-bottom:2.5rem;">
+        <div style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:1rem;">Curvas de Easing</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
+          <div>
+            <div style="font-size:var(--text-xs);font-weight:600;margin-bottom:0.25rem;">--ease-smooth</div>
+            <div style="font-family:var(--font-mono);font-size:9px;color:var(--color-primary);">cubic-bezier(0.4, 0, 0.2, 1)</div>
+            <div style="font-size:10px;color:var(--text-muted);margin-top:0.2rem;">Padrão — suave e preciso</div>
+          </div>
+          <div style="border-left:1px solid rgba(255,255,255,0.07);padding-left:1.5rem;">
+            <div style="font-size:var(--text-xs);font-weight:600;margin-bottom:0.25rem;">--ease-spring</div>
+            <div style="font-family:var(--font-mono);font-size:9px;color:var(--color-accent);">cubic-bezier(0.23, 1, 0.32, 1)</div>
+            <div style="font-size:10px;color:var(--text-muted);margin-top:0.2rem;">Reveal & scroll animations</div>
+          </div>
+          <div style="border-left:1px solid rgba(255,255,255,0.07);padding-left:1.5rem;">
+            <div style="font-size:var(--text-xs);font-weight:600;margin-bottom:0.25rem;">--ease-elastic</div>
+            <div style="font-family:var(--font-mono);font-size:9px;color:#A78BFA;">cubic-bezier(0.34, 1.56, 0.64, 1)</div>
+            <div style="font-size:10px;color:var(--text-muted);margin-top:0.2rem;">Buttons & hover effects</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Animation demos grid -->
+      <div class="reveal reveal-delay-2" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;">
+
+        <!-- Blob Float -->
+        <div class="anim-demo-card">
+          <div style="width:60px;height:60px;background:linear-gradient(135deg,var(--color-primary),var(--color-accent));border-radius:50%;animation:blob-float 4s ease-in-out infinite;"></div>
+          <div class="anim-demo-label">blob-float</div>
+        </div>
+
+        <!-- Glow Pulse -->
+        <div class="anim-demo-card">
+          <div style="width:50px;height:50px;background:var(--color-primary);border-radius:50%;animation:glow-pulse 2s ease-in-out infinite;box-shadow:0 0 30px var(--color-primary);"></div>
+          <div class="anim-demo-label">glow-pulse</div>
+        </div>
+
+        <!-- Spin Slow -->
+        <div class="anim-demo-card">
+          <div style="width:50px;height:50px;border:2px solid var(--color-primary);border-top-color:transparent;border-radius:50%;animation:spin-slow 1s linear infinite;"></div>
+          <div class="anim-demo-label">spin-slow</div>
+        </div>
+
+        <!-- Morph Blob -->
+        <div class="anim-demo-card">
+          <div style="width:60px;height:60px;background:linear-gradient(135deg,var(--color-secondary),var(--color-primary));animation:morph-blob 6s ease-in-out infinite;"></div>
+          <div class="anim-demo-label">morph-blob</div>
+        </div>
+
+        <!-- Marquee -->
+        <div class="anim-demo-card" style="overflow:hidden;">
+          <div style="white-space:nowrap;animation:marquee-run 4s linear infinite;display:flex;gap:1rem;font-family:var(--font-mono);font-size:11px;color:var(--color-primary);">
+            <span>MARQUEE</span><span>·</span><span>MOTION</span><span>·</span><span>SCROLL</span><span>·</span><span>MARQUEE</span><span>·</span><span>MOTION</span>
+          </div>
+          <div class="anim-demo-label">marquee-run</div>
+        </div>
+
+        <!-- Radar Pulse -->
+        <div class="anim-demo-card">
+          <div style="position:relative;width:50px;height:50px;display:flex;align-items:center;justify-content:center;">
+            <div style="position:absolute;width:100%;height:100%;border-radius:50%;border:2px solid var(--color-accent);animation:radar-pulse 2s ease-out infinite;"></div>
+            <div style="position:absolute;width:100%;height:100%;border-radius:50%;border:2px solid var(--color-accent);animation:radar-pulse 2s ease-out infinite 0.5s;"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--color-accent);"></div>
+          </div>
+          <div class="anim-demo-label">radar-pulse</div>
+        </div>
+
+        <!-- Beam Drop -->
+        <div class="anim-demo-card" style="overflow:hidden;">
+          <div style="position:relative;width:2px;height:80%;background:rgba(255,255,255,0.05);overflow:hidden;">
+            <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent,var(--color-primary),transparent);animation:beam-drop 2s ease-in-out infinite;"></div>
+          </div>
+          <div class="anim-demo-label">beam-drop</div>
+        </div>
+
+        <!-- Bounce Y -->
+        <div class="anim-demo-card">
+          <span class="iconify" data-icon="lucide:chevrons-down" data-width="28" style="color:white;animation:bounce-y 1.5s ease-in-out infinite;"></span>
+          <div class="anim-demo-label">bounce-y</div>
+        </div>
+
+        <!-- Shake -->
+        <div class="anim-demo-card" id="shake-card" style="cursor:pointer;" onclick="this.querySelector('.shake-el').style.animation='none';setTimeout(()=>{this.querySelector('.shake-el').style.animation='shake 0.5s ease-out'},50)">
+          <div class="shake-el" style="width:44px;height:44px;border-radius:var(--radius-lg);background:rgba(var(--color-danger-rgb,239,68,68),0.15);border:1px solid rgba(239,68,68,0.4);display:flex;align-items:center;justify-content:center;">
+            <span class="iconify" data-icon="lucide:alert-triangle" data-width="22" style="color:#F87171;"></span>
+          </div>
+          <div class="anim-demo-label">shake (click)</div>
+        </div>
+
+        <!-- Float Tags -->
+        <div class="anim-demo-card">
+          <div style="font-family:var(--font-mono);font-size:10px;color:var(--color-primary);background:rgba(var(--color-primary-rgb),0.1);padding:0.4rem 0.75rem;border-radius:var(--radius-md);border:1px solid rgba(var(--color-primary-rgb),0.2);animation:float-tag-1 4s ease-in-out infinite;">float-tag</div>
+          <div class="anim-demo-label">float-tag</div>
+        </div>
+
+        <!-- Scan Line -->
+        <div class="anim-demo-card" style="overflow:hidden;">
+          <div style="width:80%;height:3px;background:rgba(255,255,255,0.06);border-radius:99px;position:relative;overflow:hidden;">
+            <div style="position:absolute;top:0;left:-30%;width:30%;height:100%;background:linear-gradient(to right,transparent,var(--color-primary),transparent);animation:scan-line 2s linear infinite;"></div>
+          </div>
+          <div class="anim-demo-label">scan-line</div>
+        </div>
+
+        <!-- Progress Grow -->
+        <div class="anim-demo-card">
+          <div style="width:80%;">
+            <div class="progress-bar"><div class="progress-fill" id="prog-anim" style="width:65%;"></div></div>
+          </div>
+          <div class="anim-demo-label">progress-grow</div>
+        </div>
+      </div>
+
+      <!-- Parallax note -->
+      <div class="reveal reveal-delay-4 glass-panel" style="padding:1.5rem;border-radius:var(--radius-xl);">
+        <div style="display:flex;align-items:flex-start;gap:1rem;">
+          <span class="iconify" data-icon="lucide:layers" data-width="20" style="color:var(--color-primary);flex-shrink:0;margin-top:0.1rem;"></span>
+          <div>
+            <div style="font-weight:600;margin-bottom:0.35rem;">Parallax Engine</div>
+            <p style="font-size:var(--text-sm);color:rgba(255,255,255,0.55);line-height:1.6;">Adicione <code style="background:rgba(255,255,255,0.08);padding:0.1rem 0.4rem;border-radius:4px;font-family:var(--font-mono);font-size:11px;">class="parallax-element"</code> e <code style="background:rgba(255,255,255,0.08);padding:0.1rem 0.4rem;border-radius:4px;font-family:var(--font-mono);font-size:11px;">data-parallax-speed="0.1"</code> para efeito de profundidade ao scroll.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================================
+       ⑦ QUICK REFERENCE — TOKEN TABLE
+  ============================================================ -->
+  <section class="ds-section bg-section-alt" id="tokens">
+    <div class="max-w-screen-xl">
+      <div class="reveal">
+        <div class="ds-section-label">06 · Reference</div>
+        <h2 class="ds-section-title">Tokens Rápidos</h2>
+      </div>
+
+      <div class="reveal reveal-delay-1" style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
+        <!-- CSS Variables -->
+        <div class="glass-panel" style="padding:2rem;border-radius:var(--radius-xl);position:relative;overflow:hidden;">
+          <div class="beam-border-v"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:0.15em;color:var(--color-primary);margin-bottom:1rem;">CSS Custom Properties</div>
+          <pre style="font-family:var(--font-mono);font-size:11px;line-height:1.9;color:rgba(255,255,255,0.65);overflow-x:auto;"><code><span style="color:#A78BFA;">--color-primary</span>:    <span style="color:var(--color-primary);">#007BFF</span>
+<span style="color:#A78BFA;">--color-secondary</span>:  <span style="color:var(--color-secondary);">#6C3CF7</span>
+<span style="color:#A78BFA;">--color-accent</span>:     <span style="color:var(--color-accent);">#00C6FF</span>
+<span style="color:#A78BFA;">--bg-base</span>:          <span style="color:#E2E8F0;">#050A14</span>
+<span style="color:#A78BFA;">--font-heading</span>:     <span style="color:#E2E8F0;">Montserrat</span>
+<span style="color:#A78BFA;">--font-body</span>:        <span style="color:#E2E8F0;">Open Sans</span>
+<span style="color:#A78BFA;">--font-mono</span>:        <span style="color:#E2E8F0;">Space Mono</span>
+<span style="color:#A78BFA;">--ease-smooth</span>:      <span style="color:#E2E8F0;">cubic-bezier(0.4,0,0.2,1)</span>
+<span style="color:#A78BFA;">--ease-spring</span>:      <span style="color:#E2E8F0;">cubic-bezier(0.23,1,0.32,1)</span>
+<span style="color:#A78BFA;">--ease-elastic</span>:     <span style="color:#E2E8F0;">cubic-bezier(0.34,1.56,0.64,1)</span>
+<span style="color:#A78BFA;">--radius-full</span>:      <span style="color:#E2E8F0;">9999px</span>
+<span style="color:#A78BFA;">--glow-primary</span>:     <span style="color:#E2E8F0;">0 0 40px rgba(0,123,255,0.35)</span></code></pre>
+        </div>
+        <!-- Key Classes -->
+        <div class="glass-panel" style="padding:2rem;border-radius:var(--radius-xl);position:relative;overflow:hidden;">
+          <div class="beam-border-h"></div>
+          <div style="font-family:var(--font-mono);font-size:9px;text-transform:uppercase;letter-spacing:0.15em;color:var(--color-accent);margin-bottom:1rem;">Key CSS Classes</div>
+          <div style="display:flex;flex-direction:column;gap:0.75rem;">
+            <div style="display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <code style="font-family:var(--font-mono);font-size:11px;color:var(--color-primary);">.glass-panel</code>
+              <span style="font-size:10px;color:var(--text-muted);">Glassmorphism card</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <code style="font-family:var(--font-mono);font-size:11px;color:var(--color-primary);">.reveal</code>
+              <span style="font-size:10px;color:var(--text-muted);">Scroll reveal animation</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <code style="font-family:var(--font-mono);font-size:11px;color:var(--color-primary);">.split-line</code>
+              <span style="font-size:10px;color:var(--text-muted);">Hero text line reveal</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <code style="font-family:var(--font-mono);font-size:11px;color:var(--color-primary);">.liquid-blob</code>
+              <span style="font-size:10px;color:var(--text-muted);">Ambient bg blobs</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <code style="font-family:var(--font-mono);font-size:11px;color:var(--color-primary);">.btn-primary</code>
+              <span style="font-size:10px;color:var(--text-muted);">CTA with conic border</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <code style="font-family:var(--font-mono);font-size:11px;color:var(--color-primary);">.card-feature</code>
+              <span style="font-size:10px;color:var(--text-muted);">Feature card w/ radial hover</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+              <code style="font-family:var(--font-mono);font-size:11px;color:var(--color-primary);">.cursor-hover</code>
+              <span style="font-size:10px;color:var(--text-muted);">Custom cursor expand trigger</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;padding:0.6rem 0;">
+              <code style="font-family:var(--font-mono);font-size:11px;color:var(--color-primary);">.parallax-element</code>
+              <span style="font-size:10px;color:var(--text-muted);">Scroll parallax target</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer style="border-top:1px solid rgba(255,255,255,0.07);padding:3rem 2rem;text-align:center;position:relative;overflow:hidden;">
+    <div class="glow-ring" style="width:300px;height:300px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.08;animation-duration:8s;"></div>
+    <div style="position:relative;z-index:2;">
+      <div style="font-family:var(--font-heading);font-weight:900;font-size:var(--text-2xl);letter-spacing:-0.03em;text-transform:uppercase;margin-bottom:0.5rem;">
+        <span class="text-gradient">Design System · Liquid Glass</span>
+      </div>
+      <div style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-muted);margin-bottom:2rem;letter-spacing:0.1em;text-transform:uppercase;">
+        v1.0 · Montserrat + Open Sans + Space Mono · Iconify Lucide
+      </div>
+      <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
+        <a href="#typography" style="font-family:var(--font-mono);font-size:var(--text-xs);color:rgba(255,255,255,0.4);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;transition:color 0.3s;" class="cursor-hover">Typography</a>
+        <span style="color:rgba(255,255,255,0.15);">·</span>
+        <a href="#colors" style="font-family:var(--font-mono);font-size:var(--text-xs);color:rgba(255,255,255,0.4);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;" class="cursor-hover">Colors</a>
+        <span style="color:rgba(255,255,255,0.15);">·</span>
+        <a href="#components" style="font-family:var(--font-mono);font-size:var(--text-xs);color:rgba(255,255,255,0.4);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;" class="cursor-hover">Components</a>
+        <span style="color:rgba(255,255,255,0.15);">·</span>
+        <a href="#icons" style="font-family:var(--font-mono);font-size:var(--text-xs);color:rgba(255,255,255,0.4);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;" class="cursor-hover">Icons</a>
+        <span style="color:rgba(255,255,255,0.15);">·</span>
+        <a href="#animations" style="font-family:var(--font-mono);font-size:var(--text-xs);color:rgba(255,255,255,0.4);text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;" class="cursor-hover">Animations</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+  ============================================================ -->
+  <script>
+    // ——— CUSTOM CURSOR ———
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('.cursor-hover').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+    });
+
+    // ——— NAVBAR SCROLLED ———
+    const nav = document.getElementById('ds-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ——— REVEAL ON SCROLL ———
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.reveal');
+      const windowHeight = window.innerHeight;
+      const threshold = 100;
+      reveals.forEach(el => {
+        if (el.getBoundingClientRect().top < windowHeight - threshold) {
+          el.classList.add('active');
         }
+      });
+    }
+    window.addEventListener('scroll', revealOnScroll, { passive: true });
+    revealOnScroll();
 
-        // INTERSECTION OBSERVER FOR REVEALS
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
+    // ——— HERO REVEAL ON LOAD ———
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('hero').classList.add('hero-revealed');
+        revealOnScroll();
+      }, 300);
+    });
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    entry.target.classList.add('reveal-active');
+    // ——— PARALLAX ENGINE ———
+    let ticking = false;
+    function updateParallax() {
+      const els = document.querySelectorAll('.parallax-element');
+      const wh  = window.innerHeight;
+      els.forEach(el => {
+        const speed = parseFloat(el.getAttribute('data-parallax-speed')) || 0.1;
+        const rect  = el.getBoundingClientRect();
+        if (rect.top < wh && rect.bottom > 0) {
+          const center  = wh / 2;
+          const elCenter = rect.top + rect.height / 2;
+          const yPos = (center - elCenter) * speed;
+          el.style.transform = `translateY(${yPos}px)`;
+        }
+      });
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }, { passive: true });
+    updateParallax();
 
-                    // Stagger children if any
-                    const children = entry.target.querySelectorAll('.reveal');
-                    children.forEach((child, index) => {
-                        setTimeout(() => {
-                            child.classList.add('active');
-                        }, index * 100);
-                    });
-                }
-            });
-        }, observerOptions);
+    // ——— CARD FEATURE — RADIAL MOUSE GLOW ———
+    document.querySelectorAll('.card-feature').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+        const y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1);
+        card.style.setProperty('--mx', x + '%');
+        card.style.setProperty('--my', y + '%');
+      });
+    });
 
-        document.querySelectorAll('.reveal, .text-reveal-wrapper, section').forEach(el => {
-            observer.observe(el);
-        });
+    // ——— MARQUEE: Build content from template ———
+    (function buildMarquee() {
+      const tmpl = document.getElementById('marquee-content');
+      if (!tmpl) return;
+      const track = document.querySelector('.marquee-track');
+      const fragment = tmpl.content.cloneNode(true);
+      const fragment2 = tmpl.content.cloneNode(true);
+      track.appendChild(fragment);
+      track.appendChild(fragment2); // duplicate for seamless loop
+    })();
 
-        // PARALLAX EFFECT FOR HERO
-        window.addEventListener('scroll', () => {
-            const scroll = window.scrollY;
-            const heroContent = document.querySelector('h1');
-            if (heroContent) {
-                heroContent.style.transform = `translateY(${scroll * 0.1}px)`;
-            }
-        });
-
-    </script>
+    // ——— PROGRESS BAR RESET ON REVEAL ———
+    const progObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const fill = document.getElementById('prog-anim');
+          if (fill) {
+            fill.style.animation = 'none';
+            fill.offsetHeight; // reflow
+            fill.style.animation = '';
+          }
+        }
+      });
+    }, { threshold: 0.5 });
+    const progEl = document.getElementById('prog-anim');
+    if (progEl) progObs.observe(progEl.closest('.anim-demo-card'));
+  </script>
 </body>
-
 </html>

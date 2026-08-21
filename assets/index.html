@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1234 Solution | Estratégia, Gestão e Governança</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600;1,9..144,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Iconify -->
+  <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       1. TOKENS E VARIÁVEIS OFICIAIS
+       ========================================================================== */
+    :root {
+      /* Cores principais */
+      --navy: #0E1B2B;
+      --navy-2: #16283F;
+      --navy-3: #1E3350;
+      --gold: #C6A45A;
+      --gold-2: #E4C787;
+      --gold-deep: #9C7C3C;
+
+      /* Neutras / fundo claro */
+      --paper: #F4EFE4;
+      --paper-2: #ECE4D3;
+      --ink: #17212E;
+      --stone: #7C8798;
+      --stone-2: #6E6552;
+
+      /* Linhas / bordas */
+      --line-dark: rgba(198,164,90,0.18);
+      --line-light: rgba(23,33,46,0.12);
+
+      /* Texto sobre fundo escuro */
+      --text-nav: #D7DCE4;
+      --text-lede: #B9C2CF;
+      --text-soft: #9FAABC;
+
+      /* Tipografia */
+      --font-display: 'Fraunces', serif;
+      --font-body: 'IBM Plex Sans', sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+
+      /* Easing */
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-spring: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* ==========================================================================
+       2. RESET E BASE
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--navy);
+      color: var(--text-lede);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ==========================================================================
+       3. CURSOR CUSTOMIZADO
+       ========================================================================== */
+    @media (hover: hover) and (pointer: fine) {
+      body {
+        cursor: none;
+      }
+      
+      #cursor {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 16px;
+        height: 16px;
+        background: var(--gold);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.25s var(--ease-smooth),
+                    height 0.25s var(--ease-smooth),
+                    opacity 0.25s;
+        mix-blend-mode: difference;
+      }
+
+      #cursor.hovered {
+        width: 64px;
+        height: 64px;
+        opacity: 0.35;
+        mix-blend-mode: normal;
+        background: rgba(198,164,90,0.5);
+        border: 1px solid rgba(198,164,90,0.6);
+      }
+    }
+
+    @media (hover: none), (pointer: coarse) {
+      #cursor {
+        display: none !important;
+      }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 4px;
+    }
+
+    /* ==========================================================================
+       4. BACKGROUND GRID LINES
+       ========================================================================== */
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      pointer-events: none;
+    }
+
+    .grid-line {
+      border-left: 1px solid rgba(198,164,90,0.06);
+      height: 100%;
+    }
+    .grid-line:last-child {
+      border-right: 1px solid rgba(198,164,90,0.06);
+    }
+
+    /* ==========================================================================
+       5. LAYOUT PRINCIPAL DO HERO
+       ========================================================================== */
+    .hero-section {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+      padding-top: max(4rem, 6vh);
+      padding-bottom: 0;
+      justify-content: space-between;
+    }
+
+    .max-w {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2.5rem;
+      width: 100%;
+    }
+
+    .hero-main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Grid Dividido (Texto Esquerda / Vídeo Direita) */
+    .hero-split-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3rem;
+      align-items: center;
+      margin-bottom: 3vh;
+      margin-top: 2vh;
+    }
+
+    /* Texto */
+    .hero-text-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.5vh;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background-color: var(--gold);
+    }
+
+    .headline {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.8vw, 3.5rem);
+      font-weight: 700;
+      color: var(--paper);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 2.5vh;
+    }
+
+    .headline .gold-italic {
+      color: var(--gold);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .headline .line {
+      overflow: hidden;
+    }
+
+    .subheadline {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.1vw, 1.125rem);
+      color: var(--text-lede);
+      line-height: 1.6;
+      max-width: 95%;
+      margin-bottom: 3.5vh;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    /* Vídeo na Direita */
+    .hero-visual-col {
+      position: relative;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-glow-backdrop {
+      position: absolute;
+      inset: -30px;
+      background: radial-gradient(circle at center, rgba(198,164,90,0.15) 0%, transparent 60%);
+      filter: blur(25px);
+      z-index: 1;
+      border-radius: 50%;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 45vh;
+      background-color: var(--navy-2);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line-dark);
+      box-shadow: 0 20px 50px rgba(14,27,43,0.8), 0 0 30px rgba(198,164,90,0.08);
+      z-index: 2;
+    }
+
+    .hero-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s var(--ease-smooth);
+    }
+    
+    .hero-video.loaded {
+      opacity: 1;
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(14,27,43,0.3) 0%, rgba(14,27,43,0.1) 100%);
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-video {
+        display: none;
+      }
+      .video-wrapper {
+        background-image: url('poster_fallback.jpg');
+        background-size: cover;
+        background-position: center;
+      }
+    }
+
+    /* ==========================================================================
+       6. COMPONENTES (BOTÕES, STATS, MARQUEE)
+       ========================================================================== */
+    
+    /* Botões */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      font-family: var(--font-mono);
+      font-weight: 600; /* Sintetizado caso não exista nativo, mas vai dar mais peso */
+      font-size: 0.9375rem; /* Aumentado */
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      transition: all 0.3s var(--ease-spring);
+      position: relative;
+      overflow: hidden;
+      padding: 1rem 2.25rem;
+    }
+
+    /* Botão Primário (Gold com Shimmer) */
+    .btn-primary {
+      background-color: var(--gold);
+      color: var(--navy);
+    }
+    
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: skewX(-25deg);
+      animation: shimmer 4s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      20% { left: 200%; }
+      100% { left: 200%; }
+    }
+
+    .btn-primary:hover {
+      background-color: var(--gold-2);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(14, 27, 43, 0.5), 0 0 20px rgba(198, 164, 90, 0.3);
+    }
+
+    /* Botão Secundário (Ghost/Outline) */
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--text-nav);
+      border: 1px solid var(--line-dark);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background-color: rgba(198, 164, 90, 0.05);
+      transform: translateY(-2px);
+    }
+
+    /* Estatísticas */
+    .hero-stats-wrapper {
+      width: 100%;
+      padding-top: 1.5vh;
+      padding-bottom: 4vh;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      position: relative;
+      padding: 1.25rem 1.5rem;
+      background: rgba(22, 40, 63, 0.5);
+      border: 1px solid var(--line-dark);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s var(--ease-smooth);
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s var(--ease-smooth);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(198,164,90,0.3);
+      background: rgba(22, 40, 63, 0.8);
+      box-shadow: 0 10px 30px rgba(14,27,43,0.6), 0 0 25px rgba(198,164,90,0.08);
+    }
+
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-desc {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-lede);
+      line-height: 1.5;
+    }
+
+    /* Marquee */
+    .hero-marquee-wrapper {
+      border-top: 1px solid var(--line-dark);
+      background-color: rgba(14, 27, 43, 0.95);
+      padding: 1.25rem 0;
+      overflow: hidden;
+      width: 100%;
+      display: flex;
+      position: relative;
+      z-index: 3;
+    }
+
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      animation: marquee 35s linear infinite;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      padding: 0 2.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--stone);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      white-space: nowrap;
+    }
+
+    .marquee-separator {
+      color: var(--gold);
+      font-size: 0.4rem;
+      opacity: 0.6;
+    }
+
+    /* ==========================================================================
+       7. RESPONSIVIDADE
+       ========================================================================== */
+    @media (max-width: 1024px) {
+      .hero-split-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+      }
+      
+      .hero-visual-col {
+        order: -1; /* Traz o vídeo para cima no tablet/mobile */
+      }
+
+      .hero-text-col {
+        text-align: center;
+        align-items: center;
+      }
+
+      .eyebrow {
+        justify-content: center;
+      }
+
+      .subheadline {
+        text-align: center;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .max-w {
+        padding: 0 1.5rem;
+      }
+      
+      .hero-grid-lines {
+        padding: 0 1.5rem;
+        grid-template-columns: repeat(4, 1fr);
+      }
+      
+      .grid-line:nth-child(n+5) {
+        display: none;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor Customizado -->
+  <div id="cursor"></div>
+
+  <!-- Linhas Decorativas de Fundo -->
+  <div class="hero-grid-lines">
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+    <div class="grid-line"></div>
+  </div>
+
+  <main class="hero-section">
+    <div class="hero-main-content">
+      
+      <div class="max-w hero-split-grid">
+        
+        <!-- Coluna de Texto (Esquerda) -->
+        <div class="hero-text-col">
+          <div class="eyebrow gs-reveal">1234 Solution . Estratégia, Gestão e Governança</div>
+          <h1 class="headline">
+            <div class="gs-reveal-split">Ativos bem geridos não são sorte.</div>
+            <div class="gs-reveal-split gold-italic">São método.</div>
+          </h1>
+          <p class="subheadline gs-reveal">
+            Sou Adalberto Chagas, fundador e CEO da 1234 Solution. Em mais de 30 anos, transformei infraestrutura em resultado, hoje ajudando concessionárias de saneamento, autarquias, indústrias de capital intensivo e empresas de infraestrutura, reguladas ou não, a comprovar investimentos, blindar processos de auditoria e revisão tarifária, e tomar decisões mais inteligentes sobre seus ativos.
+          </p>
+          <div class="hero-actions gs-reveal">
+            <a href="mailto:contato@1234solution.com.br" class="btn btn-primary interactive">
+              Agendar conversa
+              <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
+            </a>
+            <a href="#atuacao" class="btn btn-secondary interactive">
+              Ver áreas de atuação
+            </a>
+          </div>
+        </div>
+
+        <!-- Coluna Visual / Vídeo (Direita) -->
+        <div class="hero-visual-col gs-reveal-video">
+          <div class="video-glow-backdrop"></div>
+          <div class="video-wrapper">
+            <video 
+              class="hero-video interactive" 
+              id="heroVideo"
+              autoplay 
+              muted 
+              playsinline 
+              preload="auto"
+              poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Crect width='100%25' height='100%25' fill='%2316283F'/%3E%3C/svg%3E">
+              <source src="Video_hero_1234.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+          </div>
+        </div>
+
+      </div> <!-- /hero-split-grid -->
+
+      <!-- Estatísticas Abaixo -->
+      <div class="max-w hero-stats-wrapper">
+        <div class="hero-stats gs-reveal-stagger">
+          <div class="stat-card interactive">
+            <div class="stat-value">1,1 mi+</div>
+            <div class="stat-desc">Ativos inventariados</div>
+          </div>
+          <div class="stat-card interactive">
+            <div class="stat-value">R$4,6 bi</div>
+            <div class="stat-desc">Em ativos sob gestão</div>
+          </div>
+          <div class="stat-card interactive">
+            <div class="stat-value">R$3,6 mi</div>
+            <div class="stat-desc">Em benefício fiscal</div>
+          </div>
+          <div class="stat-card interactive">
+            <div class="stat-value">300+</div>
+            <div class="stat-desc">Conselheiros e C-Levels capacitados</div>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- /hero-main-content -->
+
+    <!-- Marquee Footer do Hero -->
+    <div class="hero-marquee-wrapper gs-reveal">
+      <div class="marquee-track" id="marqueeTrack">
+        <!-- Template clonado via JS -->
+      </div>
+    </div>
+  </main>
+
+  <template id="marqueeTemplate">
+    <div class="marquee-item">
+      Conselheiro Consultivo Certificado
+      <span class="iconify marquee-separator" data-icon="lucide:diamond"></span>
+    </div>
+    <div class="marquee-item">
+      Especialista em ISO 55.000
+      <span class="iconify marquee-separator" data-icon="lucide:diamond"></span>
+    </div>
+    <div class="marquee-item">
+      Mestre em Engenharia Civil, USP
+      <span class="iconify marquee-separator" data-icon="lucide:diamond"></span>
+    </div>
+    <div class="marquee-item">
+      Troféu Quirón Diamante ESG
+      <span class="iconify marquee-separator" data-icon="lucide:diamond"></span>
+    </div>
+    <div class="marquee-item">
+      +30 anos de experiência
+      <span class="iconify marquee-separator" data-icon="lucide:diamond"></span>
+    </div>
+  </template>
+
+  <!-- Bibliotecas JS via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/split-type"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      
+      // 1. Tratamento do Vídeo (Fallback, Erro de Autoplay e Prefers-Reduced-Motion)
+      const video = document.getElementById('heroVideo');
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      
+      if (prefersReducedMotion) {
+        if (video) video.remove();
+      } else if (video) {
+        video.classList.add('loaded');
+        
+        video.addEventListener('ended', () => {
+            video.pause();
+        });
+
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.warn("Autoplay impedido pelo navegador. Mantendo poster estático.", error);
+          });
+        }
+      }
+
+      // 2. Cursor Customizado
+      if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        const cursor = document.getElementById('cursor');
+        
+        if (cursor) {
+            let mouseX = 0, mouseY = 0;
+            let cursorX = 0, cursorY = 0;
+            
+            gsap.ticker.add(() => {
+                cursorX += (mouseX - cursorX) * 0.2;
+                cursorY += (mouseY - cursorY) * 0.2;
+                cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            const interactives = document.querySelectorAll('.interactive, a, button');
+            interactives.forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+            });
+        }
+      }
+
+      // 3. Montar o Marquee via Template
+      const marqueeTrack = document.getElementById('marqueeTrack');
+      const marqueeTemplate = document.getElementById('marqueeTemplate');
+      
+      if (marqueeTrack && marqueeTemplate) {
+        for (let i = 0; i < 4; i++) {
+          marqueeTrack.appendChild(marqueeTemplate.content.cloneNode(true));
+        }
+      }
+
+      // 4. Animações com GSAP & SplitType
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Ocultar imediatamente para evitar 'flash' antes das fontes carregarem
+      gsap.set('.gs-reveal', { y: 30, opacity: 0 });
+      gsap.set('.gs-reveal-video', { x: 30, opacity: 0 });
+      gsap.set('.gs-reveal-stagger .stat-card', { y: 30, opacity: 0 });
+      gsap.set('.gs-reveal-split', { opacity: 0 });
+
+      // Aguarda as fontes carregarem para que o SplitType calcule as larguras corretamente!
+      document.fonts.ready.then(() => {
+        const splitHeadline = new SplitType('.gs-reveal-split', { types: 'lines, words', tagName: 'span' });
+        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+        // Prepara as linhas separadas para animação
+        gsap.set(splitHeadline.lines, { overflow: 'hidden' });
+        gsap.set(splitHeadline.words, { y: '100%' });
+        gsap.set('.gs-reveal-split', { opacity: 1 }); // Revela o container (palavras estão invisíveis pelo y: 100%)
+
+        // Timeline
+        tl.to('.eyebrow', { y: 0, opacity: 1, duration: 0.8, delay: 0.1 })
+          .to(splitHeadline.words, {
+            y: '0%',
+            duration: 0.8,
+            stagger: 0.04,
+            ease: "power4.out"
+          }, "-=0.5")
+          .to('.subheadline', { y: 0, opacity: 1, duration: 0.8 }, "-=0.6")
+          .to('.hero-actions', { y: 0, opacity: 1, duration: 0.8 }, "-=0.6")
+          .to('.gs-reveal-video', { x: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.8")
+          .to('.gs-reveal-stagger .stat-card', {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1
+          }, "-=0.6")
+          .to('.hero-marquee-wrapper', { y: 0, opacity: 1, duration: 0.8 }, "-=0.6");
+      });
+    });
+  </script>
+</body>
+</html>
