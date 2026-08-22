@@ -289,7 +289,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0;
+      opacity: 1; /* Forçando visibilidade imediata */
       transition: opacity 1s var(--ease-smooth);
     }
     
@@ -523,12 +523,11 @@
 
     .problem-title {
       font-family: var(--font-display);
-      font-size: clamp(2rem, 3vw, 3rem);
+      font-size: clamp(2.5rem, 5vw, 4rem);
       font-weight: 700;
-      color: var(--paper);
       line-height: 1.1;
       letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2.5rem; /* Espaço maior para acomodar o parallax */
     }
 
     .problem-lede {
@@ -656,6 +655,21 @@
     }
 
     @media (max-width: 768px) {
+      .atuacao-carousel {
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
+      }
+      .netflix-item {
+        width: 100%;
+        max-width: 320px;
+        margin-left: 3rem; /* mais espaço pro número gigante no celular */
+      }
+      .netflix-card {
+        width: 85%;
+        height: 280px; /* Caixa menor no mobile */
+      }
+      
       .problem-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
@@ -670,18 +684,401 @@
         gap: 1rem;
       }
     }
-    
+
     /* ==========================================================================
-       7. RESPONSIVIDADE
+       7. SEÇÃO RESPOSTA (Light Theme)
+       ========================================================================== */
+    .section-solution {
+      padding: 8rem 0;
+      background-color: var(--paper);
+      color: var(--ink);
+      position: relative;
+    }
+
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .section-solution .eyebrow {
+      color: var(--gold-deep);
+    }
+
+    .section-solution .eyebrow::before {
+      background-color: var(--gold-deep);
+    }
+
+    .solution-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      margin-bottom: 3rem; /* Espaço extra para evitar colisão do parallax */
+    }
+
+    .solution-bio p {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      color: var(--stone-2);
+      line-height: 1.7;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+    }
+
+    .solution-bio p:last-child {
+      margin-bottom: 0;
+    }
+
+    .solution-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 3.5rem;
+    }
+
+    .chip {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--gold);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--gold-deep);
+      background: transparent;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+
+    .chip:hover {
+      background: var(--gold);
+      color: var(--paper);
+    }
+
+    .solution-panel {
+      background: var(--paper-2);
+      padding: 3rem;
+      border: 1px solid var(--line-light);
+      border-radius: 16px;
+      transition: all 0.5s var(--ease-smooth);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Efeito Spotlight / Flashlight Dinâmico no Hover */
+    .solution-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        600px circle at var(--mouse-x) var(--mouse-y),
+        rgba(255, 255, 255, 0.6),
+        transparent 40%
+      );
+      opacity: 0;
+      transition: opacity 0.5s var(--ease-smooth);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .solution-panel:hover::before {
+      opacity: 1;
+    }
+
+    .solution-panel:hover {
+      box-shadow: 0 20px 50px rgba(23,33,46,0.06);
+      border-color: var(--gold);
+    }
+
+    /* Garantir que o conteúdo do painel fique acima do spotlight */
+    .solution-panel > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* O ícone decorativo no painel */
+    .solution-panel-icon {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-size: 2.5rem;
+      color: var(--gold);
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.7s var(--ease-smooth);
+      pointer-events: none;
+    }
+
+    .solution-panel:hover .solution-panel-icon {
+      opacity: 0.15;
+      transform: scale(1) rotate(180deg);
+    }
+
+    .panel-title {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--line-light);
+      padding-bottom: 1rem;
+    }
+
+    .tech-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .tech-list li {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .tech-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--ink);
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .tech-value {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--ink);
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       8. SEÇÃO ATUAÇÃO E MENTORIA (Dark Theme)
+       ========================================================================== */
+    .section-atuacao {
+      background-color: var(--navy);
+      color: var(--paper);
+      padding: 8rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .atuacao-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 6rem;
+    }
+
+    .atuacao-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .atuacao-lede {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      color: var(--text-lede);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .atuacao-carousel {
+      display: flex;
+      flex-direction: row;
+      gap: 1.5rem;
+      width: 100%;
+      padding: 3rem 0 5rem 1rem;
+    }
+
+    .netflix-item {
+      position: relative;
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Número: Aumentado substancialmente e na paleta Dourada */
+    .netflix-number {
+      position: absolute;
+      left: -20%; /* Puxa ainda mais pra fora pra compensar o tamanho */
+      bottom: -1rem;
+      font-family: 'Arial Black', Impact, sans-serif;
+      font-size: clamp(12rem, 16vw, 22rem); /* Bem maior */
+      font-weight: 900;
+      line-height: 0.75;
+      color: var(--navy);
+      -webkit-text-stroke: 5px var(--gold); /* Paleta dourada */
+      filter: drop-shadow(10px 0px 15px rgba(0,0,0,0.6));
+      transform: scaleY(1.1);
+      z-index: 1;
+      pointer-events: none;
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* Caixa: Diminuída em altura e largura para dar destaque ao número */
+    .netflix-card {
+      width: 75%; /* Menor para dar espaço pro número na esquerda */
+      height: 320px; /* Mais baixa */
+      background: var(--navy-2);
+      border: 1px solid var(--line-dark);
+      border-radius: 12px;
+      padding: 1.5rem;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: pointer;
+    }
+
+    .netflix-item:hover .netflix-card {
+      transform: scale(1.15) translateY(-10px);
+      z-index: 10;
+      background: var(--navy-3);
+      border-color: var(--gold);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+    }
+
+    .netflix-item:hover .netflix-number {
+      transform: scaleY(1.1) translateX(-15px);
+      -webkit-text-stroke: 5px var(--gold);
+      color: rgba(198, 164, 90, 0.15); /* Dourado translúcido no preenchimento */
+      filter: drop-shadow(15px 0px 20px rgba(0,0,0,0.3));
+    }
+
+    .netflix-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem; /* Ajustado para a caixa menor */
+      font-weight: 700;
+      margin-bottom: 0;
+      color: var(--paper);
+      line-height: 1.1;
+      transition: margin 0.5s ease;
+    }
+
+    /* A descrição fica escondida (altura 0) e se revela no hover */
+    .netflix-desc {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--text-lede);
+      line-height: 1.5;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      margin-top: 0;
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .netflix-item:hover .netflix-title {
+      margin-bottom: 0.75rem;
+    }
+
+    .netflix-item:hover .netflix-desc {
+      opacity: 1;
+      max-height: 200px;
+      margin-top: 0.75rem;
+    }
+
+    /* -- Mentoria -- */
+    .mentoria-section {
+      margin-top: 8rem;
+      padding-top: 6rem;
+      border-top: 1px solid var(--line-dark);
+      display: grid;
+      grid-template-columns: 1fr 0.8fr;
+      gap: 6rem;
+    }
+
+    .mentoria-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 3.5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+    }
+
+    .mentoria-stats {
+      border-left: 1px solid var(--line-dark);
+      padding-left: 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      justify-content: center;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .stat-number {
+      font-family: var(--font-mono);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: -0.02em;
+    }
+
+    .stat-desc {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--text-lede);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       9. RESPONSIVIDADE
        ========================================================================== */
     @media (max-width: 1024px) {
       .hero-split-grid {
         grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+      }
+      .eyebrow {
+        justify-content: center;
+      }
+      .hero-actions {
+        justify-content: center;
+      }
+      
+      .atuacao-header, .mentoria-section {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      
+      .mentoria-stats {
+        border-left: none;
+        border-top: 1px solid var(--line-dark);
+        padding-left: 0;
+        padding-top: 3rem;
+      }
+      
+      .solution-grid {
+        grid-template-columns: 1fr;
         gap: 4rem;
+      }
+      .solution-panel {
+        padding: 2.5rem 2rem;
       }
       
       .hero-visual-col {
-        order: -1; /* Traz o vídeo para cima no tablet/mobile */
+        order: -1;
       }
 
       .hero-text-col {
@@ -734,6 +1131,247 @@
 
       .hero-stats {
         grid-template-columns: 1fr;
+      }
+    }
+
+    /* ==========================================================================
+       10. PREVENÇÃO DE FOUC E CLASSES DE APOIO
+       ========================================================================== */
+    .gs-reveal, .gs-reveal-video, .gs-reveal-stagger > *, .gs-reveal-split {
+      opacity: 0;
+    }
+
+    /* Grade Decorativa da Seção Resposta (Substitui o Tailwind ausente) */
+    .solution-grid-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      z-index: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0.4;
+    }
+    .solution-grid-col {
+      display: none;
+      height: 100%;
+      border-right: 1px solid var(--line-light);
+    }
+    @media (min-width: 768px) {
+      .solution-grid-lines {
+        grid-template-columns: repeat(12, 1fr);
+      }
+      .solution-grid-col {
+        display: block;
+      }
+      .solution-grid-col:nth-child(1) { grid-column: span 3; }
+      .solution-grid-col:nth-child(2) { grid-column: span 6; }
+      .solution-grid-col:nth-child(3) { grid-column: span 3; border-right: none; }
+    }
+
+    /* ==========================================================================
+       11. SEÇÃO TRAJETÓRIA (Régua Técnica de Engenharia)
+       ========================================================================== */
+    .section-trajetoria {
+      padding: 8rem 0;
+      background-color: var(--paper); /* Fundo claro contínuo */
+      color: var(--ink);
+      position: relative;
+      border-top: 1px dashed rgba(198,164,90,0.3); /* Linha de corte/projeto */
+    }
+
+    .trajetoria-header {
+      margin-bottom: 6rem;
+      max-width: 800px;
+    }
+
+    .trajetoria-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      margin-bottom: 2rem;
+    }
+
+    .trajetoria-header .problem-lede {
+      color: var(--ink); /* Corrigindo o texto muito claro */
+      font-weight: 400;
+    }
+
+    /* Container Principal da Régua */
+    .timeline-ruler-wrapper {
+      position: relative;
+      padding-left: 4rem; /* Espaço para a régua na esquerda */
+      max-width: 900px;
+    }
+
+    /* A régua em si */
+    .engineering-ruler {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 1rem;
+      width: 20px;
+      border-right: 2px solid var(--navy-3);
+    }
+
+    /* Marcações de milímetros (ticks menores) */
+    .engineering-ruler::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: -2px; /* Alinha com a borda direita */
+      width: 6px;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 9px,
+        var(--stone-2) 9px,
+        var(--stone-2) 10px
+      );
+      opacity: 0.4;
+    }
+
+    /* Marcações de centímetros (ticks maiores) */
+    .engineering-ruler::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: -2px;
+      width: 12px;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 49px,
+        var(--navy) 49px,
+        var(--navy) 50px
+      );
+      opacity: 0.7;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 3.5rem; /* Etapas mais próximas */
+      --connector-width: 2rem; /* Variável para animação do GSAP */
+    }
+
+    .timeline-item:last-child {
+      padding-bottom: 0;
+    }
+
+    /* Conector horizontal até a régua */
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      top: 1rem;
+      left: -3rem; /* Volta até a régua */
+      width: var(--connector-width);
+      height: 1px;
+      background-color: var(--stone-2);
+      opacity: 0.5;
+    }
+
+    /* Nó Principal no Ponto de Conexão */
+    .timeline-node {
+      position: absolute;
+      top: calc(1rem - 4px);
+      left: -3rem;
+      width: 9px;
+      height: 9px;
+      background-color: var(--paper);
+      border: 2px solid var(--navy);
+      border-radius: 50%;
+      z-index: 2;
+      transition: all 0.3s var(--ease-spring);
+    }
+
+    .timeline-item:hover .timeline-node {
+      background-color: var(--gold);
+      border-color: var(--gold);
+      transform: scale(1.5);
+    }
+
+    /* Destaque Marco Atual */
+    .timeline-item.is-current::before {
+      background-color: var(--gold-deep);
+      height: 2px;
+      opacity: 1;
+    }
+    
+    .timeline-item.is-current .timeline-node {
+      width: 14px;
+      height: 14px;
+      top: calc(1rem - 6px);
+      left: calc(-3rem - 2px);
+      background-color: var(--gold);
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(198,164,90,0.3);
+    }
+
+    .timeline-item.is-current .timeline-period {
+      color: var(--gold-deep);
+      font-weight: 700;
+      background: rgba(198,164,90,0.1);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid rgba(198,164,90,0.3);
+      display: inline-block;
+    }
+
+    .timeline-item.is-current .timeline-role {
+      font-size: 1.5rem;
+      color: var(--navy);
+    }
+
+    .timeline-period {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--stone-2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+
+    .timeline-role {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .timeline-desc {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      color: var(--stone-2);
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    @media (max-width: 768px) {
+      .timeline-ruler-wrapper {
+        padding-left: 3rem;
+      }
+      .engineering-ruler {
+        left: 0;
+      }
+      .timeline-item::before {
+        left: -3rem;
+        width: 2rem;
+      }
+      .timeline-node {
+        left: -3rem;
+      }
+      .timeline-item.is-current .timeline-node {
+        left: calc(-3rem - 2px);
       }
     }
   </style>
@@ -927,6 +1565,232 @@
     </div>
   </section>
 
+  <!-- ==========================================================================
+       DOBRA: A RESPOSTA
+       ========================================================================== -->
+  <section class="section-solution" id="resposta">
+    <!-- Linhas de grade verticais decorativas (CSS Vanilla puro) -->
+    <div class="solution-grid-lines">
+        <div class="solution-grid-col"></div>
+        <div class="solution-grid-col"></div>
+        <div class="solution-grid-col"></div>
+    </div>
+
+    <div class="max-w solution-grid relative z-10">
+      
+      <!-- Coluna da Esquerda: História e Chips -->
+      <div class="solution-content">
+        <div class="eyebrow gs-reveal">A resposta</div>
+        
+        <h2 class="solution-title">
+          <div class="overflow-hidden"><div class="gs-reveal-split">Em mais de 30 anos,</div></div>
+          <div class="overflow-hidden"><div class="gs-reveal-split">resolvendo exatamente</div></div>
+          <div class="overflow-hidden"><div class="gs-reveal-split">esse tipo de problema.</div></div>
+        </h2>
+        
+        <div class="solution-bio gs-reveal-stagger">
+          <p>Liderança, para mim, sempre foi uma escolha ativa. Liderei equipes multidisciplinares de alto desempenho no Departamento de Gestão de Ativos Imobilizados da Sabesp, onde coordenei o inventário de mais de 1,1 milhão de bens patrimoniais, supervisionei a imobilização de R$4,6 bilhões em ativos e a desmobilização de 23 mil itens com benefício fiscal de R$3,6 milhões, e conduzi 19 oficinas patrimoniais para capacitar centralizadores em todas as unidades da companhia.</p>
+          <p>Esses números não são apenas indicadores. São o reflexo do que acontece quando uma equipe entende o propósito do seu trabalho.</p>
+          <p>Hoje, como fundador e CEO da 1234 Solution, canalizo essa experiência para ajudar organizações a tomarem decisões mais inteligentes sobre ativos, investimentos e pessoas.</p>
+        </div>
+
+        <div class="solution-chips gs-reveal-stagger">
+          <span class="chip">Mestre em Eng. Civil, USP</span>
+          <span class="chip">3 MBAs</span>
+          <span class="chip">3 Especializações</span>
+          <span class="chip">Conselheiro Certificado</span>
+          <span class="chip">Autor de capítulos em 5 obras</span>
+        </div>
+      </div>
+
+      <!-- Coluna da Direita: Ficha Técnica -->
+      <div class="solution-panel interactive gs-reveal" onmousemove="const rect = this.getBoundingClientRect(); this.style.setProperty('--mouse-x', `${event.clientX - rect.left}px`); this.style.setProperty('--mouse-y', `${event.clientY - rect.top}px`);">
+        <!-- Ícone rotativo decorativo -->
+        <span class="iconify solution-panel-icon" data-icon="solar:star-fall-minimalistic-linear"></span>
+        
+        <h3 class="panel-title">Ficha Técnica</h3>
+        <ul class="tech-list gs-reveal-stagger">
+          <li>
+            <span class="tech-label">Cargo atual</span>
+            <span class="tech-value">Fundador e CEO, 1234 Solution</span>
+          </li>
+          <li>
+            <span class="tech-label">Formação</span>
+            <span class="tech-value">Mestre em Engenharia Civil (Hidráulica), Escola Politécnica, USP</span>
+          </li>
+          <li>
+            <span class="tech-label">MBAs</span>
+            <span class="tech-value">Gestão de Projetos, Gestão de Ativos e Gestão de Negócios, USP/Esalq e Fundação Gorceix</span>
+          </li>
+          <li>
+            <span class="tech-label">Especializações</span>
+            <span class="tech-value">Gestão Ambiental, Engenharia de Segurança do Trabalho e Gestão Exponencial (USP, UNINOVE e FIA)</span>
+          </li>
+          <li>
+            <span class="tech-label">Governança</span>
+            <span class="tech-value">Conselheiro Consultivo Certificado, Board Academy / Conselho na Prática</span>
+          </li>
+          <li>
+            <span class="tech-label">Cursando</span>
+            <span class="tech-value">Pós-graduação em Liderança e Gestão Estratégica de Pessoas, FIA Online</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       DOBRA: ATUAÇÃO E MENTORIA
+       ========================================================================== -->
+  <section class="section-atuacao" id="atuacao">
+    <div class="max-w">
+      
+      <!-- Cabeçalho Atuação -->
+      <div class="atuacao-header gs-reveal-stagger">
+        <h2 class="atuacao-title">Quatro frentes, um mesmo compromisso: decisão bem fundamentada.</h2>
+        <p class="atuacao-lede">Os quatro pilares da 1234 Solution, como os quatro dígitos do nome, funcionam em sequência: entender o ativo, regularizar o patrimônio, planejar o próximo passo e governar com transparência.</p>
+      </div>
+
+      <!-- Netflix Top 10 Carousel -->
+      <div class="atuacao-carousel gs-reveal-stagger">
+        
+        <!-- Pilar 01 -->
+        <div class="netflix-item">
+          <div class="netflix-number">1</div>
+          <div class="netflix-card">
+            <h3 class="netflix-title">Gestão de Ativos</h3>
+            <p class="netflix-desc">Ciclo de vida completo dos seus ativos operacionais, com conformidade à ISO 55.000 e metodologia estruturada de inventário.</p>
+          </div>
+        </div>
+
+        <!-- Pilar 02 -->
+        <div class="netflix-item">
+          <div class="netflix-number">2</div>
+          <div class="netflix-card">
+            <h3 class="netflix-title">Gestão Patrimonial</h3>
+            <p class="netflix-desc">Gestão patrimonial de ativos móveis e imóveis, com controle apoiado em tecnologias como RFID, avaliação e regularização alinhadas à NBR 14.653 e ARSESP.</p>
+          </div>
+        </div>
+
+        <!-- Pilar 03 -->
+        <div class="netflix-item">
+          <div class="netflix-number">3</div>
+          <div class="netflix-card">
+            <h3 class="netflix-title">Planejamento Estratégico</h3>
+            <p class="netflix-desc">Estruturação de projetos complexos e políticas de gestão e qualidade alinhadas aos objetivos do seu negócio.</p>
+          </div>
+        </div>
+
+        <!-- Pilar 04 -->
+        <div class="netflix-item">
+          <div class="netflix-number">4</div>
+          <div class="netflix-card">
+            <h3 class="netflix-title">Governança Corporativa</h3>
+            <p class="netflix-desc">Atuação como conselheiro consultivo, apoiando conselhos administrativos em decisões de finanças, riscos e conformidade regulatória.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Seção Complementar: Mentoria -->
+      <div class="mentoria-section">
+        
+        <!-- Conteúdo Mentoria -->
+        <div class="mentoria-content gs-reveal-stagger">
+          <div class="eyebrow">Além dos 4 pilares</div>
+          <h2 class="mentoria-title">
+            <div class="overflow-hidden"><div class="gs-reveal-split">Desenvolvo líderes,</div></div>
+            <div class="overflow-hidden"><div class="gs-reveal-split">não apenas processos.</div></div>
+          </h2>
+          <p class="atuacao-lede" style="max-width: 90%;">Por mais de dez anos, formei profissionais em sala de aula como professor e coordenador acadêmico de Engenharia. Hoje, essa vivência se traduz em mentoria para lideranças e conselhos: acredito que as organizações crescem quando as pessoas que as compõem crescem junto.</p>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="mentoria-stats gs-reveal-stagger">
+          
+          <div class="stat-item">
+            <span class="stat-number">300+</span>
+            <span class="stat-desc">Conselheiros e C-Levels capacitados no Programa PFIC</span>
+          </div>
+
+          <div class="stat-item">
+            <span class="stat-number">10+ turmas</span>
+            <span class="stat-desc">focadas em Valuation e Finanças, Board Academy</span>
+          </div>
+
+          <div class="stat-item">
+            <span class="stat-number">10+ anos</span>
+            <span class="stat-desc">como professor e coordenador acadêmico</span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       DOBRA: TRAJETÓRIA
+       ========================================================================== -->
+  <section class="section-trajetoria" id="trajetoria">
+    <div class="max-w relative z-10">
+      
+      <div class="trajetoria-header gs-reveal">
+        <div class="eyebrow">Trajetória</div>
+        <h2 class="trajetoria-title gs-reveal-split">Trajetória</h2>
+        <p class="problem-lede">Uma progressão construída dentro da própria estrutura que hoje ele ajuda outras empresas a organizar, e que culminou na fundação da 1234 Solution.</p>
+      </div>
+
+      <div class="timeline-ruler-wrapper gs-reveal-stagger">
+        <div class="engineering-ruler"></div>
+
+        <!-- Marco 1 (Atual) -->
+        <div class="timeline-item is-current interactive">
+          <div class="timeline-node"></div>
+          <div class="timeline-period">2026, atual</div>
+          <h3 class="timeline-role">Fundador e CEO, dedicação integral</h3>
+          <p class="timeline-desc">1234 Solution, consultoria em gestão de ativos, gestão patrimonial, planejamento estratégico e governança.</p>
+        </div>
+
+        <!-- Marco 2 -->
+        <div class="timeline-item interactive">
+          <div class="timeline-node"></div>
+          <div class="timeline-period">ago 2024 a 2026</div>
+          <h3 class="timeline-role">Fundador, 1234 Solution</h3>
+          <p class="timeline-desc">Consultoria estruturada e conduzida em paralelo à atuação na Sabesp.</p>
+        </div>
+
+        <!-- Marco 3 -->
+        <div class="timeline-item interactive">
+          <div class="timeline-node"></div>
+          <div class="timeline-period">2023 a 2024</div>
+          <h3 class="timeline-role">Gerente de Divisão de Gestão do Imobiliário</h3>
+          <p class="timeline-desc">Sabesp, planejamento estratégico e operacional da gestão de ativos imobiliários da companhia.</p>
+        </div>
+
+        <!-- Marco 4 -->
+        <div class="timeline-item interactive">
+          <div class="timeline-node"></div>
+          <div class="timeline-period">2020 a 2023</div>
+          <h3 class="timeline-role">Gerente do Departamento de Gestão Patrimonial</h3>
+          <p class="timeline-desc">Sabesp, implementação de RFID para controle patrimonial e estruturação de planos de gestão e qualidade.</p>
+        </div>
+
+        <!-- Marco 5 -->
+        <div class="timeline-item interactive">
+          <div class="timeline-node"></div>
+          <div class="timeline-period">1999 a 2020</div>
+          <h3 class="timeline-role">Engenheiro Civil</h3>
+          <p class="timeline-desc">Sabesp, atuação técnica em engenharia de perícias e avaliações imobiliárias.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
   <!-- Bibliotecas JS via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -935,13 +1799,10 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       
-      // 1. Tratamento do Vídeo (Fallback, Erro de Autoplay e Prefers-Reduced-Motion)
+      // 1. Tratamento do Vídeo (Forçando a exibição e autoplay)
       const video = document.getElementById('heroVideo');
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       
-      if (prefersReducedMotion) {
-        if (video) video.remove();
-      } else if (video) {
+      if (video) {
         video.classList.add('loaded');
         
         video.addEventListener('ended', () => {
@@ -996,12 +1857,6 @@
       // 4. Animações com GSAP & SplitType
       gsap.registerPlugin(ScrollTrigger);
 
-      // Ocultar imediatamente para evitar 'flash' antes das fontes carregarem
-      gsap.set('.gs-reveal', { y: 30, opacity: 0 });
-      gsap.set('.hero-section .gs-reveal-video', { x: 30, opacity: 0 });
-      gsap.set('.gs-reveal-stagger > *', { y: 30, opacity: 0 });
-      gsap.set('.hero-section .gs-reveal-split', { opacity: 0 });
-
       // Aguarda as fontes carregarem para que o SplitType calcule as larguras corretamente!
       document.fonts.ready.then(() => {
         const splitHeadline = new SplitType('.hero-section .gs-reveal-split', { types: 'lines, words', tagName: 'span' });
@@ -1012,26 +1867,27 @@
         gsap.set(splitHeadline.words, { y: '100%' });
         gsap.set('.hero-section .gs-reveal-split', { opacity: 1 }); // Revela o container
 
-        // Timeline da Hero Section
-        tl.to('.hero-section .eyebrow', { y: 0, opacity: 1, duration: 0.8, delay: 0.1 })
+        // Timeline da Hero Section (Mais lenta)
+        tl.to('.hero-section .eyebrow', { y: 0, opacity: 1, duration: 1.5, delay: 0.2 })
           .to(splitHeadline.words, {
             y: '0%',
-            duration: 0.8,
-            stagger: 0.04,
+            duration: 1.8,
+            stagger: 0.08, // Revela as palavras mais devagar
             ease: "power4.out"
-          }, "-=0.5")
-          .to('.hero-section .subheadline', { y: 0, opacity: 1, duration: 0.8 }, "-=0.6")
-          .to('.hero-actions', { y: 0, opacity: 1, duration: 0.8 }, "-=0.6")
-          .to('.gs-reveal-video', { x: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.8")
+          }, "-=1.0")
+          .to('.hero-section .subheadline', { y: 0, opacity: 1, duration: 1.5 }, "-=1.2")
+          .to('.hero-actions', { y: 0, opacity: 1, duration: 1.5 }, "-=1.2")
+          .to('.gs-reveal-video', { x: 0, opacity: 1, duration: 2, ease: "power3.out" }, "-=1.5")
           .to('.hero-stats-wrapper .stat-card', {
             y: 0,
             opacity: 1,
-            duration: 0.8,
-            stagger: 0.1
-          }, "-=0.6")
-          .to('.hero-marquee-wrapper', { y: 0, opacity: 1, duration: 0.8 }, "-=0.6");
+            duration: 1.2,
+            stagger: 0.2
+          }, "-=1.5")
+          .to('.hero-marquee-wrapper', { y: 0, opacity: 1, duration: 1.5 }, "-=1.0");
+      });
 
-        // ScrollTriggers para o restante da página (Seção Problema, etc)
+      // ScrollTriggers genéricos para animações
         gsap.utils.toArray('section:not(.hero-section) .gs-reveal').forEach(function(elem) {
           ScrollTrigger.create({
             trigger: elem,
@@ -1041,6 +1897,28 @@
             },
             once: true
           });
+        });
+
+        // Revela títulos divididos em linhas nas dobras seguintes (Ex: A Resposta, Trajetória)
+        gsap.utils.toArray('section:not(.hero-section) .solution-title, section:not(.hero-section) .trajetoria-title, section:not(.hero-section) .mentoria-title').forEach(function(title) {
+          const lines = title.querySelectorAll('.gs-reveal-split');
+          if (lines.length > 0) {
+            gsap.set(lines, { y: '100%', opacity: 0 });
+            ScrollTrigger.create({
+              trigger: title,
+              start: "top 85%",
+              onEnter: function() {
+                gsap.to(lines, {
+                  y: '0%', 
+                  opacity: 1, 
+                  duration: 1, 
+                  stagger: 0.1, 
+                  ease: "power4.out"
+                });
+              },
+              once: true
+            });
+          }
         });
 
         gsap.utils.toArray('section:not(.hero-section) .gs-reveal-stagger').forEach(function(elem) {
@@ -1054,35 +1932,82 @@
           });
         });
 
-        // Efeito Parallax Real (Scrub) para a Seção Problema
-        if (window.matchMedia("(min-width: 769px)").matches) {
-          // Parallax focado no Título e Lede
-          gsap.to('.problem-title', {
-            y: 60, // Efeito de profundidade (move na direção oposta ao scroll)
+        // PARALLAX GLOBAL NAS DOBRAS SEGUINTES (Blocos subindo suavemente)
+        // Aplicado no contêiner inteiro para evitar que o título atropele o "Eyebrow"
+        gsap.utils.toArray('.problem-header, .solution-content, .trajetoria-header, .atuacao-header, .mentoria-content').forEach(function(elem) {
+          // O ScrollTrigger com scrub garante o movimento vinculado à rolagem
+          gsap.to(elem, {
+            y: -80,
             ease: "none",
             scrollTrigger: {
-              trigger: ".section-problem",
+              trigger: elem,
               start: "top bottom",
               end: "bottom top",
-              scrub: 1
+              scrub: 0.5
             }
           });
-          
-          gsap.to('.problem-lede', {
-            y: 30, // Mais sutil que o título para criar separação de camadas
-            ease: "none",
-            scrollTrigger: {
-              trigger: ".section-problem",
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1
-            }
-          });
+        });
 
-          // As caixas permanecem perfeitamente alinhadas no grid (sem offset de parallax entre elas)
+        // ---------------------------------------------------------
+        // ANIMAÇÃO BLUEPRINT DA TRAJETÓRIA (Régua de Engenharia)
+        // ---------------------------------------------------------
+        const rulerWrapper = document.querySelector(".timeline-ruler-wrapper");
+        if(rulerWrapper) {
+          // 1. A régua "cresce" para baixo ancorada ao scroll
+          gsap.fromTo('.engineering-ruler', 
+            { clipPath: 'inset(0 0 100% 0)' }, 
+            { 
+              clipPath: 'inset(0 0 0% 0)',
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '.timeline-ruler-wrapper',
+                start: "top 75%",
+                end: "bottom 75%",
+                scrub: 1
+              }
+            }
+          );
+
+          // 2. Elementos de cada marco surgem em sequência animada
+          gsap.utils.toArray('.timeline-item').forEach(function(item) {
+            const node = item.querySelector('.timeline-node');
+            const content = item.querySelectorAll('.timeline-period, .timeline-role, .timeline-desc');
+            
+            const tl = gsap.timeline({
+              scrollTrigger: {
+                trigger: item,
+                start: "top 85%", // Dispara quando o marco entra bem na tela
+                toggleActions: "play none none reverse"
+              }
+            });
+            
+            // Desenha a linha horizontal a partir da régua
+            tl.fromTo(item, 
+              { "--connector-width": "0rem" }, 
+              { "--connector-width": "2rem", duration: 0.4, ease: "power2.out" }
+            )
+            // Círculo (nó) dá um "pop"
+            .from(node, { scale: 0, opacity: 0, duration: 0.4, ease: "back.out(2)" }, "-=0.2")
+            // Textos deslizam suavemente
+            .from(content, { x: 30, opacity: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" }, "-=0.2");
+          });
         }
+
+        // Ícones e caixas descem levemente para dar profundidade cruzada
+        gsap.utils.toArray('.problem-icon-wrapper, .solution-panel').forEach(function(elem) {
+          gsap.to(elem, {
+            y: 40,
+            ease: "none",
+            scrollTrigger: {
+              trigger: elem,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.5
+            }
+          });
+        });
+
       });
-    });
   </script>
 </body>
 </html>
