@@ -1,20 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1234 Solution | Estratégia, Gestão e Governança</title>
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600;1,9..144,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Iconify -->
-  <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
-
-  <style>
-    /* ==========================================================================
+/* ==========================================================================
        1. TOKENS E VARIÁVEIS OFICIAIS
        ========================================================================== */
     :root {
@@ -1374,640 +1358,1069 @@
         left: calc(-3rem - 2px);
       }
     }
-  </style>
-</head>
-<body>
 
-  <!-- Cursor Customizado -->
-  <div id="cursor"></div>
+    /* ==========================================================================
+       12. SEÇÃO ESTAÇÕES E CAPTAÇÃO
+       ========================================================================== */
+    .section-estacoes {
+      background-color: var(--navy);
+      color: var(--paper);
+      padding: 8rem 0;
+      border-top: 1px solid var(--line-dark);
+      overflow: hidden;
+    }
 
-  <!-- Linhas Decorativas de Fundo -->
-  <div class="hero-grid-lines">
-    <div class="grid-line"></div>
-    <div class="grid-line"></div>
-    <div class="grid-line"></div>
-    <div class="grid-line"></div>
-    <div class="grid-line"></div>
-    <div class="grid-line"></div>
-    <div class="grid-line"></div>
-    <div class="grid-line"></div>
-    <div class="grid-line"></div>
-    <div class="grid-line"></div>
-    <div class="grid-line"></div>
-    <div class="grid-line"></div>
-  </div>
+    .estacoes-header-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 3rem;
+      gap: 1.5rem;
+    }
 
-  <main class="hero-section">
-    <div class="hero-main-content">
-      
-      <div class="max-w hero-split-grid">
-        
-        <!-- Coluna de Texto (Esquerda) -->
-        <div class="hero-text-col">
-          <div class="eyebrow gs-reveal">1234 Solution . Estratégia, Gestão e Governança</div>
-          <h1 class="headline">
-            <div class="gs-reveal-split">Ativos bem geridos não são sorte.</div>
-            <div class="gs-reveal-split gold-italic">São métodos.</div>
-          </h1>
-          <p class="subheadline gs-reveal">
-            Sou Adalberto Chagas, fundador e CEO da 1234 Solution. Em mais de 30 anos, transformei infraestrutura em resultado, hoje ajudando concessionárias de saneamento, autarquias, indústrias de capital intensivo e empresas de infraestrutura, reguladas ou não, a comprovar investimentos, blindar processos de auditoria e revisão tarifária, e tomar decisões mais inteligentes sobre seus ativos.
-          </p>
-          <div class="hero-actions gs-reveal">
-            <a href="mailto:contato@1234solution.com.br" class="btn btn-primary interactive">
-              Agendar conversa
-              <span class="iconify" data-icon="lucide:arrow-right" data-width="16"></span>
-            </a>
-            <a href="#atuacao" class="btn btn-secondary interactive">
-              Ver áreas de atuação
-            </a>
-          </div>
-        </div>
+    .estacoes-header {
+      max-width: 700px;
+    }
 
-        <!-- Coluna Visual / Vídeo (Direita) -->
-        <div class="hero-visual-col gs-reveal-video">
-          <div class="video-glow-backdrop"></div>
-          <div class="video-wrapper">
-            <video 
-              class="hero-video interactive" 
-              id="heroVideo"
-              autoplay 
-              muted 
-              playsinline 
-              preload="auto"
-              poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Crect width='100%25' height='100%25' fill='%2316283F'/%3E%3C/svg%3E">
-              <source src="Video_hero_1234.mp4" type="video/mp4">
-            </video>
-            <div class="video-overlay"></div>
-          </div>
-        </div>
+    .estacoes-header .eyebrow {
+      display: flex; align-items: center; gap: 0.85rem;
+      font-family: var(--font-mono); font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.28em;
+      color: var(--gold); margin-bottom: 1.75rem;
+    }
+    .estacoes-header .eyebrow::before { content: ''; display: block; width: 26px; height: 1px; background: var(--gold); flex-shrink: 0; }
 
-      </div> <!-- /hero-split-grid -->
+    .estacoes-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--paper);
+      margin-bottom: 1.5rem;
+    }
 
-      <!-- Estatísticas Abaixo -->
-      <div class="max-w hero-stats-wrapper">
-        <div class="hero-stats gs-reveal-stagger">
-          <div class="stat-card interactive">
-            <div class="stat-value">1,1 mi+</div>
-            <div class="stat-desc">Ativos inventariados</div>
-          </div>
-          <div class="stat-card interactive">
-            <div class="stat-value">R$4,6 bi</div>
-            <div class="stat-desc">Em ativos sob gestão</div>
-          </div>
-          <div class="stat-card interactive">
-            <div class="stat-value">R$3,6 mi</div>
-            <div class="stat-desc">Em benefício fiscal</div>
-          </div>
-          <div class="stat-card interactive">
-            <div class="stat-value">300+</div>
-            <div class="stat-desc">Conselheiros e C-Levels capacitados</div>
-          </div>
-        </div>
-      </div>
+    .estacoes-lede {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      color: var(--stone);
+      line-height: 1.6;
+    }
 
-    </div> <!-- /hero-main-content -->
+    /* SWIPER STYLES */
+    .estacoes-swiper {
+      width: 100%;
+      overflow: visible !important; /* Importante para ver o próximo slide parcialmente */
+      padding-bottom: 2rem;
+    }
 
-    <!-- Marquee Footer do Hero -->
-    <div class="hero-marquee-wrapper gs-reveal">
-      <div class="marquee-track" id="marqueeTrack">
-        <!-- Template clonado via JS -->
-      </div>
-    </div>
-  </main>
+    .estacao-card {
+      position: relative;
+      width: 380px !important; /* Ajustado para caberem 3 no desktop folgados */
+      height: 520px;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid rgba(198,164,90,0.18);
+      display: flex;
+      flex-direction: column;
+      background-color: var(--navy-2);
+      transition: border-color 0.4s;
+    }
+    
+    .estacao-card:hover {
+      border-color: rgba(198,164,90,0.45);
+    }
 
-  <template id="marqueeTemplate">
-    <div class="marquee-item">
-      Conselheiro Consultivo Certificado
-      <span class="iconify marquee-separator" data-icon="lucide:diamond"></span>
-    </div>
-    <div class="marquee-item">
-      Especialista em ISO 55.000
-      <span class="iconify marquee-separator" data-icon="lucide:diamond"></span>
-    </div>
-    <div class="marquee-item">
-      Mestre em Engenharia Civil, USP
-      <span class="iconify marquee-separator" data-icon="lucide:diamond"></span>
-    </div>
-    <div class="marquee-item">
-      Troféu Quirón Diamante ESG
-      <span class="iconify marquee-separator" data-icon="lucide:diamond"></span>
-    </div>
-    <div class="marquee-item">
-      +30 anos de experiência
-      <span class="iconify marquee-separator" data-icon="lucide:diamond"></span>
-    </div>
-  </template>
+    .estacao-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
 
-  <!-- ==========================================================================
-       DOBRA: O PROBLEMA
-       ========================================================================== -->
-  <section class="section-problem" id="problema">
-    <div class="max-w">
-      
-      <div class="problem-header gs-reveal">
-        <div class="eyebrow">O problema</div>
-        <h2 class="problem-title">Quanto do seu patrimônio você consegue comprovar sob pressão?</h2>
-        <p class="problem-lede">No setor regulado, a pressão vem da agência. Na indústria, vem da auditoria, da seguradora ou do conselho. O risco por trás é o mesmo: ativo que existe, mas não está comprovado do jeito que alguém vai exigir.</p>
-      </div>
+    .estacao-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-spring);
+    }
 
-      <div class="problem-grid gs-reveal-stagger">
-        
-        <!-- Card 01 -->
-        <div class="problem-card interactive">
-          <div class="problem-card-header">
-            <div class="problem-icon-wrapper">
-              <img src="img/icon-3.jpg" alt="Risco de glosa" loading="lazy">
-            </div>
-            <h3 class="problem-card-title">Risco de glosa ou de auditoria</h3>
-          </div>
-          <p class="problem-card-desc">Em saneamento e infraestrutura regulada, CAPEX que a ARSESP e a ANA podem não reconhecer na Base de Remuneração Regulatória. Em outras indústrias, o mesmo gap aparece em auditorias, seguros e certificações como ISO 55.000.</p>
-        </div>
+    .estacao-card:hover .estacao-img {
+      transform: scale(1.05);
+    }
 
-        <!-- Card 02 -->
-        <div class="problem-card interactive">
-          <div class="problem-card-header">
-            <div class="problem-icon-wrapper">
-              <img src="img/icon-2.jpg" alt="Ativos ocultos" loading="lazy">
-            </div>
-            <h3 class="problem-card-title">Ativos ocultos</h3>
-          </div>
-          <p class="problem-card-desc">Redes enterradas, equipamentos legados, instalações antigas que ninguém documentou direito. Sem mapeamento e valoração, esse patrimônio não sustenta indenização, seguro nem composição de custo.</p>
-        </div>
+    .estacao-card-content {
+      position: relative;
+      flex: 1;
+      padding: 1.5rem 1.75rem;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
 
-        <!-- Card 03 -->
-        <div class="problem-card interactive">
-          <div class="problem-card-header">
-            <div class="problem-icon-wrapper">
-              <img src="img/icon-1.jpg" alt="Dado fragmentado" loading="lazy">
-            </div>
-            <h3 class="problem-card-title">Dado fragmentado</h3>
-          </div>
-          <p class="problem-card-desc">A engenharia usa um sistema, a contabilidade usa outro. Cada auditoria ou revisão tarifária vira uma corrida para reconciliar planilhas que deveriam falar a mesma língua.</p>
-        </div>
+    .estacao-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+      padding-bottom: 0.25rem;
+      border-bottom: 1px solid rgba(198,164,90,0.3);
+      align-self: flex-start;
+    }
 
-        <!-- Card 04 -->
-        <div class="problem-card interactive">
-          <div class="problem-card-header">
-            <div class="problem-icon-wrapper">
-              <img src="img/icon-4.jpg" alt="Pressão normativa constante" loading="lazy">
-            </div>
-            <h3 class="problem-card-title">Pressão normativa constante</h3>
-          </div>
-          <p class="problem-card-desc">Resoluções de agências ou normas internas de compliance mudam mais rápido do que a equipe consegue se atualizar. Ficar em conformidade virou trabalho em tempo integral.</p>
-        </div>
+    .estacao-card-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--paper);
+      margin-bottom: 0.5rem;
+    }
 
-      </div>
+    .estacao-card-desc {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--stone);
+      line-height: 1.5;
+    }
 
-      <div class="problem-footer gs-reveal">
-        <p class="problem-bridge">Se alguma dessas situações é familiar, você já sabe o tamanho do risco que carrega.</p>
-      </div>
+    /* Navegação Customizada do Swiper */
+    .swiper-nav-wrapper {
+      display: flex;
+      gap: 1rem;
+    }
+    .swiper-btn-custom {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(14,27,43,0.5);
+      color: var(--gold);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .swiper-btn-custom:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+    .swiper-btn-custom.swiper-button-disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
 
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       DOBRA: A RESPOSTA
-       ========================================================================== -->
-  <section class="section-solution" id="resposta">
-    <!-- Linhas de grade verticais decorativas (CSS Vanilla puro) -->
-    <div class="solution-grid-lines">
-        <div class="solution-grid-col"></div>
-        <div class="solution-grid-col"></div>
-        <div class="solution-grid-col"></div>
-    </div>
-
-    <div class="max-w solution-grid relative z-10">
-      
-      <!-- Coluna da Esquerda: História e Chips -->
-      <div class="solution-content">
-        <div class="eyebrow gs-reveal">A resposta</div>
-        
-        <h2 class="solution-title">
-          <div class="overflow-hidden"><div class="gs-reveal-split">Em mais de 30 anos,</div></div>
-          <div class="overflow-hidden"><div class="gs-reveal-split">resolvendo exatamente</div></div>
-          <div class="overflow-hidden"><div class="gs-reveal-split">esse tipo de problema.</div></div>
-        </h2>
-        
-        <div class="solution-bio gs-reveal-stagger">
-          <p>Liderança, para mim, sempre foi uma escolha ativa. Liderei equipes multidisciplinares de alto desempenho no Departamento de Gestão de Ativos Imobilizados da Sabesp, onde coordenei o inventário de mais de 1,1 milhão de bens patrimoniais, supervisionei a imobilização de R$4,6 bilhões em ativos e a desmobilização de 23 mil itens com benefício fiscal de R$3,6 milhões, e conduzi 19 oficinas patrimoniais para capacitar centralizadores em todas as unidades da companhia.</p>
-          <p>Esses números não são apenas indicadores. São o reflexo do que acontece quando uma equipe entende o propósito do seu trabalho.</p>
-          <p>Hoje, como fundador e CEO da 1234 Solution, canalizo essa experiência para ajudar organizações a tomarem decisões mais inteligentes sobre ativos, investimentos e pessoas.</p>
-        </div>
-
-        <div class="solution-chips gs-reveal-stagger">
-          <span class="chip">Mestre em Eng. Civil, USP</span>
-          <span class="chip">3 MBAs</span>
-          <span class="chip">3 Especializações</span>
-          <span class="chip">Conselheiro Certificado</span>
-          <span class="chip">Autor de capítulos em 5 obras</span>
-        </div>
-      </div>
-
-      <!-- Coluna da Direita: Ficha Técnica -->
-      <div class="solution-panel interactive gs-reveal" onmousemove="const rect = this.getBoundingClientRect(); this.style.setProperty('--mouse-x', `${event.clientX - rect.left}px`); this.style.setProperty('--mouse-y', `${event.clientY - rect.top}px`);">
-        <!-- Ícone rotativo decorativo -->
-        <span class="iconify solution-panel-icon" data-icon="solar:star-fall-minimalistic-linear"></span>
-        
-        <h3 class="panel-title">Ficha Técnica</h3>
-        <ul class="tech-list gs-reveal-stagger">
-          <li>
-            <span class="tech-label">Cargo atual</span>
-            <span class="tech-value">Fundador e CEO, 1234 Solution</span>
-          </li>
-          <li>
-            <span class="tech-label">Formação</span>
-            <span class="tech-value">Mestre em Engenharia Civil (Hidráulica), Escola Politécnica, USP</span>
-          </li>
-          <li>
-            <span class="tech-label">MBAs</span>
-            <span class="tech-value">Gestão de Projetos, Gestão de Ativos e Gestão de Negócios, USP/Esalq e Fundação Gorceix</span>
-          </li>
-          <li>
-            <span class="tech-label">Especializações</span>
-            <span class="tech-value">Gestão Ambiental, Engenharia de Segurança do Trabalho e Gestão Exponencial (USP, UNINOVE e FIA)</span>
-          </li>
-          <li>
-            <span class="tech-label">Governança</span>
-            <span class="tech-value">Conselheiro Consultivo Certificado, Board Academy / Conselho na Prática</span>
-          </li>
-          <li>
-            <span class="tech-label">Cursando</span>
-            <span class="tech-value">Pós-graduação em Liderança e Gestão Estratégica de Pessoas, FIA Online</span>
-          </li>
-        </ul>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       DOBRA: ATUAÇÃO E MENTORIA
-       ========================================================================== -->
-  <section class="section-atuacao" id="atuacao">
-    <div class="max-w">
-      
-      <!-- Cabeçalho Atuação -->
-      <div class="atuacao-header gs-reveal-stagger">
-        <h2 class="atuacao-title">Quatro frentes, um mesmo compromisso: decisão bem fundamentada.</h2>
-        <p class="atuacao-lede">Os quatro pilares da 1234 Solution, como os quatro dígitos do nome, funcionam em sequência: entender o ativo, regularizar o patrimônio, planejar o próximo passo e governar com transparência.</p>
-      </div>
-
-      <!-- Netflix Top 10 Carousel -->
-      <div class="atuacao-carousel gs-reveal-stagger">
-        
-        <!-- Pilar 01 -->
-        <div class="netflix-item">
-          <div class="netflix-number">1</div>
-          <div class="netflix-card">
-            <h3 class="netflix-title">Gestão de Ativos</h3>
-            <p class="netflix-desc">Ciclo de vida completo dos seus ativos operacionais, com conformidade à ISO 55.000 e metodologia estruturada de inventário.</p>
-          </div>
-        </div>
-
-        <!-- Pilar 02 -->
-        <div class="netflix-item">
-          <div class="netflix-number">2</div>
-          <div class="netflix-card">
-            <h3 class="netflix-title">Gestão Patrimonial</h3>
-            <p class="netflix-desc">Gestão patrimonial de ativos móveis e imóveis, com controle apoiado em tecnologias como RFID, avaliação e regularização alinhadas à NBR 14.653 e ARSESP.</p>
-          </div>
-        </div>
-
-        <!-- Pilar 03 -->
-        <div class="netflix-item">
-          <div class="netflix-number">3</div>
-          <div class="netflix-card">
-            <h3 class="netflix-title">Planejamento Estratégico</h3>
-            <p class="netflix-desc">Estruturação de projetos complexos e políticas de gestão e qualidade alinhadas aos objetivos do seu negócio.</p>
-          </div>
-        </div>
-
-        <!-- Pilar 04 -->
-        <div class="netflix-item">
-          <div class="netflix-number">4</div>
-          <div class="netflix-card">
-            <h3 class="netflix-title">Governança Corporativa</h3>
-            <p class="netflix-desc">Atuação como conselheiro consultivo, apoiando conselhos administrativos em decisões de finanças, riscos e conformidade regulatória.</p>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Seção Complementar: Mentoria -->
-      <div class="mentoria-section">
-        
-        <!-- Conteúdo Mentoria -->
-        <div class="mentoria-content gs-reveal-stagger">
-          <div class="eyebrow">Além dos 4 pilares</div>
-          <h2 class="mentoria-title">
-            <div class="overflow-hidden"><div class="gs-reveal-split">Desenvolvo líderes,</div></div>
-            <div class="overflow-hidden"><div class="gs-reveal-split">não apenas processos.</div></div>
-          </h2>
-          <p class="atuacao-lede" style="max-width: 90%;">Por mais de dez anos, formei profissionais em sala de aula como professor e coordenador acadêmico de Engenharia. Hoje, essa vivência se traduz em mentoria para lideranças e conselhos: acredito que as organizações crescem quando as pessoas que as compõem crescem junto.</p>
-        </div>
-
-        <!-- Estatísticas -->
-        <div class="mentoria-stats gs-reveal-stagger">
-          
-          <div class="stat-item">
-            <span class="stat-number">300+</span>
-            <span class="stat-desc">Conselheiros e C-Levels capacitados no Programa PFIC</span>
-          </div>
-
-          <div class="stat-item">
-            <span class="stat-number">10+ turmas</span>
-            <span class="stat-desc">focadas em Valuation e Finanças, Board Academy</span>
-          </div>
-
-          <div class="stat-item">
-            <span class="stat-number">10+ anos</span>
-            <span class="stat-desc">como professor e coordenador acadêmico</span>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       DOBRA: TRAJETÓRIA
-       ========================================================================== -->
-  <section class="section-trajetoria" id="trajetoria">
-    <div class="max-w relative z-10">
-      
-      <div class="trajetoria-header gs-reveal">
-        <div class="eyebrow">Trajetória</div>
-        <h2 class="trajetoria-title gs-reveal-split">Trajetória</h2>
-        <p class="problem-lede">Uma progressão construída dentro da própria estrutura que hoje ele ajuda outras empresas a organizar, e que culminou na fundação da 1234 Solution.</p>
-      </div>
-
-      <div class="timeline-ruler-wrapper gs-reveal-stagger">
-        <div class="engineering-ruler"></div>
-
-        <!-- Marco 1 (Atual) -->
-        <div class="timeline-item is-current interactive">
-          <div class="timeline-node"></div>
-          <div class="timeline-period">2026, atual</div>
-          <h3 class="timeline-role">Fundador e CEO, dedicação integral</h3>
-          <p class="timeline-desc">1234 Solution, consultoria em gestão de ativos, gestão patrimonial, planejamento estratégico e governança.</p>
-        </div>
-
-        <!-- Marco 2 -->
-        <div class="timeline-item interactive">
-          <div class="timeline-node"></div>
-          <div class="timeline-period">ago 2024 a 2026</div>
-          <h3 class="timeline-role">Fundador, 1234 Solution</h3>
-          <p class="timeline-desc">Consultoria estruturada e conduzida em paralelo à atuação na Sabesp.</p>
-        </div>
-
-        <!-- Marco 3 -->
-        <div class="timeline-item interactive">
-          <div class="timeline-node"></div>
-          <div class="timeline-period">2023 a 2024</div>
-          <h3 class="timeline-role">Gerente de Divisão de Gestão do Imobiliário</h3>
-          <p class="timeline-desc">Sabesp, planejamento estratégico e operacional da gestão de ativos imobiliários da companhia.</p>
-        </div>
-
-        <!-- Marco 4 -->
-        <div class="timeline-item interactive">
-          <div class="timeline-node"></div>
-          <div class="timeline-period">2020 a 2023</div>
-          <h3 class="timeline-role">Gerente do Departamento de Gestão Patrimonial</h3>
-          <p class="timeline-desc">Sabesp, implementação de RFID para controle patrimonial e estruturação de planos de gestão e qualidade.</p>
-        </div>
-
-        <!-- Marco 5 -->
-        <div class="timeline-item interactive">
-          <div class="timeline-node"></div>
-          <div class="timeline-period">1999 a 2020</div>
-          <h3 class="timeline-role">Engenheiro Civil</h3>
-          <p class="timeline-desc">Sabesp, atuação técnica em engenharia de perícias e avaliações imobiliárias.</p>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Bibliotecas JS via CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/split-type"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      
-      // 1. Tratamento do Vídeo (Forçando a exibição e autoplay)
-      const video = document.getElementById('heroVideo');
-      
-      if (video) {
-        video.classList.add('loaded');
-        
-        video.addEventListener('ended', () => {
-            video.pause();
-        });
-
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.warn("Autoplay impedido pelo navegador. Mantendo poster estático.", error);
-          });
-        }
+    @media (max-width: 1024px) {
+      .section-estacoes {
+        padding: 5rem 0;
       }
-
-      // 2. Cursor Customizado
-      if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-        const cursor = document.getElementById('cursor');
-        
-        if (cursor) {
-            let mouseX = 0, mouseY = 0;
-            let cursorX = 0, cursorY = 0;
-            
-            gsap.ticker.add(() => {
-                cursorX += (mouseX - cursorX) * 0.2;
-                cursorY += (mouseY - cursorY) * 0.2;
-                cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
-            });
-
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-            });
-
-            const interactives = document.querySelectorAll('.interactive, a, button');
-            interactives.forEach(el => {
-                el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-                el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-            });
-        }
+      .estacoes-header-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 3rem;
       }
-
-      // 3. Montar o Marquee via Template
-      const marqueeTrack = document.getElementById('marqueeTrack');
-      const marqueeTemplate = document.getElementById('marqueeTemplate');
-      
-      if (marqueeTrack && marqueeTemplate) {
-        for (let i = 0; i < 4; i++) {
-          marqueeTrack.appendChild(marqueeTemplate.content.cloneNode(true));
-        }
+      .estacao-card {
+        width: 80vw !important;
+        height: 45vh;
       }
+    }
 
-      // 4. Animações com GSAP & SplitType
-      gsap.registerPlugin(ScrollTrigger);
+    /* ==========================================================================
+       13. INFRAESTRUTURA TÉCNICA
+       ========================================================================== */
+    .section-infra {
+      background-color: var(--paper);
+      color: var(--ink);
+      padding: 8rem 0;
+      border-top: 1px solid var(--line-light);
+    }
 
-      // Aguarda as fontes carregarem para que o SplitType calcule as larguras corretamente!
-      document.fonts.ready.then(() => {
-        const splitHeadline = new SplitType('.hero-section .gs-reveal-split', { types: 'lines, words', tagName: 'span' });
-        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    .infra-header {
+      max-width: 700px;
+      margin-bottom: 4rem;
+    }
 
-        // Prepara as linhas separadas para animação
-        gsap.set(splitHeadline.lines, { overflow: 'hidden' });
-        gsap.set(splitHeadline.words, { y: '100%' });
-        gsap.set('.hero-section .gs-reveal-split', { opacity: 1 }); // Revela o container
+    .infra-header .eyebrow {
+      display: flex; align-items: center; gap: 0.85rem;
+      font-family: var(--font-mono); font-size: 0.62rem;
+      text-transform: uppercase; letter-spacing: 0.28em;
+      color: var(--stone-2); margin-bottom: 1.75rem;
+    }
+    .infra-header .eyebrow::before { content: ''; display: block; width: 26px; height: 1px; background: var(--stone-2); flex-shrink: 0; }
 
-        // Timeline da Hero Section (Mais lenta)
-        tl.to('.hero-section .eyebrow', { y: 0, opacity: 1, duration: 1.5, delay: 0.2 })
-          .to(splitHeadline.words, {
-            y: '0%',
-            duration: 1.8,
-            stagger: 0.08, // Revela as palavras mais devagar
-            ease: "power4.out"
-          }, "-=1.0")
-          .to('.hero-section .subheadline', { y: 0, opacity: 1, duration: 1.5 }, "-=1.2")
-          .to('.hero-actions', { y: 0, opacity: 1, duration: 1.5 }, "-=1.2")
-          .to('.gs-reveal-video', { x: 0, opacity: 1, duration: 2, ease: "power3.out" }, "-=1.5")
-          .to('.hero-stats-wrapper .stat-card', {
-            y: 0,
-            opacity: 1,
-            duration: 1.2,
-            stagger: 0.2
-          }, "-=1.5")
-          .to('.hero-marquee-wrapper', { y: 0, opacity: 1, duration: 1.5 }, "-=1.0");
-      });
+    .infra-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
 
-      // ScrollTriggers genéricos para animações
-        gsap.utils.toArray('section:not(.hero-section) .gs-reveal').forEach(function(elem) {
-          ScrollTrigger.create({
-            trigger: elem,
-            start: "top 85%",
-            onEnter: function() {
-              gsap.to(elem, {y: 0, opacity: 1, duration: 0.8, ease: "power3.out"});
-            },
-            once: true
-          });
-        });
+    .infra-lede {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      color: var(--stone-2);
+      line-height: 1.6;
+    }
 
-        // Revela títulos divididos em linhas nas dobras seguintes (Ex: A Resposta, Trajetória)
-        gsap.utils.toArray('section:not(.hero-section) .solution-title, section:not(.hero-section) .trajetoria-title, section:not(.hero-section) .mentoria-title').forEach(function(title) {
-          const lines = title.querySelectorAll('.gs-reveal-split');
-          if (lines.length > 0) {
-            gsap.set(lines, { y: '100%', opacity: 0 });
-            ScrollTrigger.create({
-              trigger: title,
-              start: "top 85%",
-              onEnter: function() {
-                gsap.to(lines, {
-                  y: '0%', 
-                  opacity: 1, 
-                  duration: 1, 
-                  stagger: 0.1, 
-                  ease: "power4.out"
-                });
-              },
-              once: true
-            });
-          }
-        });
+    .infra-swiper {
+      width: 100%;
+      padding-top: 2rem;
+      padding-bottom: 4rem;
+      overflow: visible !important;
+    }
 
-        gsap.utils.toArray('section:not(.hero-section) .gs-reveal-stagger').forEach(function(elem) {
-          ScrollTrigger.create({
-            trigger: elem,
-            start: "top 85%",
-            onEnter: function() {
-              gsap.to(elem.children, {y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out"});
-            },
-            once: true
-          });
-        });
+    .infra-swiper .swiper-slide {
+      width: 500px;
+      opacity: 0.4;
+      transition: opacity 0.5s ease;
+    }
 
-        // PARALLAX GLOBAL NAS DOBRAS SEGUINTES (Blocos subindo suavemente)
-        // Aplicado no contêiner inteiro para evitar que o título atropele o "Eyebrow"
-        gsap.utils.toArray('.problem-header, .solution-content, .trajetoria-header, .atuacao-header, .mentoria-content').forEach(function(elem) {
-          // O ScrollTrigger com scrub garante o movimento vinculado à rolagem
-          gsap.to(elem, {
-            y: -80,
-            ease: "none",
-            scrollTrigger: {
-              trigger: elem,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 0.5
-            }
-          });
-        });
+    .infra-swiper .swiper-slide-active {
+      opacity: 1;
+    }
 
-        // ---------------------------------------------------------
-        // ANIMAÇÃO BLUEPRINT DA TRAJETÓRIA (Régua de Engenharia)
-        // ---------------------------------------------------------
-        const rulerWrapper = document.querySelector(".timeline-ruler-wrapper");
-        if(rulerWrapper) {
-          // 1. A régua "cresce" para baixo ancorada ao scroll
-          gsap.fromTo('.engineering-ruler', 
-            { clipPath: 'inset(0 0 100% 0)' }, 
-            { 
-              clipPath: 'inset(0 0 0% 0)',
-              ease: 'none',
-              scrollTrigger: {
-                trigger: '.timeline-ruler-wrapper',
-                start: "top 75%",
-                end: "bottom 75%",
-                scrub: 1
-              }
-            }
-          );
+    .infra-pagination {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    
+    .infra-pagination .swiper-pagination-bullet {
+      background: var(--stone-2);
+      opacity: 0.4;
+      width: 8px;
+      height: 8px;
+      transition: all 0.3s;
+    }
+    
+    .infra-pagination .swiper-pagination-bullet-active {
+      opacity: 1;
+      background: var(--gold-deep);
+      width: 24px;
+      border-radius: 4px;
+    }
 
-          // 2. Elementos de cada marco surgem em sequência animada
-          gsap.utils.toArray('.timeline-item').forEach(function(item) {
-            const node = item.querySelector('.timeline-node');
-            const content = item.querySelectorAll('.timeline-period, .timeline-role, .timeline-desc');
-            
-            const tl = gsap.timeline({
-              scrollTrigger: {
-                trigger: item,
-                start: "top 85%", // Dispara quando o marco entra bem na tela
-                toggleActions: "play none none reverse"
-              }
-            });
-            
-            // Desenha a linha horizontal a partir da régua
-            tl.fromTo(item, 
-              { "--connector-width": "0rem" }, 
-              { "--connector-width": "2rem", duration: 0.4, ease: "power2.out" }
-            )
-            // Círculo (nó) dá um "pop"
-            .from(node, { scale: 0, opacity: 0, duration: 0.4, ease: "back.out(2)" }, "-=0.2")
-            // Textos deslizam suavemente
-            .from(content, { x: 30, opacity: 0, duration: 0.5, stagger: 0.1, ease: "power3.out" }, "-=0.2");
-          });
-        }
+    .infra-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
 
-        // Ícones e caixas descem levemente para dar profundidade cruzada
-        gsap.utils.toArray('.problem-icon-wrapper, .solution-panel').forEach(function(elem) {
-          gsap.to(elem, {
-            y: 40,
-            ease: "none",
-            scrollTrigger: {
-              trigger: elem,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 0.5
-            }
-          });
-        });
+    .infra-img-wrap {
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--line-light);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
 
-      });
-  </script>
-</body>
-</html>
+    .infra-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-spring);
+    }
+
+    .infra-card:hover .infra-img {
+      transform: scale(1.02);
+    }
+
+    .infra-caption {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--stone-2);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1024px) {
+      .section-infra {
+        padding: 5rem 0;
+      }
+      .infra-swiper .swiper-slide {
+        width: 85vw;
+      }
+    }
+
+    /* ==========================================================================
+       11. DOBRA: CREDENCIAIS
+       ========================================================================== */
+    .section-credenciais {
+      padding: 8rem 0 0 0;
+      background-color: var(--navy);
+      border-top: 1px solid var(--line-dark);
+      position: relative;
+    }
+
+    .credenciais-header {
+      max-width: 800px;
+      margin-bottom: 4rem;
+    }
+
+    .credenciais-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      color: var(--paper);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .credenciais-lede {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      color: var(--text-lede);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .credenciais-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 5rem;
+    }
+
+    /* Lista Formação */
+    .formacao-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .formacao-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--line-dark);
+      gap: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s var(--ease-smooth);
+    }
+
+    .formacao-item:first-child {
+      border-top: 1px solid var(--line-dark);
+    }
+
+    .formacao-item:hover {
+      background: rgba(198, 164, 90, 0.03);
+      padding-left: 1rem;
+      padding-right: 1rem;
+      border-radius: 8px;
+    }
+
+    .formacao-item:hover .formacao-info {
+      color: var(--gold-2);
+    }
+
+    .formacao-info {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--paper);
+      line-height: 1.5;
+      transition: color 0.3s ease;
+    }
+
+    .formacao-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--gold);
+      margin-right: 0.5rem;
+    }
+
+    .formacao-date {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--stone);
+      white-space: nowrap;
+    }
+
+    /* Cards Prêmios */
+    .premios-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .premio-card {
+      position: relative;
+      padding: 1.75rem;
+      background: rgba(22, 40, 63, 0.4);
+      border: 1px solid var(--line-dark);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .premio-card::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 150%; height: 150%;
+      background: radial-gradient(circle, rgba(198,164,90,0.1) 0%, transparent 70%);
+      transform: translate(-50%, -50%) scale(0.5);
+      opacity: 0;
+      transition: all 0.6s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .premio-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--gold) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .premio-content, .premio-img-wrap {
+      position: relative;
+      z-index: 1;
+    }
+
+    .premio-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(198,164,90,0.4);
+      background: rgba(22, 40, 63, 0.8);
+      box-shadow: 0 10px 40px rgba(14,27,43,0.7), 0 0 35px rgba(198,164,90,0.15);
+    }
+
+    .premio-card:hover::after {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .premio-card:hover::before {
+      opacity: 1;
+    }
+
+    .premio-img-wrap {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1px solid var(--line-dark);
+    }
+
+    .premio-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .premio-card:hover .premio-img {
+      transform: scale(1.1);
+    }
+
+    .diamante-card {
+      border-color: rgba(198,164,90,0.4);
+      background: rgba(198,164,90,0.05);
+    }
+
+    .premio-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid rgba(198,164,90,0.25);
+      border-radius: 99px;
+      background: rgba(198,164,90,0.1);
+    }
+
+    .premio-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--paper);
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
+    }
+
+    .premio-org {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--stone);
+    }
+
+    .premios-addendum {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--text-lede);
+      line-height: 1.7;
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      background: rgba(23, 33, 46, 0.3);
+      border-left: 2px solid var(--gold-deep);
+      border-radius: 0 8px 8px 0;
+    }
+
+    /* Faixa Final */
+    .credenciais-stats-wrapper {
+      border-top: 1px solid var(--line-dark);
+      background-color: rgba(14, 27, 43, 0.95);
+      padding: 3rem 0;
+      width: 100%;
+    }
+
+    .credenciais-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .cred-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .cred-stat-value {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: baseline;
+      gap: 0.2rem;
+    }
+
+    .cred-stat-unit {
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+
+    .cred-stat-prefix {
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+
+    .cred-stat-desc {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--text-lede);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 1024px) {
+      .credenciais-grid {
+        grid-template-columns: 1fr;
+      }
+      .credenciais-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      .credenciais-stats {
+        grid-template-columns: 1fr;
+      }
+      .formacao-item {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+    /* ==========================================================================
+       12. DOBRA: PERGUNTAS (FAQ)
+       ========================================================================== */
+    .section-perguntas {
+      padding: 8rem 0;
+      background-color: var(--navy);
+      border-top: 1px solid var(--line-dark);
+    }
+
+    .perguntas-header {
+      max-width: 800px;
+      margin-bottom: 4rem;
+    }
+
+    .perguntas-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      color: var(--paper);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .perguntas-lede {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      color: var(--text-lede);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .perguntas-list {
+      max-width: 820px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--line-dark);
+      opacity: 0;
+      transform: translateY(20px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .faq-item::before {
+      content: "";
+      position: absolute;
+      inset: 0px;
+      background: radial-gradient(
+        600px circle at var(--mouse-x) var(--mouse-y),
+        rgba(198, 164, 90, 0.08),
+        transparent 40%
+      );
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .faq-item:hover::before { 
+      opacity: 1; 
+    }
+
+    .faq-item:first-child {
+      border-top: 1px solid var(--line-dark);
+    }
+
+    .faq-summary {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 2rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      text-align: left;
+      gap: 2rem;
+      transition: background 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .faq-summary:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: -2px;
+      border-radius: 8px;
+    }
+
+    .faq-summary:hover {
+      background: rgba(198,164,90,0.02);
+      border-radius: 8px;
+    }
+
+    .faq-question {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--paper);
+      line-height: 1.3;
+      display: flex;
+      gap: 1rem;
+      align-items: baseline;
+      transition: color 0.3s;
+    }
+    
+    .faq-item.is-open .faq-question {
+      color: var(--gold-2);
+    }
+
+    .faq-num {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--gold-2);
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--line-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      transition: all 0.4s var(--ease-spring);
+    }
+
+    .faq-summary:hover .faq-icon {
+      background: rgba(198,164,90,0.1);
+      border-color: rgba(198,164,90,0.3);
+      transform: scale(1.1);
+    }
+
+    .faq-item.is-open .faq-icon {
+      transform: rotate(45deg);
+      background: var(--gold);
+      color: var(--navy);
+      border-color: var(--gold);
+    }
+
+    .faq-content-wrapper {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.5s var(--ease-spring);
+      position: relative;
+      z-index: 1;
+    }
+
+    .faq-item.is-open .faq-content-wrapper {
+      grid-template-rows: 1fr;
+    }
+
+    .faq-content {
+      overflow: hidden;
+    }
+
+    .faq-content-inner {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-lede);
+      line-height: 1.7;
+      padding-bottom: 2rem;
+      padding-left: calc(1rem + 28px); /* Alinhar com o texto da pergunta */
+    }
+
+    @media (max-width: 768px) {
+      .faq-content-inner {
+        padding-left: 0;
+      }
+    }
+    /* ==========================================================================
+       10. SEÇÃO CONTATO E FOOTER
+       ========================================================================== */
+    .contato-section {
+      background-color: var(--paper);
+      color: var(--ink);
+      padding: 8rem 2rem;
+    }
+
+    .contato-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .contato-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+
+    .contato-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .contato-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+      color: var(--ink);
+    }
+
+    .contato-body {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--stone-2);
+      margin-bottom: 2rem;
+      max-width: 95%;
+    }
+
+    .contato-quote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.2rem, 2vw, 1.4rem);
+      color: var(--gold-deep);
+      line-height: 1.4;
+      border-left: 2px solid var(--gold);
+      padding-left: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .contato-panel {
+      background-color: var(--paper-2);
+      border: 1px solid var(--line-light);
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      justify-content: center;
+      border-radius: 4px;
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .contact-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--stone-2);
+    }
+
+    .contact-value {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    a.contact-value:hover {
+      color: var(--gold-deep);
+    }
+
+    /* FOOTER */
+    .site-footer {
+      background-color: var(--navy);
+      color: var(--paper);
+      padding: 2rem 2rem;
+      border-top: 1px solid var(--line-dark);
+    }
+
+    .footer-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-brand, .footer-copy {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: rgba(244, 239, 228, 0.7); /* paper com opacidade */
+    }
+
+    @media (max-width: 600px) {
+      .footer-flex {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* PREMIUM BUTTON (Contato) */
+    .btn-premium {
+      padding: 0.85rem 2.2rem;
+      border-radius: 4px;
+      color: var(--navy);
+      background: transparent;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-premium .btn-inner-track {
+      position: absolute; inset: 0;
+      z-index: -1; border-radius: inherit; overflow: hidden; padding: 1px;
+    }
+    .btn-premium .btn-conic {
+      position: absolute; inset: -100%;
+      background: conic-gradient(from 0deg, transparent 0deg 270deg, var(--gold) 360deg);
+      animation: conic-spin 3s linear infinite;
+    }
+    .btn-premium .btn-bg {
+      position: absolute; inset: 1px; border-radius: inherit;
+      background: var(--gold); overflow: hidden;
+    }
+    .btn-premium .btn-shimmer {
+      position: absolute; inset: 0;
+      opacity: 0.15; mix-blend-mode: plus-lighter;
+      background-image: repeating-linear-gradient(90deg, #fff, #fff 1px, transparent 1px, transparent 8px);
+      background-size: 24px 100%;
+      animation: lines-slide 1.8s linear infinite;
+    }
+    .btn-premium .btn-glow {
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 70%; height: 60%;
+      background: rgba(198,164,90,0.3); border-radius: 50%;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .btn-premium:hover { 
+      transform: scale(1.05) translateY(-2px); 
+      box-shadow: 0 10px 30px rgba(198, 164, 90, 0.4), 0 0 20px rgba(198, 164, 90, 0.2); 
+    }
+    .btn-premium:hover .btn-glow { 
+      background: rgba(228,199,135,0.8); /* ilumina tudo */
+      height: 100%; 
+      width: 100%; 
+      border-radius: 0; 
+    }
+    .btn-premium:active { transform: scale(0.97); }
+    .btn-premium .btn-label { position: relative; z-index: 2; color: var(--navy); font-weight: 700; display: flex; align-items: center; }
+    .btn-premium .iconify {
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .btn-premium:hover .iconify {
+      transform: translateX(6px) scale(1.15);
+    }
+
+    @keyframes conic-spin { to { transform: rotate(360deg); } }
+    @keyframes lines-slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+    /* ==========================================================================
+       12. HEADER NAVEGAÇÃO E SCROLL
+       ========================================================================== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--gold);
+      z-index: 1000;
+      box-shadow: 0 0 10px rgba(198, 164, 90, 0.8);
+      transition: width 0.1s;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 3rem);
+      max-width: 1200px;
+      z-index: 100;
+      background: rgba(14, 27, 43, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(198, 164, 90, 0.2);
+      border-radius: 100px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(198, 164, 90, 0.05);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), top 0.5s;
+    }
+
+    .site-header.is-hidden {
+      transform: translate(-50%, -150%);
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0.6rem 0.6rem 2rem;
+      width: 100%;
+    }
+
+    .header-logo a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+    
+    .header-logo a:hover {
+      opacity: 0.8;
+    }
+
+    .header-nav {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      position: relative;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--text-nav);
+      text-decoration: none;
+      transition: color 0.3s;
+      padding: 0.5rem 0;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: 2px;
+    }
+
+    .nav-link:hover {
+      color: var(--paper);
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .header-cta .btn-premium {
+      padding: 0.7rem 1.8rem;
+      font-size: 0.85rem;
+      border-radius: 100px; /* combina com o pill do header */
+    }
+
+    @media (max-width: 1024px) {
+      .header-nav {
+        display: none;
+      }
+      .site-header {
+        top: 1rem;
+        width: calc(100% - 2rem);
+        border-radius: 1rem;
+      }
+      .header-inner {
+        padding: 1rem;
+      }
+      .header-cta .btn-premium {
+        padding: 0.5rem 1rem;
+      }
+    }
